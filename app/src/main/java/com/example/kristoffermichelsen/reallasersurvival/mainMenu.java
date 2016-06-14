@@ -22,7 +22,6 @@ public class mainMenu extends AppCompatActivity {
         title.setTextSize(45);
 
 
-
         Button startGame = (Button) findViewById(R.id.button);
 
         startGame.setOnClickListener(new View.OnClickListener() {
@@ -36,6 +35,16 @@ public class mainMenu extends AppCompatActivity {
         Button settings = (Button) findViewById(R.id.settingsButton);
 
         settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent start = new Intent(mainMenu.this, SettingsActivity.class);
+                startActivity(start);
+            }
+        });
+
+        Button highscore = (Button) findViewById(R.id.highscore);
+
+        highscore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent start = new Intent(mainMenu.this, SettingsActivity.class);
