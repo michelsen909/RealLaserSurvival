@@ -22,7 +22,6 @@ public class mainMenu extends AppCompatActivity {
             public void onClick(View v) {
                 Intent start = new Intent(mainMenu.this, SettingsActivity.class);
                 startActivity(start);
-
             }
         });
 
