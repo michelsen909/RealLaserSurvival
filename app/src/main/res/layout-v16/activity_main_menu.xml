@@ -14,14 +14,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Laser Survival"
-        android:textSize="55dp"
+
+        android:textSize="28dp"
         android:id="@+id/textView"
         android:textColor="@color/material_grey_50"
         android:focusableInTouchMode="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-       />
+        android:fontFamily="AR DESTINE" />
 
     <Button
         android:layout_width="wrap_content"
