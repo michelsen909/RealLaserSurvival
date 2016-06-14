@@ -37,8 +37,8 @@ public class mainMenu extends AppCompatActivity {
         settings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(mainMenu.this, SettingsActivity.class);
-                startActivity(start);
+                Intent settings = new Intent(mainMenu.this, SettingsActivity.class);
+                startActivity(settings);
             }
         });
 
@@ -47,8 +47,8 @@ public class mainMenu extends AppCompatActivity {
         highscore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(mainMenu.this, SettingsActivity.class);
-                startActivity(start);
+                Intent highscore = new Intent(mainMenu.this, SettingsActivity.class);
+                startActivity(highscore);
             }
         });
 
