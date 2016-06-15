@@ -20,7 +20,8 @@
             android:label="@string/title_activity_settings" />
         <activity android:name=".GameOverActivity" />
         <activity android:name=".GameActivity" />
-        <activity android:name=".HighscoreActivity"></activity>
+        <activity android:name=".HighscoreActivity" />
+        <activity android:name=".GameActivity2"></activity>
     </application>
 
 </manifest>

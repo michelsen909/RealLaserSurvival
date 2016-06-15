@@ -49,5 +49,17 @@ public class MainMenuActivity extends AppCompatActivity {
             }
         });
 
+
+        // TEST!
+
+        Button testButton = (Button) findViewById(R.id.testButton);
+
+        testButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent test = new Intent(MainMenuActivity.this, GameActivity2.class);
+                startActivity(test);
+            }
+        });
     }
 }
