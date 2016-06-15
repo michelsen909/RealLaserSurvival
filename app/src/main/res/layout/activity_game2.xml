@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#000000"
+    android:background="#FFA500"
     android:rowCount="9"
     android:id="@+id/gameScreen2"
     android:columnCount="9"

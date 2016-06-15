@@ -37,7 +37,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         Point size= new Point();
         display.getSize(size);
         int screenWidth=size.x;
-        int screenHeight=size.y;
+        int screenHeight=size.y-100;
 
         int count=0;
 
@@ -69,18 +69,17 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                 }
                 */
 
-
                 if(count%2 == 0) {
                     newPos.setBackgroundColor(Color.WHITE);
                 } else if (count%2 == 1) {
                     newPos.setBackgroundColor(Color.LTGRAY);
                 }
 
+
                 if(i==0 || i==12){
                     newPos.setMinimumHeight(screenHeight/24);
                 }else{
                     newPos.setMinimumHeight(screenHeight/12);
-
                 }
 
                 if(j==0 || j==8){
@@ -88,10 +87,9 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                 }
                 else{
                     newPos.setMinimumWidth(screenWidth/8);
-
                 }
-                count++;
 
+                count++;
 
                 grid.addView(newPos);
 
