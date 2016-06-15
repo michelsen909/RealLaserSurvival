@@ -37,11 +37,11 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         Point size= new Point();
         display.getSize(size);
         int screenWidth=size.x;
-        int screenHeight=size.y-100;
+        int screenHeight=size.y;
 
         int count=0;
 
-        for(int i=0;i<13;i++){
+        for(int i=0;i<12;i++){
 
             for(int j=0;j<9;j++){
 
@@ -76,7 +76,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                 }
 
 
-                if(i==0 || i==12){
+                if(i==0 || i==11){
                     newPos.setMinimumHeight(screenHeight/24);
                 }else{
                     newPos.setMinimumHeight(screenHeight/12);
