@@ -41,8 +41,8 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2, float vel1, float vel2){
-        ImageView userBall= (ImageView) findViewById(R.id.userBall);
-        userBall.setBackgroundColor(Color.GREEN);
+        //ImageView userBall= (ImageView) findViewById(R.id.userBall);
+        //userBall.setBackgroundColor(Color.GREEN);
 
         return true;
     }
