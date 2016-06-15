@@ -41,46 +41,19 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         int count=0;
 
-        int colorh= Color.WHITE;
 
 
 
 
-        for(int i=0;i<13;i++){
-            if(colorh==Color.WHITE){
-                colorh=Color.BLACK;
-            }else{
-                colorh=Color.WHITE;
-            }
-            for(int j=0;j<9;j++){
+        for(int i=0;i<8;i++){
 
-            ImageView newPos = new ImageView(getApplicationContext());
-            newPos.setBackgroundColor(colorh);
-                Log.i("GameApp",""+screenWidth);
-                if(count%3==1){
-                    newPos.setBackgroundColor(Color.BLUE);
-                }
-                if(count%3==2){
-                    newPos.setBackgroundColor(Color.GREEN);
-                }
-                count++;
-                //GridLayout.LayoutParams lp = new GridLayout.LayoutParams(GridLayout.LayoutParams.WRAP_CONTENT,GridLayout.LayoutParams.MATCH_PARENT);
-                //lp.setMargins(1,1,1,1);
-                //newPos.setLayoutParams(lp);
+            for(int j=0;j<12;j++){
+                ImageView newPos = new ImageView(getApplicationContext());
 
-                if(i==0 || i==11){
-                    newPos.setMinimumHeight(screenHeight/24);
-                }else{
-                    newPos.setMinimumHeight(screenHeight/12);
-
-                }
-
-                if(j==0 || j==7){
-                    newPos.setMinimumWidth(screenWidth/16);
-                }
-                else{
-                    newPos.setMinimumWidth(screenWidth/8);
-
+                if (i%2 == 0) {
+                    newPos.setBackgroundColor(Color.WHITE);
+                } else if (i%2 == 1) {
+                    newPos.setBackgroundColor(Color.BLACK);
                 }
 
 
