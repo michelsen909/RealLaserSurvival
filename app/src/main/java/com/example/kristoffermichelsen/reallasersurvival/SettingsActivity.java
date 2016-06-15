@@ -21,5 +21,16 @@ public class SettingsActivity extends AppCompatActivity {
         title.setTypeface(font);
         title.setTextSize(45);
 
+        Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
+
+        mainMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mainMenu = new Intent(SettingsActivity.this, MainMenuActivity.class);
+                startActivity(mainMenu);
+            }
+        });
+
+
     }
 }
