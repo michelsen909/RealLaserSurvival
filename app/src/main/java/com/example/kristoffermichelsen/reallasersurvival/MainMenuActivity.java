@@ -45,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
         highscoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent highscore = new Intent(MainMenuActivity.this, SettingsActivityForkert.class);
+                Intent highscore = new Intent(MainMenuActivity.this, HighscoreActivity.class);
                 startActivity(highscore);
             }
         });
