@@ -19,6 +19,8 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        grid.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()));
 
 
     }
