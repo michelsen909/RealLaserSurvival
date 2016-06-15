@@ -41,7 +41,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         int count=0;
 
-        for(int i=0;i<9;i++){
+        for(int i=0;i<13;i++){
 
             for(int j=0;j<9;j++){
 
@@ -67,10 +67,10 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                     newPos.setBackgroundColor(Color.CYAN);
                 }
 
-                if(i==0 || i==8){
-                    newPos.setMinimumHeight(screenHeight/16);
+                if(i==0 || i==12){
+                    newPos.setMinimumHeight(screenHeight/24);
                 }else{
-                    newPos.setMinimumHeight(screenHeight/8);
+                    newPos.setMinimumHeight(screenHeight/12);
 
                 }
 
