@@ -7,6 +7,32 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kristoffermichelsen.reallasersurvival.HighscoreActivity">
+    tools:context="com.example.kristoffermichelsen.reallasersurvival.HighscoreActivity"
+    android:background="#000000">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Highscores"
+        android:textSize="45dp"
+        android:id="@+id/highscores"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Menu"
+        android:id="@+id/mainMenuButton"
+        android:textSize="22dp"
+        android:background="@drawable/highscore_button"
+        android:textColor="@color/material_grey_50"
+        android:width="150dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/highscores"
+        android:layout_centerHorizontal="true"/>
 
 </RelativeLayout>
