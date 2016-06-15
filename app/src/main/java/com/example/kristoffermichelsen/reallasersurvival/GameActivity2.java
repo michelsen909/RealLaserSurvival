@@ -28,10 +28,10 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_game2);
 
         detector = new GestureDetector(this,this);
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
         grid.setUseDefaultMargins(false);
         Display display = getWindowManager().getDefaultDisplay();
         Point size= new Point();
@@ -41,44 +41,47 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         int count=0;
 
-        int colorh= Color.WHITE;
-
-
-
-
-        for(int i=0;i<12;i++){
+        for(int i=0;i<9;i++){
 
             for(int j=0;j<9;j++){
 
                 ImageView newPos = new ImageView(getApplicationContext());
-                newPos.setBackgroundColor(colorh);
-                Log.i("GameApp",""+screenWidth);
-                if(count%3==1){
-                    newPos.setBackgroundColor(Color.BLUE);
-                }
-                if(count%3==2){
+
+                if(count%9 == 0) {
+                    newPos.setBackgroundColor(Color.WHITE);
+                } else if (count%9 == 1) {
+                    newPos.setBackgroundColor(Color.LTGRAY);
+                } else if (count%9 == 2) {
+                    newPos.setBackgroundColor(Color.DKGRAY);
+                } else if (count%9 == 3) {
+                    newPos.setBackgroundColor(Color.RED);
+                } else if (count%9 == 4) {
                     newPos.setBackgroundColor(Color.GREEN);
+                } else if (count%9 == 5) {
+                    newPos.setBackgroundColor(Color.BLUE);
+                } else if (count%9 == 6) {
+                    newPos.setBackgroundColor(Color.YELLOW);
+                } else if (count%9 == 7) {
+                    newPos.setBackgroundColor(Color.MAGENTA);
+                } else if (count%9 == 8) {
+                    newPos.setBackgroundColor(Color.CYAN);
                 }
-                count++;
-                //GridLayout.LayoutParams lp = new GridLayout.LayoutParams(GridLayout.LayoutParams.WRAP_CONTENT,GridLayout.LayoutParams.MATCH_PARENT);
-                //lp.setMargins(1,1,1,1);
-                //newPos.setLayoutParams(lp);
 
-                if(i==0 || i==11){
-                    newPos.setMinimumHeight(screenHeight/24);
+                if(i==0 || i==8){
+                    newPos.setMinimumHeight(screenHeight/16);
                 }else{
-                    newPos.setMinimumHeight(screenHeight/12);
+                    newPos.setMinimumHeight(screenHeight/8);
 
                 }
 
-                if(j==0 || j==7){
+                if(j==0 || j==8){
                     newPos.setMinimumWidth(screenWidth/16);
                 }
                 else{
                     newPos.setMinimumWidth(screenWidth/8);
 
                 }
-
+                count++;
 
 
                 grid.addView(newPos);

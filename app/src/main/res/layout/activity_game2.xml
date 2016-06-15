@@ -4,12 +4,12 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="#000000"
-    android:rowCount="12"
-    android:id="@+id/gameScreen"
-    android:columnCount="8"
+    android:rowCount="9"
+    android:id="@+id/gameScreen2"
+    android:columnCount="9"
     android:horizontalSpacing="0dp"
     android:verticalSpacing="0dp"
-    android:useDefaultMargins="true"
+    android:useDefaultMargins="false"
     android:alignmentMode="alignBounds"
 
     tools:context="com.example.kristoffermichelsen.reallasersurvival.GameActivity2">
