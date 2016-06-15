@@ -28,9 +28,12 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         detector = new GestureDetector(this,this);
 
 
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.gameScreen);
 
-        //test
+        gridLayout.setUseDefaultMargins(false);
+        gridLayout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
+        gridLayout.setRowOrderPreserved(false);
+
 
     }
 
