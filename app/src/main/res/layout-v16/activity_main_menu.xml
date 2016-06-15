@@ -7,34 +7,33 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.kristoffermichelsen.reallasersurvival.mainMenu"
+    tools:context="com.example.kristoffermichelsen.reallasersurvival.MainMenuActivity"
     android:background="#000000">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Laser Survival"
-
-        android:textSize="28dp"
-        android:id="@+id/textView"
+        android:textSize="45dp"
+        android:id="@+id/title"
         android:textColor="@color/material_grey_50"
         android:focusableInTouchMode="false"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="80dp"
-        android:fontFamily="AR DESTINE" />
+        />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Start"
-        android:id="@+id/button"
+        android:id="@+id/startButton"
         android:layout_marginTop="61dp"
         android:textSize="22dp"
         android:background="@drawable/start_button"
         android:textColor="@color/material_grey_50"
         android:width="150dp"
-        android:layout_below="@+id/textView"
+        android:layout_below="@+id/title"
         android:layout_centerHorizontal="true" />
 
     <Button
@@ -47,22 +46,20 @@
         android:textColor="@color/material_grey_50"
         android:width="150dp"
         android:layout_marginTop="57dp"
-        android:layout_below="@+id/highscore"
-        android:layout_alignLeft="@+id/highscore"
-        android:layout_alignStart="@+id/highscore" />
+        android:layout_below="@+id/startButton"
+        android:layout_centerHorizontal="true"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Highscore"
-        android:id="@+id/highscore"
+        android:id="@+id/highscoreButton"
         android:textSize="22dp"
         android:background="@drawable/highscore_button"
         android:textColor="@color/material_grey_50"
         android:width="150dp"
-
-        android:layout_below="@+id/button"
-        android:layout_alignLeft="@+id/button"
-        android:layout_alignStart="@+id/button"
-        android:layout_marginTop="57dp" />
+        android:layout_below="@+id/settingsButton"
+        android:layout_marginTop="57dp"
+        android:layout_centerHorizontal="true"
+        />
 </RelativeLayout>

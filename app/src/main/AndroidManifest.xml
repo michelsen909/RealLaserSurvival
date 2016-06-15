@@ -8,7 +8,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mainMenu">
+        <activity android:name=".MainMenuActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -19,7 +19,7 @@
             android:name=".SettingsActivityForkert"
             android:label="@string/title_activity_settings"></activity>
         <activity
-            android:name=".settings"
+            android:name=".SettingsActivity"
             android:label="@string/title_activity_settings"></activity>
         <activity android:name=".GameOverActivity"></activity>
         <activity android:name=".GameActivity"></activity>
