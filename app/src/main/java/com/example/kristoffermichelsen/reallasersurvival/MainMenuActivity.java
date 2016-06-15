@@ -19,7 +19,6 @@ public class MainMenuActivity extends AppCompatActivity {
         title.setTypeface(font);
         title.setTextSize(45);
 
-
         Button startButton = (Button) findViewById(R.id.startButton);
 
         startButton.setOnClickListener(new View.OnClickListener() {
