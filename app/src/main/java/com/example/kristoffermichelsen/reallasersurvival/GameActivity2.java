@@ -47,6 +47,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
                 ImageView newPos = new ImageView(getApplicationContext());
 
+                /*
                 if(count%9 == 0) {
                     newPos.setBackgroundColor(Color.WHITE);
                 } else if (count%9 == 1) {
@@ -65,6 +66,14 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                     newPos.setBackgroundColor(Color.MAGENTA);
                 } else if (count%9 == 8) {
                     newPos.setBackgroundColor(Color.CYAN);
+                }
+                */
+
+
+                if(count%2 == 0) {
+                    newPos.setBackgroundColor(Color.WHITE);
+                } else if (count%2 == 1) {
+                    newPos.setBackgroundColor(Color.LTGRAY);
                 }
 
                 if(i==0 || i==12){
