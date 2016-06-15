@@ -32,6 +32,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         detector = new GestureDetector(this,this);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        grid.setUseDefaultMargins(false);
         Display display = getWindowManager().getDefaultDisplay();
         Point size= new Point();
         display.getSize(size);

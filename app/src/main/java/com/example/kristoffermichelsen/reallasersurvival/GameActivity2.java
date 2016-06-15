@@ -23,17 +23,14 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game);
+        setContentView(R.layout.activity_game2);
 
         detector = new GestureDetector(this,this);
 
 
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gameScreen);
 
-        gridLayout.setUseDefaultMargins(false);
-        gridLayout.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
-        gridLayout.setRowOrderPreserved(false);
-
+        gridLayout.setPadding(0,0,0,0);
 
     }
 

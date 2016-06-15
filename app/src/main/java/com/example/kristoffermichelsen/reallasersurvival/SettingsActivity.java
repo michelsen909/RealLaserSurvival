@@ -8,7 +8,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.RadioGroup;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -28,6 +30,27 @@ public class SettingsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent mainMenu = new Intent(SettingsActivity.this, MainMenuActivity.class);
                 startActivity(mainMenu);
+            }
+        });
+
+        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroupBallColor);
+        RadioButton white = (RadioButton) findViewById(R.id.white);
+        RadioButton blue = (RadioButton) findViewById(R.id.blue);
+        RadioButton green = (RadioButton) findViewById(R.id.green);
+        RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
+        {
+            public void onCheckedChanged(RadioGroup group, int checkedId)
+            {
+                RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+
+                boolean isChecked = radioButton.isChecked();
+
+                if (isChecked)
+                {
+                    //skift farve på bold til farven på radioButton
+                }
             }
         });
 
