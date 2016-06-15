@@ -16,7 +16,7 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        TextView title = (TextView) findViewById(R.id.textView);
+        TextView title = (TextView) findViewById(R.id.settings);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
