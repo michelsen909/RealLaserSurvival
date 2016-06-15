@@ -1,9 +1,12 @@
 package com.example.kristoffermichelsen.reallasersurvival;
 
 import android.content.Context;
+import android.media.Image;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 public class OnSwipeTouchListener implements View.OnTouchListener {
 
@@ -63,11 +66,14 @@ public class OnSwipeTouchListener implements View.OnTouchListener {
     }
 
     public void onSwipeLeft() {
+
     }
 
     public void onSwipeTop() {
+
     }
 
     public void onSwipeBottom() {
+
     }
 }
