@@ -10,47 +10,47 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class mainMenu extends AppCompatActivity {
+public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
-        TextView title = (TextView) findViewById(R.id.textView);
+        TextView title = (TextView) findViewById(R.id.title);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
 
 
-        Button startGame = (Button) findViewById(R.id.button);
+        Button startButton = (Button) findViewById(R.id.startButton);
 
-        startGame.setOnClickListener(new View.OnClickListener() {
+        startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent start = new Intent(mainMenu.this, GameActivity.class);
+                Intent start = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(start);
             }
         });
 
-        Button settings = (Button) findViewById(R.id.settingsButton);
+        Button settingsButton = (Button) findViewById(R.id.settingsButton);
 
-        settings.setOnClickListener(new View.OnClickListener() {
+        settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent settings = new Intent(mainMenu.this, settings.class);
+                Intent settings = new Intent(MainMenuActivity.this, settings.class);
                 startActivity(settings);
             }
         });
 
-        Button highscore = (Button) findViewById(R.id.highscore);
+        Button highscoreButton = (Button) findViewById(R.id.highscoreButton);
 
-        highscore.setOnClickListener(new View.OnClickListener() {
+        highscoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent highscore = new Intent(mainMenu.this, SettingsActivity.class);
+                Intent highscore = new Intent(MainMenuActivity.this, SettingsActivity.class);
                 startActivity(highscore);
             }
         });
 
-     }
+    }
 }
