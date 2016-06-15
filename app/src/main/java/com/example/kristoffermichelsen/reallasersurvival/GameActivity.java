@@ -63,9 +63,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     newPos.setBackgroundColor(Color.GREEN);
                 }
                 count++;
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,LinearLayout.LayoutParams.MATCH_PARENT);
-                lp.setMargins(1,1,1,1);
-                newPos.setLayoutParams(lp);
+                //GridLayout.LayoutParams lp = new GridLayout.LayoutParams(GridLayout.LayoutParams.WRAP_CONTENT,GridLayout.LayoutParams.MATCH_PARENT);
+                //lp.setMargins(1,1,1,1);
+                //newPos.setLayoutParams(lp);
 
                 if(i==0){
                     newPos.setMinimumHeight(screenHeight/24);
