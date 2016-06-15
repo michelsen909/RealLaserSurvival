@@ -78,6 +78,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
     @Override
     public void onLongPress(MotionEvent e) {
+        ImageView userBall= (ImageView) findViewById(R.id.userBall);
+
+        userBall.setBackgroundColor(Color.WHITE);
 
     }
 
