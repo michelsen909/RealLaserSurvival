@@ -22,6 +22,7 @@ public class GameActivity extends AppCompatActivity {
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         grid.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()));
 
+        //test
 
     }
 
