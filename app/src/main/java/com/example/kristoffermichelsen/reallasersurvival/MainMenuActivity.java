@@ -1,9 +1,7 @@
 package com.example.kristoffermichelsen.reallasersurvival;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.graphics.Typeface;
-import android.media.audiofx.BassBoost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -37,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent settings = new Intent(MainMenuActivity.this, settings.class);
+                Intent settings = new Intent(MainMenuActivity.this, SettingsActivity.class);
                 startActivity(settings);
             }
         });
@@ -47,7 +45,7 @@ public class MainMenuActivity extends AppCompatActivity {
         highscoreButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent highscore = new Intent(MainMenuActivity.this, SettingsActivity.class);
+                Intent highscore = new Intent(MainMenuActivity.this, SettingsActivityForkert.class);
                 startActivity(highscore);
             }
         });

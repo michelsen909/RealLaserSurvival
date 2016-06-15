@@ -16,7 +16,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsActivity"
+            android:name=".SettingsActivityForkert"
             android:label="@string/title_activity_settings"></activity>
         <activity
             android:name=".settings"
