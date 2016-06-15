@@ -18,9 +18,73 @@
         android:id="@+id/gameOver"
         android:textColor="@color/material_grey_50"
         android:focusableInTouchMode="false"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Your score:"
+        android:textSize="25dp"
+        android:id="@+id/yourScore"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/gameOver"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Top 3"
+        android:textSize="25dp"
+        android:id="@+id/top3"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/yourScore"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#1"
+        android:textSize="20dp"
+        android:id="@+id/no1"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/top3"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#2"
+        android:textSize="20dp"
+        android:id="@+id/no2"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/no1"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="#3"
+        android:textSize="20dp"
+        android:id="@+id/no3"
+        android:textColor="@color/material_grey_50"
+        android:focusableInTouchMode="false"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/no2"
+        android:layout_centerHorizontal="true"
         />
 
     <Button
@@ -33,7 +97,7 @@
         android:textColor="@color/material_grey_50"
         android:width="150dp"
         android:layout_marginTop="57dp"
-        android:layout_below="@+id/gameOver"
+        android:layout_below="@+id/no3"
         android:layout_centerHorizontal="true"/>
 
     <Button
@@ -48,8 +112,5 @@
         android:layout_marginTop="30dp"
         android:layout_below="@+id/playAgainButton"
         android:layout_centerHorizontal="true"/>
-
-
-
 
 </RelativeLayout>
