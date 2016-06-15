@@ -46,13 +46,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
 
-        for(int i=0;i<12;i++){
+        for(int i=0;i<13;i++){
             if(colorh==Color.WHITE){
                 colorh=Color.BLACK;
             }else{
                 colorh=Color.WHITE;
             }
-            for(int j=0;j<8;j++){
+            for(int j=0;j<9;j++){
 
             ImageView newPos = new ImageView(getApplicationContext());
             newPos.setBackgroundColor(colorh);
@@ -68,14 +68,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 //lp.setMargins(1,1,1,1);
                 //newPos.setLayoutParams(lp);
 
-                if(i==0){
+                if(i==0 || i==11){
                     newPos.setMinimumHeight(screenHeight/24);
                 }else{
                     newPos.setMinimumHeight(screenHeight/12);
 
                 }
 
-                if(j==0){
+                if(j==0 || j==7){
                     newPos.setMinimumWidth(screenWidth/16);
                 }
                 else{
