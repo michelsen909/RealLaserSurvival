@@ -10,10 +10,14 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class MainMenuActivity extends AppCompatActivity {
+
+    static ArrayList<Integer> highscores = new ArrayList<Integer>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +75,7 @@ public class MainMenuActivity extends AppCompatActivity {
     public static void createHighscore() {
         try {
             Scanner highscoreFile = new Scanner(new File("scores/Highscore.txt"));
-            ArrayList<Integer> highscores = new ArrayList<Integer>();
+            highscores = new ArrayList<Integer>();
             for (int i = 0; i <= 4; i++) {
                 highscores.add(highscoreFile.nextInt());
             }
@@ -81,4 +85,23 @@ public class MainMenuActivity extends AppCompatActivity {
 
         }
     }
+    public void saveHighscore() {
+        try{
+            FileWriter highscorePrinter = new FileWriter("Highscore.txt");
+            for(int i = 0;i <= 4;i++){
+                String j = highscores.get(i).toString();
+                highscorePrinter.write(j + " ");
+            }
+            highscorePrinter.close();
+        } catch (java.io.IOException e){
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveHighscore();
+    }
 }
+
