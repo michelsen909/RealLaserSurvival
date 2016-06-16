@@ -8,6 +8,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     @Override
@@ -18,6 +23,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+        createHighscore();
 
         Button startButton = (Button) findViewById(R.id.startButton);
 
@@ -61,5 +67,18 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(test);
             }
         });
+    }
+    public static void createHighscore() {
+        try {
+            Scanner highscoreFile = new Scanner(new File("scores/Highscore.txt"));
+            ArrayList<Integer> highscores = new ArrayList<Integer>();
+            for (int i = 0; i <= 4; i++) {
+                highscores.add(highscoreFile.nextInt());
+            }
+            highscoreFile.close();
+
+        } catch (FileNotFoundException e){
+
+        }
     }
 }
