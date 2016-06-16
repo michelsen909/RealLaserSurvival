@@ -192,7 +192,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         new Thread(new Runnable() {
             boolean dead=false;
-            int wait=3000;
+            int wait=3001;
             @Override
             public void run() {
                 try{
