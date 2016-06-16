@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -74,14 +75,17 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     public static void createHighscore() {
         try {
-            Scanner highscoreFile = new Scanner(new File("scores/Highscore.txt"));
-            highscores = new ArrayList<Integer>();
-            for (int i = 0; i <= 4; i++) {
-                highscores.add(highscoreFile.nextInt());
+            Scanner highscoreFile = new Scanner(new File("assets/scores/Highscore.txt"));
+
+
+            for (int i = 0; i < 5; i++) {
+                highscores.add(Integer.parseInt(highscoreFile.next()));
+                Log.i("Highscore",highscores.toString() );
             }
             highscoreFile.close();
 
         } catch (FileNotFoundException e){
+            Log.i("Highscore","File not found" );
 
         }
 
