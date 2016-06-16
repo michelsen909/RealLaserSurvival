@@ -44,12 +44,12 @@ public class GameOverActivity extends AppCompatActivity {
         });
         //TODO - Change this to Recent Score from Game Activity
         int RecentScore = 20005;
-        if (RecentScore > MainMenuActivity.highscores.get(4)){
+
             MainMenuActivity.highscores.add(RecentScore);
             Collections.sort(MainMenuActivity.highscores);
             MainMenuActivity.highscores.remove(0);
             Collections.reverse(MainMenuActivity.highscores);
-        }
+
 
 
     }
