@@ -126,7 +126,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         if(event1.getX()<event2.getX() && deltaX>100 && deltaX>deltaY){
             //move right
-            if(ball.x!=8){
+            if(ball.x!=7){
                 allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
                 ball.x=ball.x+1;
                 allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
@@ -137,7 +137,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         } else if(event1.getX()>event2.getX() && deltaX>100 && deltaX>deltaY){
             // move left
-            if(ball.x!=0){
+            if(ball.x!=1){
                 allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
                 ball.x=ball.x-1;
                 allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
@@ -149,9 +149,9 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         }
         if(!moved){
-        if(event1.getY()<event2.getY() && deltaY>100 && deltaY>deltaX){
+        if(event1.getY()<event2.getY() && deltaY>100 && deltaY>=deltaX){
             //move down
-            if(ball.y!=11){
+            if(ball.y!=10){
                 allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
                 ball.y=ball.y+1;
                 allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
@@ -159,9 +159,9 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
             }
             // userBall.setBackgroundColor(Color.RED);
 
-        } else if(event1.getY()>event2.getY() && deltaY>100 && deltaY>deltaX) {
+        } else if(event1.getY()>event2.getY() && deltaY>100 && deltaY>=deltaX) {
             //move up
-            if (ball.y != 0) {
+            if (ball.y != 1) {
                 allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
                 ball.y = ball.y - 1;
                 allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
