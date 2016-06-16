@@ -14,6 +14,13 @@
     tools:context="com.example.kristoffermichelsen.reallasersurvival.GameActivity2">
 
     <TextView
+        android:layout_columnSpan="1"
+        android:id="@+id/empty1"
+        android:typeface="normal"
+        android:textColor="#FFFFFF"
+        android:text=""
+        />
+    <TextView
         android:layout_columnSpan="3"
         android:id="@+id/multiplier"
         android:typeface="normal"
@@ -21,11 +28,11 @@
         android:text="1.2x"
         />
     <TextView
-        android:layout_columnSpan="3"
-        android:id="@+id/empty"
+        android:layout_columnSpan="1"
+        android:id="@+id/empty2"
         android:typeface="normal"
         android:textColor="#FFFFFF"
-        android:text=" "
+        android:text=""
         />
     <TextView
         android:layout_columnSpan="3"
@@ -34,9 +41,14 @@
         android:textColor="#FFFFFF"
         android:text="254000"
         android:gravity="right"
-
         />
-
+    <TextView
+        android:layout_columnSpan="1"
+        android:id="@+id/empty3"
+        android:typeface="normal"
+        android:textColor="#FFFFFF"
+        android:text=""
+        />
 
 
 </GridLayout>
