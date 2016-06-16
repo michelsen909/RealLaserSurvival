@@ -49,6 +49,9 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         TextView multiplier = (TextView) findViewById(R.id.multiplier);
         TextView score = (TextView) findViewById(R.id.score);
+        TextView empty1 = (TextView) findViewById(R.id.empty1);
+        //TextView empty2 = (TextView) findViewById(R.id.empty2);
+        TextView empty3 = (TextView) findViewById(R.id.empty3);
 
         multiplier.setMinimumHeight(screenHeight/24);
         multiplier.setMaxHeight(screenHeight/24);
@@ -56,8 +59,12 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         score.setMinimumHeight(screenHeight/24);
         score.setMaxHeight(screenHeight/24);
         //score.setTextSize(screenHeight/24);
-        score.setMinimumWidth(screenWidth/3+screenWidth/32);
+        //score.setMinimumWidth(screenWidth/3+screenWidth/32);
         //score.setMaxWidth(screenWidth/3);
+        
+        empty1.setWidth(screenWidth/9);
+        //empty2.setWidth(screenWidth/9);
+        empty3.setWidth(screenWidth/9);
 
         int count=0;
 
@@ -196,7 +203,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
     @Override
     public void onLongPress(MotionEvent e) {
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
         //grid.getChildAt(16).setBackgroundColor(Color.GREEN);
 
 
