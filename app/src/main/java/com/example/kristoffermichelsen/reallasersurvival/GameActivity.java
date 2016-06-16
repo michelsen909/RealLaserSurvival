@@ -41,9 +41,26 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         @Override
         public void handleMessage(Message inputMessage){
             String location = inputMessage.getData().getString("message");
-            if(location.equals("RED 1 4")){
-                allCells[7][5].setBackgroundColor(Color.YELLOW);
-            }
+
+                String [] splitString = location.split(",");
+                int laserColor;
+                switch (splitString[0]){
+                    case "RED":
+                        laserColor=Color.RED;
+                        break;
+                    case "GREEN":
+                        laserColor=Color.GREEN;
+                        break;
+                    case "BLUE":
+                        laserColor=Color.BLUE;
+                        break;
+                    default:
+                        laserColor=Color.WHITE;
+                        break;
+
+                }
+
+                edges[Integer.parseInt(splitString[1])].setBackgroundColor(laserColor);
         }
     };
 
@@ -145,7 +162,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 Thread.sleep(wait);
                                 sendCommand();
 
-                                wait=wait-100;
+                                //wait=wait-100;
                             }
 
 
@@ -168,7 +185,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             edges[indicator]=allCells[11][i+1];
             indicator++;
         }
-        for(int i=0;i<11;i++){
+        for(int i=0;i<10;i++){
             edges[indicator]=allCells[i+1][0];
             indicator++;
             edges[indicator]=allCells[i+1][8];
@@ -181,18 +198,21 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     public void sendCommand(){
-        Message msg = lasers.obtainMessage();
-        Bundle bundle = new Bundle();
+
         Random r= new Random();
 
         int lasersSpawned=r.nextInt(6)+1;
         ArrayList<Integer> fieldsUsed=new ArrayList();
 
         for(int i=0;i<lasersSpawned;i++) {
+        Message msg = lasers.obtainMessage();
+        Bundle bundle = new Bundle();
             int selectEdge = r.nextInt(34);
-            if(fieldsUsed.contains(selectEdge)){
 
+            while(fieldsUsed.contains(selectEdge)){
+                selectEdge = r.nextInt(34);
             }
+            fieldsUsed.add(selectEdge);
             int selectColor = r.nextInt(3);
             String color = "YELLOW";
             switch (selectColor) {
@@ -206,7 +226,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     color = "GREEN";
                     break;
             }
-            bundle.putString("message", color + selectEdge);
+            bundle.putString("message", color +","+ selectEdge);
             msg.setData(bundle);
             lasers.sendMessage(msg);
         }
