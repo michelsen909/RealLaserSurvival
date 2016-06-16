@@ -7,6 +7,7 @@ import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.media.Image;
+import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Layout;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 
@@ -27,6 +29,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
     Point ball;
     ImageView allCells [] [] = new ImageView[12][9];
+
 
 
     @Override
@@ -44,7 +47,16 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         int screenHeight=size.y;
         ball = new Point(4,6);
 
+        TextView multiplier = (TextView) findViewById(R.id.multiplier);
+        TextView score = (TextView) findViewById(R.id.score);
 
+        multiplier.setMinimumHeight(screenHeight/24);
+        multiplier.setMaxHeight(screenHeight/24);
+        //multiplier.setTextSize(screenHeight/24);
+        score.setMinimumHeight(screenHeight/24);
+        score.setMaxHeight(screenHeight/24);
+        //score.setTextSize(screenHeight/24);
+        score.setMinimumWidth(screenWidth/3);
 
 
         int count=0;

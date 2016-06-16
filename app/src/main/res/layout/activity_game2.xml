@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#FFA500"
+    android:background="#000000"
     android:id="@+id/gameScreen2"
-    android:rowCount="12"
     android:columnCount="9"
     android:horizontalSpacing="0dp"
     android:verticalSpacing="0dp"
@@ -14,6 +13,29 @@
 
     tools:context="com.example.kristoffermichelsen.reallasersurvival.GameActivity2">
 
+    <TextView
+        android:layout_columnSpan="3"
+        android:id="@+id/multiplier"
+        android:typeface="normal"
+        android:textColor="#FFFFFF"
+        android:text="1.2x"
+        />
+    <TextView
+        android:layout_columnSpan="3"
+        android:id="@+id/empty"
+        android:typeface="normal"
+        android:textColor="#FFFFFF"
+        android:text=" "
+        />
+    <TextView
+        android:layout_columnSpan="3"
+        android:id="@+id/score"
+        android:typeface="normal"
+        android:textColor="#FFFFFF"
+        android:text="254000"
+        android:gravity="right"
+
+        />
 
 
 
