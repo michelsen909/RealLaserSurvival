@@ -196,7 +196,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
     @Override
     public void onLongPress(MotionEvent e) {
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
         //grid.getChildAt(16).setBackgroundColor(Color.GREEN);
 
 
