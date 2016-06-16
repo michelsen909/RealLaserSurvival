@@ -84,24 +84,7 @@ public class MainMenuActivity extends AppCompatActivity {
         } catch (FileNotFoundException e){
 
         }
-    }
-    public void saveHighscore() {
-        try{
-            FileWriter highscorePrinter = new FileWriter("Highscore.txt");
-            for(int i = 0;i <= 4;i++){
-                String j = highscores.get(i).toString();
-                highscorePrinter.write(j + " ");
-            }
-            highscorePrinter.close();
-        } catch (java.io.IOException e){
 
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveHighscore();
     }
 }
 
