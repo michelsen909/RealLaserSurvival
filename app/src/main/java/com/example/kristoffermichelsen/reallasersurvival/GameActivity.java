@@ -165,29 +165,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
 
-                new Thread(new Runnable() {
-                    boolean dead=false;
-                    int wait=3000;
-                    @Override
-                    public void run() {
-                        try{
-                            while(!dead) {
-                                Thread.sleep(wait);
-                                sendCommand(1);
-                                Thread.sleep(wait);
-                                sendCommand(2);
 
-                                //wait=wait-100;
-                            }
-
-
-
-
-                        }catch(InterruptedException e){
-
-                        }
-                    }
-                }).start();
 
 
 
@@ -207,9 +185,35 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             indicator++;
         }
 
+
+
         allCells[6][4].setBackgroundColor(Color.WHITE);
         //test
 
+        new Thread(new Runnable() {
+            boolean dead=false;
+            int wait=3000;
+            @Override
+            public void run() {
+                try{
+                    while(!dead) {
+                        Thread.sleep(wait);
+
+                        sendCommand(1);
+                        Thread.sleep(wait);
+                        sendCommand(2);
+
+                        //wait=wait-100;
+                    }
+
+
+
+
+                }catch(InterruptedException e){
+
+                }
+            }
+        }).start();
     }
 
     public void sendCommand(int message){
