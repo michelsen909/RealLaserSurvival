@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import java.io.FileWriter;
+import java.util.Collections;
+
 public class GameOverActivity extends AppCompatActivity {
 
     @Override
@@ -15,7 +18,7 @@ public class GameOverActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
 
-        TextView title = (TextView) findViewById(R.id.title);
+        TextView title = (TextView) findViewById(R.id.gameOver);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
@@ -39,9 +42,36 @@ public class GameOverActivity extends AppCompatActivity {
                 startActivity(mainMenu);
             }
         });
-
-
+        //TODO - Change this to Recent Score from Game Activity
+        int RecentScore = 20005;
+        if (RecentScore > MainMenuActivity.highscores.get(4)){
+            MainMenuActivity.highscores.add(RecentScore);
+            Collections.sort(MainMenuActivity.highscores);
+            MainMenuActivity.highscores.remove(0);
+            Collections.reverse(MainMenuActivity.highscores);
+        }
 
 
     }
+    public void saveHighscore() {
+        try{
+            FileWriter highscorePrinter = new FileWriter("Highscore.txt");
+            for(int i = 0;i <= 4;i++){
+                String j = MainMenuActivity.highscores.get(i).toString();
+                highscorePrinter.write(j + " ");
+            }
+            highscorePrinter.close();
+        } catch (java.io.IOException e){
+
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        saveHighscore();
+    }
 }
+
+
+
