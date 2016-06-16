@@ -244,7 +244,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             sendResetCommand();
                             innerWait=innerWait-(wait/blinks);
                         }
-
+// TODO make dynamic waittime
 
                         //wait=wait-100;
                     }
