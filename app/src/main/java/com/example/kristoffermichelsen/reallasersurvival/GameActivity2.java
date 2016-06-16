@@ -56,8 +56,8 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         score.setMinimumHeight(screenHeight/24);
         score.setMaxHeight(screenHeight/24);
         //score.setTextSize(screenHeight/24);
-        score.setMinimumWidth(screenWidth/3);
-
+        score.setMinimumWidth(screenWidth/3+screenWidth/32);
+        //score.setMaxWidth(screenWidth/3);
 
         int count=0;
 
