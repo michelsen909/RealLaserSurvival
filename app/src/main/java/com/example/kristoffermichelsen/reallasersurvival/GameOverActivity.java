@@ -50,7 +50,13 @@ public class GameOverActivity extends AppCompatActivity {
             MainMenuActivity.highscores.remove(0);
             Collections.reverse(MainMenuActivity.highscores);
 
+        TextView no1 = (TextView) findViewById(R.id.no1);
+        TextView no2 = (TextView) findViewById(R.id.no2);
+        TextView no3 = (TextView) findViewById(R.id.no3);
 
+        no1.setText("#1 "+MainMenuActivity.highscores.get(0));
+        no2.setText("#2 "+MainMenuActivity.highscores.get(1));
+        no3.setText("#3 "+MainMenuActivity.highscores.get(2));
 
     }
     public void saveHighscore() {
