@@ -36,6 +36,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     Point ball;
     ImageView allCells [] [] = new ImageView[12][9];
     ImageView edges []  = new ImageView[34];
+    int wait=1000;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -60,7 +61,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 }
 
+
                 edges[Integer.parseInt(splitString[1])].setBackgroundColor(laserColor);
+
         }
                 else{
                     resetEdges();
@@ -192,16 +195,56 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         new Thread(new Runnable() {
             boolean dead=false;
-            int wait=3001;
+            int wait=1500;
+            int blinks=10;
             @Override
             public void run() {
                 try{
+                    Thread.sleep(3000-wait);
                     while(!dead) {
-                        Thread.sleep(wait);
+                        Random r= new Random();
+                        ArrayList<Integer> fieldsUsed=new ArrayList();
+                        int lasersSpawned=r.nextInt(4)+3;
+                        ArrayList<String> allLasers= new ArrayList<String>();
+                        for(int i=0;i<lasersSpawned;i++){
+                        int selectEdge = r.nextInt(34);
+                        while(fieldsUsed.contains(selectEdge)){
+                            selectEdge = r.nextInt(34);
+                        }
+                        fieldsUsed.add(selectEdge);
+                        int selectColor = r.nextInt(3);
+                        String color = "YELLOW";
+                        switch (selectColor) {
+                            case 1:
+                                color = "RED";
+                                break;
+                            case 2:
+                                color = "BLUE";
+                                break;
+                            case 0:
+                                color = "GREEN";
+                                break;
+                        }
+                        allLasers.add(color+","+selectEdge);
+                        }
+                        int innerWait=wait;
 
-                        sendCommand(1);
-                        Thread.sleep(wait);
-                        sendCommand(2);
+                        while(innerWait>0) {
+
+                            Thread.sleep(innerWait);
+
+                            for (String i : allLasers) {
+                                sendCommand(i);
+                            }
+
+                            Thread.sleep(innerWait/2);
+                            if(innerWait>700){
+                                innerWait=700;
+                            }
+                            sendResetCommand();
+                            innerWait=innerWait-(wait/blinks);
+                        }
+
 
                         //wait=wait-100;
                     }
@@ -215,46 +258,25 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             }
         }).start();
     }
-
-    public void sendCommand(int message){
-        if(message==1){
-        Random r= new Random();
-
-        int lasersSpawned=r.nextInt(6)+1;
-        ArrayList<Integer> fieldsUsed=new ArrayList();
-
-        for(int i=0;i<lasersSpawned;i++) {
+    public void sendResetCommand(){
         Message msg = lasers.obtainMessage();
         Bundle bundle = new Bundle();
-            int selectEdge = r.nextInt(34);
-            while(fieldsUsed.contains(selectEdge)){
-                selectEdge = r.nextInt(34);
-            }
-            fieldsUsed.add(selectEdge);
-            int selectColor = r.nextInt(3);
-            String color = "YELLOW";
-            switch (selectColor) {
-                case 1:
-                    color = "RED";
-                    break;
-                case 2:
-                    color = "BLUE";
-                    break;
-                case 0:
-                    color = "GREEN";
-                    break;
-            }
-            bundle.putString("message", color +","+ selectEdge);
-            msg.setData(bundle);
-            lasers.sendMessage(msg);
-        }}
-        else{
+        bundle.putString("message","reset");
+        msg.setData(bundle);
+        lasers.sendMessage(msg);
+    }
+
+    public void sendCommand(String message){
+
+
             Message msg = lasers.obtainMessage();
             Bundle bundle = new Bundle();
-            bundle.putString("message","reset");
+
+            bundle.putString("message",message);
             msg.setData(bundle);
             lasers.sendMessage(msg);
-        }
+
+
 
     }
 
