@@ -41,7 +41,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         @Override
         public void handleMessage(Message inputMessage){
             String location = inputMessage.getData().getString("message");
-
+                if(!location.equals("reset")){
                 String [] splitString = location.split(",");
                 int laserColor;
                 switch (splitString[0]){
@@ -62,7 +62,20 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 edges[Integer.parseInt(splitString[1])].setBackgroundColor(laserColor);
         }
+                else{
+                    resetEdges();
+        }
+
+
+        }
     };
+
+
+    private void resetEdges(){
+        for (ImageView i:edges) {
+            i.setBackgroundColor(Color.BLACK);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -160,7 +173,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         try{
                             while(!dead) {
                                 Thread.sleep(wait);
-                                sendCommand();
+                                sendCommand(1);
+                                Thread.sleep(wait);
+                                sendCommand(2);
 
                                 //wait=wait-100;
                             }
@@ -197,8 +212,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
     }
 
-    public void sendCommand(){
-
+    public void sendCommand(int message){
+        if(message==1){
         Random r= new Random();
 
         int lasersSpawned=r.nextInt(6)+1;
@@ -208,7 +223,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         Message msg = lasers.obtainMessage();
         Bundle bundle = new Bundle();
             int selectEdge = r.nextInt(34);
-
             while(fieldsUsed.contains(selectEdge)){
                 selectEdge = r.nextInt(34);
             }
@@ -227,6 +241,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     break;
             }
             bundle.putString("message", color +","+ selectEdge);
+            msg.setData(bundle);
+            lasers.sendMessage(msg);
+        }}
+        else{
+            Message msg = lasers.obtainMessage();
+            Bundle bundle = new Bundle();
+            bundle.putString("message","reset");
             msg.setData(bundle);
             lasers.sendMessage(msg);
         }
