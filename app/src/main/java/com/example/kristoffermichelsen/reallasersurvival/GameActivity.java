@@ -39,8 +39,10 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         int screenWidth=size.x;
         int screenHeight=size.y;
 
+        ImageView allCells [] [] = new ImageView[13][9];
         int count=0;
 
+        // [row][column]
         int colorh= Color.WHITE;
 
 
@@ -86,6 +88,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
                 grid.addView(newPos);
+                allCells[i][j]=newPos;
 
         }}
 
