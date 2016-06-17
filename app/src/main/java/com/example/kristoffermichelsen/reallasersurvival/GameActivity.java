@@ -286,6 +286,17 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             indicator++;
         }
 
+        allCells[0][0].setBackgroundColor(Color.BLACK);
+        allColors[0][0]=Color.BLACK;
+
+        allCells[11][8].setBackgroundColor(Color.BLACK);
+        allColors[11][8]=Color.BLACK;
+
+        allCells[0][8].setBackgroundColor(Color.BLACK);
+        allColors[0][8]=Color.BLACK;
+
+        allCells[11][0].setBackgroundColor(Color.BLACK);
+        allColors[11][0]=Color.BLACK;
 
         //allCells[6][4].setBackgroundColor(Color.WHITE);
         Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
