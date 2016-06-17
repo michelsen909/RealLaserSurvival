@@ -17,18 +17,21 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.RadioGroup;
-import android.graphics.*;
+import android.content.*;
 
 public class SettingsActivity extends AppCompatActivity {
+    static int savedColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
         TextView title = (TextView) findViewById(R.id.settings);
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+        load();
+
 
         Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
 
@@ -40,57 +43,57 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        RadioGroup radioGroup = (RadioGroup)findViewById(R.id.radioGroupBallColor);
+        RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroupBallColor);
         //RadioButton white = (RadioButton) findViewById(R.id.white);
         //RadioButton blue = (RadioButton) findViewById(R.id.blue);
         //RadioButton green = (RadioButton) findViewById(R.id.green);
         //RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
 
+        int rG1_CheckId = radioGroup.getCheckedRadioButtonId();
 
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
-        {
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                RadioButton radioButton = (RadioButton)group.findViewById(checkedId);
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
 
                 boolean isChecked = radioButton.isChecked();
 
-                if (isChecked)
-                {
-                    //skift farve på bold til farven på radioButton
+                if (isChecked) {
                     GameActivity.ballColor = radioButton.getCurrentTextColor();
+                    savedColor = radioButton.getCurrentTextColor();
+                    save(radioButton.getId());
 
                 }
             }
         });
 
-        final Switch toggleGrid = (Switch)findViewById(R.id.showGridSwitch);
+        final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-                int[][] green = new int[][] {
-                        new int[] { -android.R.attr.state_enabled}, // enabled
+                int[][] green = new int[][]{
+                        new int[]{-android.R.attr.state_enabled}, // enabled
                 };
 
-                int[] colors = new int[] {
+                int[] colors = new int[]{
                         Color.GREEN,
                 };
 
-                int[][] red = new int[][] {
-                        new int[] { -android.R.attr.state_enabled}, // enabled
+                int[][] red = new int[][]{
+                        new int[]{-android.R.attr.state_enabled}, // enabled
                 };
 
-                int[] color = new int[] {
+                int[] color = new int[]{
                         Color.RED,
                 };
 
 
                 ColorStateList on = new ColorStateList(green, colors);
-                ColorStateList off = new ColorStateList(red,color);
-                if(toggleGrid.isChecked()){
+                ColorStateList off = new ColorStateList(red, color);
+                if (toggleGrid.isChecked()) {
                     toggleGrid.setTrackTintList(on);
-                }else{
+                } else {
                     toggleGrid.setTrackTintList(off);
                 }
 
@@ -99,4 +102,24 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
+
+    private void save(int radioid) {
+
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("check", radioid);
+        editor.commit();
+    }
+
+    private void load() {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
+        int radioId = sharedPreferences.getInt("check", 0);
+        if (radioId > 0) {
+            RadioButton rbtn = (RadioButton) findViewById(radioId);
+            rbtn.setChecked(true);
+        }
+
+    }
+
 }

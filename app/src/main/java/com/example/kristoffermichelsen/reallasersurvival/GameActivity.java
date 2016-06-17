@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int wait=1000;
     Drawable ballDraw;
     static int recentGameScore=0;
-    static int ballColor = Color.WHITE;
+    static int ballColor = SettingsActivity.savedColor;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
