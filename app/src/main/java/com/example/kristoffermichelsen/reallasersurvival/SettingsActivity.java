@@ -68,6 +68,7 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
+        toggleGrid.setChecked(loadGridToggle());
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -93,8 +94,10 @@ public class SettingsActivity extends AppCompatActivity {
                 ColorStateList off = new ColorStateList(red, color);
                 if (toggleGrid.isChecked()) {
                     toggleGrid.setTrackTintList(on);
+                    saveGridToggle(true);
                 } else {
                     toggleGrid.setTrackTintList(off);
+                    saveGridToggle(false);
                 }
 
             }
@@ -118,6 +121,33 @@ public class SettingsActivity extends AppCompatActivity {
         if (radioId > 0) {
             RadioButton rbtn = (RadioButton) findViewById(radioId);
             rbtn.setChecked(true);
+        }
+
+    }
+
+
+    private void saveGridToggle(boolean grid) {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        if (grid) {
+            editor.putBoolean("grid", true);
+            editor.commit();
+        } else {
+            editor.putBoolean("grid", false);
+            editor.commit();
+        }
+
+    }
+
+    private boolean loadGridToggle() {
+        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+
+        boolean grid = sharedPreferences.getBoolean("grid",false);
+        if (grid) {
+            return true;
+        } else {
+            return false;
         }
 
     }

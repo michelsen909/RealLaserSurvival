@@ -21,8 +21,12 @@
         <activity android:name=".GameOverActivity" />
         <activity android:name=".GameActivity" />
         <activity android:name=".HighscoreActivity" />
-        <activity android:name=".GameActivity2"></activity>
-        <service android:name=".Audio"  android:enabled="true"></service>
+        <activity android:name=".GameActivity2" />
+
+        <service
+            android:name=".Audio"
+            android:enabled="true" />
+
     </application>
 
 </manifest>

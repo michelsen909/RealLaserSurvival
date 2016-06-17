@@ -25,8 +25,6 @@ public class MainMenuActivity extends AppCompatActivity {
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
 
-    static boolean grid = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
