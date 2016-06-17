@@ -419,8 +419,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     // FIX NEXT ACTIVITY
                     startActivity(intent);
 
-
-
                 }catch(InterruptedException e){
 
                 }
