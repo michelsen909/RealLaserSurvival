@@ -219,11 +219,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 */
 
                 if(count%2 == 0) {
-                    int color1 = Color.BLACK;
+                    int color1 = Color.DKGRAY;
                     newPos.setBackgroundColor(color1);
                     allColors[i][j]=color1;
                 } else if (count%2 == 1) {
-                    int color2=Color.BLACK;
+                    int color2=Color.LTGRAY;
                     newPos.setBackgroundColor(color2);
                     allColors[i][j]=color2;
                 }
