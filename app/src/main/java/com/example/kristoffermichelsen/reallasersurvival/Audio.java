@@ -6,7 +6,7 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 
 
-public class PlayAudio extends Service{
+public class Audio extends Service{
     MediaPlayer audio;
     public void onCreate(){
         super.onCreate();
@@ -16,8 +16,6 @@ public class PlayAudio extends Service{
     public int onStartCommand(Intent intent, int flags, int startId){
         audio.start();
         audio.setLooping(true);
-        if(audio.isLooping() != true){
-        }
         return 1;
     }
 
