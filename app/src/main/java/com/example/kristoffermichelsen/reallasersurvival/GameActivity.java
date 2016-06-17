@@ -417,7 +417,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
 
-                        boolean powerupSpawn = r.nextInt(100)<85;
+                        boolean powerupSpawn = r.nextInt(100)<40;
 
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
