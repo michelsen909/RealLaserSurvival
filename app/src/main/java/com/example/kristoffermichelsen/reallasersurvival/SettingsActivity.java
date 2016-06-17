@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked)
                 {
                     //skift farve på bold til farven på radioButton
-                    GameActivity.ballColor = radioButton.;
+                    GameActivity.ballColor = radioButton.getCurrentTextColor();
 
                 }
             }
