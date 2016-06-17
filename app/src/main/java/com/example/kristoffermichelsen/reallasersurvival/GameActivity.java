@@ -93,6 +93,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         allCells[i][x].setBackgroundColor(laserColor);
                         if(allCells[i][x].getForeground()!=null){
                             alive=false;
+
                         }
                     }
 
@@ -104,6 +105,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         allCells[y][i].setBackgroundColor(laserColor);
                         if(allCells[y][i].getForeground()!=null){ // CHECK NOT NULL
                             alive=false;
+
                         }
                     }
 
@@ -316,18 +318,18 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
-                        int lasersSpawned=r.nextInt(9)+3;
+                        int lasersSpawned=r.nextInt(7)+3;
                         ArrayList<String> allLasers= new ArrayList<String>();
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
 
-                        while(fieldsUsed.contains(selectEdge)){
+                        while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                             Log.i("GameActiviy","new select edge");
                             selectEdge = r.nextInt(34);
                         }
                             if(selectEdge<14){
                                 if(verticalLasers<7){
-                                    while(fieldsUsed.contains(selectEdge)){
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                                         Log.i("GameActiviy","new select edge");
                                         selectEdge = r.nextInt(14);
                                     }
@@ -335,7 +337,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 }
                                 else{
                                     selectEdge=r.nextInt(20)+14;
-                                    while(fieldsUsed.contains(selectEdge)){
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                                         Log.i("GameActiviy","new select edge");
                                         selectEdge = r.nextInt(20)+14;
                                     }
@@ -470,6 +472,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onFling(MotionEvent event1, MotionEvent event2, float vel1, float vel2){
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
         //userBall.layout(2,3,1,2);
+        if(alive){
 
         boolean moved=false;
         float deltaX =Math.abs(event1.getX()-event2.getX());
@@ -534,7 +537,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 // userBall.setBackgroundColor(Color.YELLOW);
 
             }
-        }
+        }}
 
 
         return true;
