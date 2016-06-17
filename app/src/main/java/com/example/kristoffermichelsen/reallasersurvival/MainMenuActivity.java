@@ -70,15 +70,27 @@ public class MainMenuActivity extends AppCompatActivity {
 
         // TEST!
 
-        Button testButton = (Button) findViewById(R.id.testButton);
+        Button testStartButton = (Button) findViewById(R.id.testStartButton);
 
-        testButton.setOnClickListener(new View.OnClickListener() {
+        testStartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent test = new Intent(MainMenuActivity.this, GameOverActivity.class);
-                startActivity(test);
+                Intent testStart = new Intent(MainMenuActivity.this, GameActivity2.class);
+                startActivity(testStart);
             }
-        });}
+        });
+
+        Button testGameOverButton = (Button) findViewById(R.id.testGameOverButton);
+
+        testGameOverButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent testGameOver = new Intent(MainMenuActivity.this, GameOverActivity.class);
+                startActivity(testGameOver);
+            }
+        });
+
+    }
 
 
     public static void createHighscore() {
