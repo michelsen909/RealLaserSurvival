@@ -134,7 +134,7 @@ public class SettingsActivity extends AppCompatActivity {
         if (radioId > 0) {
             RadioButton rbtn = (RadioButton) findViewById(radioId);
             rbtn.setChecked(true);
-            savedColor = rbtn.getCurrentTextColor();
+            //savedColor = rbtn.getCurrentTextColor();
             GameActivity.ballColor=rbtn.getCurrentTextColor();
         }
 
