@@ -125,6 +125,12 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onResume();
         playAudio(findViewById(R.id.title));
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopAudio(findViewById(R.id.title));
+    }
 }
 
 
