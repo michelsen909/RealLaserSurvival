@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
@@ -148,7 +149,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     private void resetEntireBoard(){
         for(int i=0;i<12;i++){
             for(int j=0;j<9;j++){
-
                     allCells[i][j].setBackgroundColor(allColors[i][j]);
 
             }
@@ -273,11 +273,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             edges[indicator]=allCells[i+1][8];
             indicator++;
         }
+        for(int i=0;i<edges.length;i++){
+            edges[i].setBackgroundColor(Color.BLACK);
+        }
 
 
-
-        allCells[6][4].setBackgroundColor(Color.WHITE);
-        allCells[6][4].setBackgroundResource(R.drawable.ball);
+        //allCells[6][4].setBackgroundColor(Color.WHITE);
+        Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+        allCells[ball.y][ball.x].setForeground(ballDraw);
         //test
 
         new Thread(new Runnable() {
@@ -342,8 +345,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         incrementScore();
                         incrementMultiplier();
                         for(String i:allLasers){
+                            sendCommand(i);
                             sendCommand("Shoot,"+i);
                         }
+                        Thread.sleep(breakBetween);
+                        sendResetCommand();
 
                     }
 
@@ -412,10 +418,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             //move right
             if(ball.x!=7){
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                allCells[ball.y][ball.x].setBackgroundResource(0);
+                allCells[ball.y][ball.x].setForeground(null);
                 ball.x=ball.x+1;
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
             }
@@ -425,10 +432,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             // move left
             if(ball.x!=1){
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                allCells[ball.y][ball.x].setBackgroundResource(0);
+                allCells[ball.y][ball.x].setForeground(null);
                 ball.x=ball.x-1;
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                //allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
             }
@@ -441,10 +450,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 //move down
                 if(ball.y!=10){
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                    allCells[ball.y][ball.x].setBackgroundResource(0);
+                    allCells[ball.y][ball.x].setForeground(null);
                     ball.y=ball.y+1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                    Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved=true;
                 }
                 // userBall.setBackgroundColor(Color.RED);
@@ -453,10 +463,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 //move up
                 if (ball.y != 1) {
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                    allCells[ball.y][ball.x].setBackgroundResource(0);
+                    allCells[ball.y][ball.x].setForeground(null);
                     ball.y = ball.y - 1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                    Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved = true;
                 }
                 // userBall.setBackgroundColor(Color.YELLOW);
