@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.RadioGroup;
 import android.content.*;
 
+import java.util.ArrayList;
+
 public class SettingsActivity extends AppCompatActivity {
     static int savedColor;
 
@@ -50,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity {
         final RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
 
         int rG1_CheckId = radioGroup.getCheckedRadioButtonId();
+        RadioButton [] radioButtons = {white,blue,green,yellow};
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -67,12 +70,18 @@ public class SettingsActivity extends AppCompatActivity {
                     GameActivity.ballColor = Color.WHITE;
                     savedColor=Color.WHITE;
                 }
-                if(!blue.isChecked() && !green.isChecked() && !yellow.isChecked()){
-                    savedColor=Color.WHITE;
-                    white.setChecked(true);
-                }
             }
         });
+
+        if(!blue.isChecked() && !green.isChecked() && !yellow.isChecked()){
+            savedColor=Color.WHITE;
+            white.setChecked(true);
+        }
+        for(int i=0; i<radioButtons.length;i++){
+            if(radioButtons[i].isChecked()){
+                savedColor=radioButtons[i].getCurrentTextColor();
+            }
+        }
 
         final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
 
