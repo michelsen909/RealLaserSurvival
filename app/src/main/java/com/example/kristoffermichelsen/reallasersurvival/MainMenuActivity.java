@@ -2,10 +2,10 @@ package com.example.kristoffermichelsen.reallasersurvival;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -109,12 +109,12 @@ public class MainMenuActivity extends AppCompatActivity {
 
     }
     public void playAudio(View view) {
-        Intent objIntent = new Intent(this, PlayAudio.class);
+        Intent objIntent = new Intent(this, Audio.class);
         startService(objIntent);
     }
 
     public void stopAudio(View view) {
-        Intent objIntent = new Intent(this, PlayAudio.class);
+        Intent objIntent = new Intent(this, Audio.class);
         stopService(objIntent);
     }
 
@@ -130,6 +130,15 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onDestroy();
         stopAudio(findViewById(R.id.title));
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (!this.isFinishing()) {
+            stopAudio(findViewById(R.id.title));
+        }
+    }
+
 }
 
 

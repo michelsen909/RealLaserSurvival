@@ -22,7 +22,7 @@
         <activity android:name=".GameActivity" />
         <activity android:name=".HighscoreActivity" />
         <activity android:name=".GameActivity2"></activity>
-        <service android:name="PlayAudio"  android:enabled="true"></service>
+        <service android:name=".Audio"  android:enabled="true"></service>
     </application>
 
 </manifest>
