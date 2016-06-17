@@ -46,10 +46,10 @@ public class GameOverActivity extends AppCompatActivity {
 
         int newHighscore = GameActivity.recentGameScore;
 
-            MainMenuActivity.highscores.add(newHighscore);
-            Collections.sort(MainMenuActivity.highscores);
-            MainMenuActivity.highscores.remove(0);
-            Collections.reverse(MainMenuActivity.highscores);
+        MainMenuActivity.highscores.add(newHighscore);
+        Collections.sort(MainMenuActivity.highscores);
+        MainMenuActivity.highscores.remove(0);
+        Collections.reverse(MainMenuActivity.highscores);
 
         TextView no1 = (TextView) findViewById(R.id.no1);
         TextView no2 = (TextView) findViewById(R.id.no2);
