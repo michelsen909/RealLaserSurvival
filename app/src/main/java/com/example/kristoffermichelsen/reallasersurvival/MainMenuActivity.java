@@ -26,8 +26,6 @@ import java.util.Scanner;
 public class MainMenuActivity extends AppCompatActivity {
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
-    public static final String MyPREFERENCES = "MyPrefs" ;
-    SharedPreferences sharedpreferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
 
     static boolean grid = false;
 
@@ -137,7 +135,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         Context context = getApplicationContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         if (!taskInfo.isEmpty()) {
             ComponentName topActivity = taskInfo.get(0).topActivity;
            if (!topActivity.getPackageName().equals(context.getPackageName())) {
