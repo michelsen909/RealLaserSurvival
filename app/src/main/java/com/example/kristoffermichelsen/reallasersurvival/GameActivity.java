@@ -3,6 +3,7 @@ package com.example.kristoffermichelsen.reallasersurvival;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
@@ -33,16 +34,75 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
     GestureDetector detector;
 
+    double multiplier=1.0;
+    int score=0;
     Point ball;
     ImageView allCells [] [] = new ImageView[12][9];
+    int allColors [] [] = new int [12][9];
     ImageView edges []  = new ImageView[34];
+    TextView multiplierText;
+    TextView scoreText;
     int wait=1000;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message inputMessage){
             String location = inputMessage.getData().getString("message");
-                if(!location.equals("reset")){
+
+            if(location.substring(0,1).equals("S")){
+                String[] splitString =location.split(",",3);
+                int edgeNum = Integer.parseInt(splitString[2]);
+                int laserColor;
+                switch (splitString[1]){
+                    case "RED":
+                        laserColor=Color.RED;
+                        break;
+                    case "GREEN":
+                        laserColor=Color.GREEN;
+                        break;
+                    case "BLUE":
+                        laserColor=Color.BLUE;
+                        break;
+                    default:
+                        laserColor=Color.WHITE;
+                        break;
+
+                }
+                Point laserPoint = new Point();
+                //Log.i("GameActivity",edges[edgeNum].getX()+"");
+                for(int i=0;i<12;i++){
+                    for(int j=0;j<9;j++){
+                        if(allCells[i][j].equals(edges[edgeNum])){
+                            laserPoint.x=j;
+                            laserPoint.y=i;
+                        }
+                    }
+                }
+
+                if(edgeNum<14){
+                    int x=edgeNum/2;
+                    x++;
+                    for(int i=1;i<11;i++){
+                        allCells[i][x].setBackgroundColor(laserColor);
+                    }
+
+                }
+                else{
+                    int y=(edgeNum-14)/2;
+                    y++;
+                    for(int i=1;i<8;i++){
+                        allCells[y][i].setBackgroundColor(laserColor);
+                    }
+
+
+
+                }
+
+
+
+
+            }
+                else if(!location.equals("reset")){
                 String [] splitString = location.split(",");
                 int laserColor;
                 switch (splitString[0]){
@@ -64,9 +124,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 edges[Integer.parseInt(splitString[1])].setBackgroundColor(laserColor);
 
+
+                    multiplierText.setText(multiplier+"x");
+                    scoreText.setText(score+"");
         }
                 else{
+
                     resetEdges();
+                    resetEntireBoard();
         }
 
 
@@ -80,6 +145,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         }
     }
 
+    private void resetEntireBoard(){
+        for(int i=0;i<12;i++){
+            for(int j=0;j<9;j++){
+
+                    allCells[i][j].setBackgroundColor(allColors[i][j]);
+
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,6 +162,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         detector = new GestureDetector(this,this);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
+        multiplierText= (TextView) findViewById(R.id.multiplier);
+        scoreText= (TextView) findViewById(R.id.score);
+
+        scoreText.setText(""+0);
+        multiplierText.setText(1.0+"x");
+
         grid.setUseDefaultMargins(false);
         Display display = getWindowManager().getDefaultDisplay();
         Point size= new Point();
@@ -138,9 +219,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 */
 
                 if(count%2 == 0) {
-                    newPos.setBackgroundColor(Color.BLACK);
+                    int color1 = Color.BLACK;
+                    newPos.setBackgroundColor(color1);
+                    allColors[i][j]=color1;
                 } else if (count%2 == 1) {
-                    newPos.setBackgroundColor(Color.BLACK);
+                    int color2=Color.BLACK;
+                    newPos.setBackgroundColor(color2);
+                    allColors[i][j]=color2;
                 }
 
 
@@ -161,6 +246,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 grid.addView(newPos);
                 allCells[i][j]=newPos;
+
 
 
 
@@ -195,12 +281,15 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         new Thread(new Runnable() {
             boolean dead=false;
-            int wait=1500;
-            int blinks=10;
+             // multiplier
+            int wait=1500; // initial wait
+            int blinks=10; // how many times the lasers blink
+            int breakBetween=0; // break between spawns
+
             @Override
             public void run() {
                 try{
-                    Thread.sleep(3000-wait);
+                    Thread.sleep(3000);
                     while(!dead) {
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
@@ -209,6 +298,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
                         while(fieldsUsed.contains(selectEdge)){
+                            Log.i("GameActiviy","new select edge");
                             selectEdge = r.nextInt(34);
                         }
                         fieldsUsed.add(selectEdge);
@@ -229,9 +319,10 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         }
                         int innerWait=wait;
 
+                        Thread.sleep(breakBetween); // break between laser spawns
                         while(innerWait>0) {
 
-                            Thread.sleep(innerWait);
+                            //Thread.sleep(innerWait);
 
                             for (String i : allLasers) {
                                 sendCommand(i);
@@ -242,11 +333,17 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 innerWait=700;
                             }
                             sendResetCommand();
+                            Thread.sleep(innerWait);
                             innerWait=innerWait-(wait/blinks);
                         }
-// TODO make dynamic waittime
 
                         //wait=wait-100;
+                        incrementScore();
+                        incrementMultiplier();
+                        for(String i:allLasers){
+                            sendCommand("Shoot,"+i);
+                        }
+
                     }
 
 
@@ -258,6 +355,21 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             }
         }).start();
     }
+
+    public void incrementMultiplier(){
+        double increments=0.1;
+        multiplier=multiplier+increments;
+        multiplier=multiplier*10;
+        multiplier=Math.round(multiplier);
+        multiplier=multiplier/10;
+    }
+
+    public void incrementScore (){
+
+        double adder=100*multiplier;
+        score=(int)(score+adder);
+    }
+
     public void sendResetCommand(){
         Message msg = lasers.obtainMessage();
         Bundle bundle = new Bundle();
