@@ -311,17 +311,38 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     Thread.sleep(3000);
                     while(isAlive()) {
                         sendResetCommand();
+                        int verticalLasers=0;
+                        int horizontalLasers=0;
 
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
-                        int lasersSpawned=r.nextInt(4)+3;
+                        int lasersSpawned=r.nextInt(9)+3;
                         ArrayList<String> allLasers= new ArrayList<String>();
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
+
                         while(fieldsUsed.contains(selectEdge)){
                             Log.i("GameActiviy","new select edge");
                             selectEdge = r.nextInt(34);
                         }
+                            if(selectEdge<14){
+                                if(verticalLasers<7){
+                                    while(fieldsUsed.contains(selectEdge)){
+                                        Log.i("GameActiviy","new select edge");
+                                        selectEdge = r.nextInt(14);
+                                    }
+                                    verticalLasers++;
+                                }
+                                else{
+                                    selectEdge=r.nextInt(20)+14;
+                                    while(fieldsUsed.contains(selectEdge)){
+                                        Log.i("GameActiviy","new select edge");
+                                        selectEdge = r.nextInt(20)+14;
+                                    }
+                                }
+                            }
+
+
                         fieldsUsed.add(selectEdge);
                         int selectColor = r.nextInt(3);
                         String color = "YELLOW";
