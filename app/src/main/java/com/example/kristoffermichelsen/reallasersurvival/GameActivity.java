@@ -277,6 +277,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
         allCells[6][4].setBackgroundColor(Color.WHITE);
+        allCells[6][4].setBackgroundResource(R.drawable.ball);
         //test
 
         new Thread(new Runnable() {
@@ -284,7 +285,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
              // multiplier
             int wait=1500; // initial wait
             int blinks=10; // how many times the lasers blink
-            int breakBetween=0; // break between spawns
+            int breakBetween=400; // break between spawns
 
             @Override
             public void run() {
@@ -410,9 +411,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         if(event1.getX()<event2.getX() && deltaX>100 && deltaX>deltaY){
             //move right
             if(ball.x!=7){
-                allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                allCells[ball.y][ball.x].setBackgroundResource(0);
                 ball.x=ball.x+1;
-                allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
                 moved=true;
 
             }
@@ -421,9 +424,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         } else if(event1.getX()>event2.getX() && deltaX>100 && deltaX>deltaY){
             // move left
             if(ball.x!=1){
-                allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                allCells[ball.y][ball.x].setBackgroundResource(0);
                 ball.x=ball.x-1;
-                allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
                 moved=true;
 
             }
@@ -435,9 +440,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             if(event1.getY()<event2.getY() && deltaY>100 && deltaY>=deltaX){
                 //move down
                 if(ball.y!=10){
-                    allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                    allCells[ball.y][ball.x].setBackgroundResource(0);
                     ball.y=ball.y+1;
-                    allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
                     moved=true;
                 }
                 // userBall.setBackgroundColor(Color.RED);
@@ -445,9 +452,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             } else if(event1.getY()>event2.getY() && deltaY>100 && deltaY>=deltaX) {
                 //move up
                 if (ball.y != 1) {
-                    allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                    allCells[ball.y][ball.x].setBackgroundResource(0);
                     ball.y = ball.y - 1;
-                    allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
                     moved = true;
                 }
                 // userBall.setBackgroundColor(Color.YELLOW);

@@ -64,28 +64,26 @@
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Test start"
         android:id="@+id/testStartButton"
         android:textSize="15dp"
         android:background="@drawable/test_button"
         android:textColor="@color/material_grey_50"
         android:width="150dp"
-        android:height="10dp"
         android:layout_below="@+id/highscoreButton"
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="Test game over"
         android:id="@+id/testGameOverButton"
         android:textSize="15dp"
         android:background="@drawable/test_button"
         android:textColor="@color/material_grey_50"
         android:width="150dp"
-        android:height="20dp"
         android:layout_below="@+id/testStartButton"
         android:layout_marginTop="2dp"
         android:layout_centerHorizontal="true" />
