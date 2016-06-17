@@ -50,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     Drawable ballDraw;
     static int recentGameScore=0;
     static int ballColor = SettingsActivity.savedColor;
+    boolean backUsed=false;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -174,6 +175,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         super.onPause();
 
         alive=false;
+        backUsed=true;
     }
 
     @Override
@@ -413,12 +415,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                     }
                     // END GAME
-                    setRecentScore(score);
-                    Log.i("GameActivity","Score: "+ score);
-                    Intent intent = new Intent(GameActivity.this,MainMenuActivity.class);
-                    // FIX NEXT ACTIVITY
-                    startActivity(intent);
-
+                    if(!backUsed) {
+                        setRecentScore(score);
+                        Log.i("GameActivity", "Score: " + score);
+                        Intent intent = new Intent(GameActivity.this, MainMenuActivity.class);
+                        // FIX NEXT ACTIVITY
+                        startActivity(intent);
+                    }
 
 
                 }catch(InterruptedException e){
