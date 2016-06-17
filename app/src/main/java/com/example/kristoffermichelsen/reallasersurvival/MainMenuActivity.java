@@ -1,5 +1,8 @@
 package com.example.kristoffermichelsen.reallasersurvival;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
@@ -9,11 +12,13 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MainMenuActivity extends AppCompatActivity {
@@ -130,16 +135,30 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onDestroy();
         stopAudio(findViewById(R.id.title));
     }
-
     @Override
     protected void onPause() {
-        super.onPause();
-        if (!this.isFinishing()) {
+        if (this.isFinishing()){ //basically BACK was pressed from this activity
             stopAudio(findViewById(R.id.title));
+            Toast.makeText(MainMenuActivity.this, "YOU PRESSED BACK FROM YOUR 'HOME/MAIN' ACTIVITY", Toast.LENGTH_SHORT).show();
         }
+        Context context = getApplicationContext();
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        if (!taskInfo.isEmpty()) {
+            ComponentName topActivity = taskInfo.get(0).topActivity;
+            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+                stopAudio(findViewById(R.id.title));
+                Toast.makeText(MainMenuActivity.this, "YOU LEFT YOUR APP", Toast.LENGTH_SHORT).show();
+            }
+            else {
+                Toast.makeText(MainMenuActivity.this, "YOU SWITCHED ACTIVITIES WITHIN YOUR APP", Toast.LENGTH_SHORT).show();
+            }
+        }
+        super.onPause();
+    }
     }
 
-}
+
 
 
 
