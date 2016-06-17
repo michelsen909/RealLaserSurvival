@@ -3,9 +3,13 @@ package com.example.kristoffermichelsen.reallasersurvival;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
+import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
@@ -33,15 +37,87 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
     GestureDetector detector;
 
+    double multiplier=1.0;
+    int score=0;
     Point ball;
     ImageView allCells [] [] = new ImageView[12][9];
+    int allColors [] [] = new int [12][9];
     ImageView edges []  = new ImageView[34];
+    TextView multiplierText;
+    TextView scoreText;
+    boolean alive=true;
+    int wait=1000;
+    Drawable ballDraw;
+    static int recentGameScore=0;
+    static int ballColor = SettingsActivity.savedColor;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
         public void handleMessage(Message inputMessage){
             String location = inputMessage.getData().getString("message");
-            if(!location.equals("reset")){
+
+            if(location.substring(0,1).equals("S")){
+                String[] splitString =location.split(",",3);
+                int edgeNum = Integer.parseInt(splitString[2]);
+                int laserColor;
+                switch (splitString[1]){
+                    case "RED":
+                        laserColor=Color.RED;
+                        break;
+                    case "GREEN":
+                        laserColor=Color.GREEN;
+                        break;
+                    case "BLUE":
+                        laserColor=Color.BLUE;
+                        break;
+                    default:
+                        laserColor=Color.WHITE;
+                        break;
+
+                }
+                Point laserPoint = new Point();
+                //Log.i("GameActivity",edges[edgeNum].getX()+"");
+                for(int i=0;i<12;i++){
+                    for(int j=0;j<9;j++){
+                        if(allCells[i][j].equals(edges[edgeNum])){
+                            laserPoint.x=j;
+                            laserPoint.y=i;
+                        }
+                    }
+                }
+
+                if(edgeNum<14){
+                    int x=edgeNum/2;
+                    x++;
+                    for(int i=1;i<11;i++){
+                        allCells[i][x].setBackgroundColor(laserColor);
+                        if(allCells[i][x].getForeground()!=null){
+                            alive=false;
+
+                        }
+                    }
+
+                }
+                else{
+                    int y=(edgeNum-14)/2;
+                    y++;
+                    for(int i=1;i<8;i++){
+                        allCells[y][i].setBackgroundColor(laserColor);
+                        if(allCells[y][i].getForeground()!=null){ // CHECK NOT NULL
+                            alive=false;
+
+                        }
+                    }
+
+
+
+                }
+
+
+
+
+            }
+            else if(!location.equals("reset")){
                 String [] splitString = location.split(",");
                 int laserColor;
                 switch (splitString[0]){
@@ -60,10 +136,17 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
                 }
 
+
                 edges[Integer.parseInt(splitString[1])].setBackgroundColor(laserColor);
+
+
+                multiplierText.setText(multiplier+"x");
+                scoreText.setText(score+"");
             }
             else{
+
                 resetEdges();
+                resetEntireBoard();
             }
 
 
@@ -77,6 +160,22 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         }
     }
 
+    private void resetEntireBoard(){
+        for(int i=0;i<12;i++){
+            for(int j=0;j<9;j++){
+                allCells[i][j].setBackgroundColor(allColors[i][j]);
+
+            }
+        }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        alive=false;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,6 +183,12 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
         detector = new GestureDetector(this,this);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
+        multiplierText= (TextView) findViewById(R.id.multiplier);
+        scoreText= (TextView) findViewById(R.id.score);
+
+        scoreText.setText(""+0);
+        multiplierText.setText(1.0+"x");
+
         grid.setUseDefaultMargins(false);
         Display display = getWindowManager().getDefaultDisplay();
         Point size= new Point();
@@ -92,16 +197,16 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         int screenHeight=size.y;
         ball = new Point(4,6);
 
-        TextView multiplier = (TextView) findViewById(R.id.multiplier);
-        TextView score = (TextView) findViewById(R.id.score);
+        final TextView multiplier = (TextView) findViewById(R.id.multiplier);
+        final TextView scoreView = (TextView) findViewById(R.id.score);
 
         multiplier.setMinimumHeight(screenHeight/24);
         multiplier.setMaxHeight(screenHeight/24);
         //multiplier.setTextSize(screenHeight/24);
-        score.setMinimumHeight(screenHeight/24);
-        score.setMaxHeight(screenHeight/24);
+        scoreView.setMinimumHeight(screenHeight/24);
+        scoreView.setMaxHeight(screenHeight/24);
         //score.setTextSize(screenHeight/24);
-        score.setMinimumWidth(screenWidth/3+screenWidth/32);
+        scoreView.setMinimumWidth(screenWidth/3+screenWidth/32);
         //score.setMaxWidth(screenWidth/3);
 
         int count=0;
@@ -112,32 +217,17 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
 
                 ImageView newPos = new ImageView(getApplicationContext());
 
-                /*
-                if(count%9 == 0) {
-                    newPos.setBackgroundColor(Color.WHITE);
-                } else if (count%9 == 1) {
-                    newPos.setBackgroundColor(Color.LTGRAY);
-                } else if (count%9 == 2) {
-                    newPos.setBackgroundColor(Color.DKGRAY);
-                } else if (count%9 == 3) {
-                    newPos.setBackgroundColor(Color.RED);
-                } else if (count%9 == 4) {
-                    newPos.setBackgroundColor(Color.GREEN);
-                } else if (count%9 == 5) {
-                    newPos.setBackgroundColor(Color.BLUE);
-                } else if (count%9 == 6) {
-                    newPos.setBackgroundColor(Color.YELLOW);
-                } else if (count%9 == 7) {
-                    newPos.setBackgroundColor(Color.MAGENTA);
-                } else if (count%9 == 8) {
-                    newPos.setBackgroundColor(Color.CYAN);
-                }
-                */
+
+
 
                 if(count%2 == 0) {
-                    newPos.setBackgroundColor(Color.LTGRAY);
+                    int color1 = Color.DKGRAY;
+                    newPos.setBackgroundColor(color1);
+                    allColors[i][j]=color1;
                 } else if (count%2 == 1) {
-                    newPos.setBackgroundColor(Color.DKGRAY);
+                    int color2=Color.LTGRAY;
+                    newPos.setBackgroundColor(color2);
+                    allColors[i][j]=color2;
                 }
 
 
@@ -145,11 +235,6 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                     newPos.setMinimumHeight(screenHeight/24);
                 }else{
                     newPos.setMinimumHeight(screenHeight/12);
-                    if(count%2 == 0) {
-                        newPos.setBackgroundColor(Color.LTGRAY);
-                    } else if (count%2 == 1) {
-                        newPos.setBackgroundColor(Color.DKGRAY);
-                    }
                 }
 
                 if(j==0 || j==8){
@@ -157,17 +242,14 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                 }
                 else{
                     newPos.setMinimumWidth(screenWidth/8);
-                    if(count%2 == 0 && (j != 0 || j != 8)) {
-                        newPos.setBackgroundColor(Color.LTGRAY);
-                    } if (count%2 == 1 && (j != 0 || j != 8)) {
-                        newPos.setBackgroundColor(Color.DKGRAY);
-                    }
                 }
 
                 count++;
 
                 grid.addView(newPos);
                 allCells[i][j]=newPos;
+                allCells[i][j].setForeground(null);
+
 
 
 
@@ -184,41 +266,158 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         int indicator=0;
         for(int i=0;i<7;i++){
             edges[indicator]=allCells[0][i+1];
+            allCells[0][i+1].setBackgroundColor(Color.BLACK);
+            allColors[0][i+1]=Color.BLACK;
+
             indicator++;
             edges[indicator]=allCells[11][i+1];
+            allCells[11][i+1].setBackgroundColor(Color.BLACK);
+            allColors[11][i+1]=Color.BLACK;
+
             indicator++;
         }
         for(int i=0;i<10;i++){
             edges[indicator]=allCells[i+1][0];
+            allCells[i+1][0].setBackgroundColor(Color.BLACK);
+            allColors[i+1][0]=Color.BLACK;
+
             indicator++;
             edges[indicator]=allCells[i+1][8];
+            allCells[i+1][8].setBackgroundColor(Color.BLACK);
+            allColors[i+1][8]=Color.BLACK;
+
             indicator++;
         }
 
+        allCells[0][0].setBackgroundColor(Color.BLACK);
+        allColors[0][0]=Color.BLACK;
 
-        allCells[6][4].setBackgroundColor(Color.WHITE);
-        allCells[6][4].setBackgroundResource(R.drawable.ball);
+        allCells[11][8].setBackgroundColor(Color.BLACK);
+        allColors[11][8]=Color.BLACK;
 
-        //allCells[6][4].setImageResource(R.);
+        allCells[0][8].setBackgroundColor(Color.BLACK);
+        allColors[0][8]=Color.BLACK;
 
+        allCells[11][0].setBackgroundColor(Color.BLACK);
+        allColors[11][0]=Color.BLACK;
+
+        //allCells[6][4].setBackgroundColor(Color.WHITE);
+        ballDraw = (Drawable) getDrawable(R.drawable.ball);
+        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+        allCells[ball.y][ball.x].setForeground(ballDraw);
         //test
 
         new Thread(new Runnable() {
-            boolean dead=false;
-            int wait=3001;
+            //boolean dead=false;
+
+            int wait=1500; // initial wait
+            int blinks=10; // how many times the lasers blink
+            int breakBetween=400; // break between spawns
+            int numLasers=4;
+
             @Override
             public void run() {
                 try{
-                    while(!dead) {
-                        Thread.sleep(wait);
+                    Thread.sleep(3000);
+                    while(isAlive()) {
+                        sendResetCommand();
+                        int verticalLasers=0;
+                        int horizontalLasers=0;
 
-                        sendCommand(1);
-                        Thread.sleep(wait);
-                        sendCommand(2);
+                        Random r= new Random();
+                        ArrayList<Integer> fieldsUsed=new ArrayList();
+                        int lasersSpawned=r.nextInt(numLasers)+3;
+                        ArrayList<String> allLasers= new ArrayList<String>();
+                        for(int i=0;i<lasersSpawned;i++){
+                            int selectEdge = r.nextInt(34);
+
+                            while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
+                                Log.i("GameActiviy","new select edge");
+                                selectEdge = r.nextInt(34);
+                            }
+                            if(selectEdge<14){
+                                if(verticalLasers<7){
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
+                                        Log.i("GameActiviy","new select edge");
+                                        selectEdge = r.nextInt(14);
+                                    }
+                                    verticalLasers++;
+                                }
+                                else{
+                                    selectEdge=r.nextInt(20)+14;
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
+                                        Log.i("GameActiviy","new select edge");
+                                        selectEdge = r.nextInt(20)+14;
+                                    }
+                                }
+                            }
+
+
+                            fieldsUsed.add(selectEdge);
+                            int selectColor = r.nextInt(3);
+                            String color = "YELLOW";
+                            switch (selectColor) {
+                                case 1:
+                                    color = "RED";
+                                    break;
+                                case 2:
+                                    color = "BLUE";
+                                    break;
+                                case 0:
+                                    color = "GREEN";
+                                    break;
+                            }
+                            allLasers.add(color+","+selectEdge);
+                        }
+                        int innerWait=wait;
+
+                        Thread.sleep(breakBetween); // break between laser spawns
+                        while(innerWait>0) {
+
+                            //Thread.sleep(innerWait);
+
+                            for (String i : allLasers) {
+                                sendCommand(i);
+                            }
+
+                            Thread.sleep(innerWait/2);
+                            if(innerWait>700){
+                                innerWait=700;
+                            }
+                            sendResetCommand();
+                            Thread.sleep(innerWait);
+                            innerWait=innerWait-(wait/blinks);
+                        }
 
                         //wait=wait-100;
-                    }
+                        incrementScore();
+                        incrementMultiplier();
+                        for(String i:allLasers){
+                            sendCommand(i);
+                            sendCommand("Shoot,"+i);
+                        }
+                        Thread.sleep(breakBetween);
 
+                        if(wait>200){
+                            wait=wait-100;
+                        }
+                        if(breakBetween>100){
+                            breakBetween=breakBetween-20;
+                        }
+                        if(breakBetween<=100 && blinks>7){
+                            blinks--;
+                        }
+                        if(Math.round(getMultiplier())==getMultiplier() && lasersSpawned<7){
+                            lasersSpawned++;
+                        }
+
+                    }
+                    // END GAME
+                    setRecentScore(score);
+                    Log.i("GameActivity","Score: "+ score);
+                    Intent intent = new Intent(GameActivity2.this,MainMenuActivity.class);
+                    // FIX NEXT ACTIVITY
+                    startActivity(intent);
 
 
 
@@ -229,45 +428,52 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
         }).start();
     }
 
-    public void sendCommand(int message){
-        if(message==1){
-            Random r= new Random();
+    public double getMultiplier(){
+        return multiplier;
+    }
 
-            int lasersSpawned=r.nextInt(6)+1;
-            ArrayList<Integer> fieldsUsed=new ArrayList();
+    public void setRecentScore(int in){
+        recentGameScore=in;
+    }
 
-            for(int i=0;i<lasersSpawned;i++) {
-                Message msg = lasers.obtainMessage();
-                Bundle bundle = new Bundle();
-                int selectEdge = r.nextInt(34);
-                while(fieldsUsed.contains(selectEdge)){
-                    selectEdge = r.nextInt(34);
-                }
-                fieldsUsed.add(selectEdge);
-                int selectColor = r.nextInt(3);
-                String color = "YELLOW";
-                switch (selectColor) {
-                    case 1:
-                        color = "RED";
-                        break;
-                    case 2:
-                        color = "BLUE";
-                        break;
-                    case 0:
-                        color = "GREEN";
-                        break;
-                }
-                bundle.putString("message", color +","+ selectEdge);
-                msg.setData(bundle);
-                lasers.sendMessage(msg);
-            }}
-        else{
-            Message msg = lasers.obtainMessage();
-            Bundle bundle = new Bundle();
-            bundle.putString("message","reset");
-            msg.setData(bundle);
-            lasers.sendMessage(msg);
-        }
+    public boolean isAlive(){
+
+        return alive;
+    }
+
+    public void incrementMultiplier(){
+        double increments=0.1;
+        multiplier=multiplier+increments;
+        multiplier=multiplier*10;
+        multiplier=Math.round(multiplier);
+        multiplier=multiplier/10;
+    }
+
+    public void incrementScore (){
+
+        double adder=100*multiplier;
+        score=(int)(score+adder);
+    }
+
+    public void sendResetCommand(){
+        Message msg = lasers.obtainMessage();
+        Bundle bundle = new Bundle();
+        bundle.putString("message","reset");
+        msg.setData(bundle);
+        lasers.sendMessage(msg);
+    }
+
+    public void sendCommand(String message){
+
+
+        Message msg = lasers.obtainMessage();
+        Bundle bundle = new Bundle();
+
+        bundle.putString("message",message);
+        msg.setData(bundle);
+        lasers.sendMessage(msg);
+
+
 
     }
 
@@ -281,66 +487,72 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
     public boolean onFling(MotionEvent event1, MotionEvent event2, float vel1, float vel2){
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
         //userBall.layout(2,3,1,2);
+        if(alive){
 
-        boolean moved=false;
-        float deltaX =Math.abs(event1.getX()-event2.getX());
-        float deltaY = Math.abs(event1.getY()-event2.getY());
+            boolean moved=false;
+            float deltaX =Math.abs(event1.getX()-event2.getX());
+            float deltaY = Math.abs(event1.getY()-event2.getY());
 
-        if(event1.getX()<event2.getX() && deltaX>100 && deltaX>deltaY){
-            //move right
-            if(ball.x!=7){
-                //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                allCells[ball.y][ball.x].setBackgroundResource(0);
-                ball.x=ball.x+1;
-                //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
-                moved=true;
-
-            }
-            //userBall.setBackgroundColor(Color.GREEN);
-
-        } else if(event1.getX()>event2.getX() && deltaX>100 && deltaX>deltaY){
-            // move left
-            if(ball.x!=1){
-                //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                allCells[ball.y][ball.x].setBackgroundResource(0);
-                ball.x=ball.x-1;
-                //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
-                moved=true;
-
-            }
-
-            //userBall.setBackgroundColor(Color.BLUE);
-
-        }
-        if(!moved){
-            if(event1.getY()<event2.getY() && deltaY>100 && deltaY>=deltaX){
-                //move down
-                if(ball.y!=10){
+            if(event1.getX()<event2.getX() && deltaX>100 && deltaX>deltaY){
+                //move right
+                if(ball.x!=7){
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                    allCells[ball.y][ball.x].setBackgroundResource(0);
-                    ball.y=ball.y+1;
+                    allCells[ball.y][ball.x].setForeground(null);
+                    ball.x=ball.x+1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                    //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved=true;
-                }
-                // userBall.setBackgroundColor(Color.RED);
 
-            } else if(event1.getY()>event2.getY() && deltaY>100 && deltaY>=deltaX) {
-                //move up
-                if (ball.y != 1) {
-                    //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
-                    allCells[ball.y][ball.x].setBackgroundResource(0);
-                    ball.y = ball.y - 1;
-                    //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
-                    moved = true;
                 }
-                // userBall.setBackgroundColor(Color.YELLOW);
+                //userBall.setBackgroundColor(Color.GREEN);
+
+            } else if(event1.getX()>event2.getX() && deltaX>100 && deltaX>deltaY){
+                // move left
+                if(ball.x!=1){
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                    allCells[ball.y][ball.x].setForeground(null);
+                    ball.x=ball.x-1;
+                    //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                    //allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
+                    //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
+                    moved=true;
+
+                }
+
+                //userBall.setBackgroundColor(Color.BLUE);
 
             }
-        }
+            if(!moved){
+                if(event1.getY()<event2.getY() && deltaY>100 && deltaY>=deltaX){
+                    //move down
+                    if(ball.y!=10){
+                        //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                        allCells[ball.y][ball.x].setForeground(null);
+                        ball.y=ball.y+1;
+                        //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                        // Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                        allCells[ball.y][ball.x].setForeground(ballDraw);
+                        moved=true;
+                    }
+                    // userBall.setBackgroundColor(Color.RED);
+
+                } else if(event1.getY()>event2.getY() && deltaY>100 && deltaY>=deltaX) {
+                    //move up
+                    if (ball.y != 1) {
+                        //allCells[ball.y][ball.x].setBackgroundColor(Color.BLACK);
+                        allCells[ball.y][ball.x].setForeground(null);
+                        ball.y = ball.y - 1;
+                        //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
+                        //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                        allCells[ball.y][ball.x].setForeground(ballDraw);
+                        moved = true;
+                    }
+                    // userBall.setBackgroundColor(Color.YELLOW);
+
+                }
+            }}
 
 
         return true;

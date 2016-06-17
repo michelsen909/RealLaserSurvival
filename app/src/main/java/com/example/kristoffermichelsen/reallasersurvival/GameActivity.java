@@ -49,7 +49,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int wait=1000;
     Drawable ballDraw;
     static int recentGameScore=0;
-    static int ballColor = Color.WHITE;
+    static int ballColor = SettingsActivity.savedColor;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -93,6 +93,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         allCells[i][x].setBackgroundColor(laserColor);
                         if(allCells[i][x].getForeground()!=null){
                             alive=false;
+
                         }
                     }
 
@@ -104,6 +105,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         allCells[y][i].setBackgroundColor(laserColor);
                         if(allCells[y][i].getForeground()!=null){ // CHECK NOT NULL
                             alive=false;
+
                         }
                     }
 
@@ -168,6 +170,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        alive=false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
@@ -188,7 +197,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         int screenHeight=size.y;
         ball = new Point(4,6);
 
-        TextView multiplier = (TextView) findViewById(R.id.multiplier);
+        final TextView multiplier = (TextView) findViewById(R.id.multiplier);
         final TextView scoreView = (TextView) findViewById(R.id.score);
 
         multiplier.setMinimumHeight(screenHeight/24);
@@ -304,6 +313,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             int wait=1500; // initial wait
             int blinks=10; // how many times the lasers blink
             int breakBetween=400; // break between spawns
+            int numLasers=4;
 
             @Override
             public void run() {
@@ -316,18 +326,18 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
-                        int lasersSpawned=r.nextInt(9)+3;
+                        int lasersSpawned=r.nextInt(numLasers)+3;
                         ArrayList<String> allLasers= new ArrayList<String>();
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
 
-                        while(fieldsUsed.contains(selectEdge)){
+                        while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                             Log.i("GameActiviy","new select edge");
                             selectEdge = r.nextInt(34);
                         }
                             if(selectEdge<14){
                                 if(verticalLasers<7){
-                                    while(fieldsUsed.contains(selectEdge)){
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                                         Log.i("GameActiviy","new select edge");
                                         selectEdge = r.nextInt(14);
                                     }
@@ -335,7 +345,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 }
                                 else{
                                     selectEdge=r.nextInt(20)+14;
-                                    while(fieldsUsed.contains(selectEdge)){
+                                    while(fieldsUsed.contains(selectEdge) || (selectEdge%2==0 && fieldsUsed.contains(selectEdge+1)) || (selectEdge%2==1&&fieldsUsed.contains(selectEdge-1))){
                                         Log.i("GameActiviy","new select edge");
                                         selectEdge = r.nextInt(20)+14;
                                     }
@@ -397,6 +407,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         if(breakBetween<=100 && blinks>7){
                             blinks--;
                         }
+                        if(Math.round(getMultiplier())==getMultiplier() && lasersSpawned<7){
+                            lasersSpawned++;
+                        }
 
                     }
                     // END GAME
@@ -413,6 +426,10 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 }
             }
         }).start();
+    }
+
+    public double getMultiplier(){
+        return multiplier;
     }
 
     public void setRecentScore(int in){
@@ -470,6 +487,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     public boolean onFling(MotionEvent event1, MotionEvent event2, float vel1, float vel2){
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
         //userBall.layout(2,3,1,2);
+        if(alive){
 
         boolean moved=false;
         float deltaX =Math.abs(event1.getX()-event2.getX());
@@ -534,7 +552,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 // userBall.setBackgroundColor(Color.YELLOW);
 
             }
-        }
+        }}
 
 
         return true;
