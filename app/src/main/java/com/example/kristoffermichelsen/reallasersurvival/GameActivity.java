@@ -69,11 +69,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int px = r.nextInt(7)+1;
                     int py= r.nextInt(11)+1;
 
-                    while(allCells[px][py].getForeground()==ballDraw){
+                    while(allCells[py][px].getForeground()==ballDraw){
                         px=r.nextInt(7)+1;
                         py=r.nextInt(11)+1;
                     }
+                    Drawable powerBall = (Drawable)getDrawable(R.drawable.power_up);
+                    powerBall.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
+                    powerBall.setLevel(10);
 
+
+                    allCells[py][px].setForeground(powerBall);
 
 
                     break;
@@ -123,6 +128,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                         alive=false;
                                     }
                                     else{
+                                        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
                                         lives--;
                                     }
 
@@ -142,6 +148,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                         alive=false;
                                     }
                                     else{
+                                        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
                                         lives--;
                                     }
                                 }
@@ -555,6 +562,29 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         return detector.onTouchEvent(event);
     }
 
+    public void givePowers(int in){
+        switch(in){
+            case 10: // shield
+                Log.i("GameActivity"," shield powerup");
+
+                if(lives==1){
+                    Log.i("GameActivity"," shield powerup inner");
+
+                    ballDraw.setColorFilter(new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY));
+
+                    lives++;
+
+                }
+                break;
+            default:
+                Log.i("GameActivity"," default powerup");
+
+                break;
+
+
+        }
+    }
+
     @Override
     public boolean onFling(MotionEvent event1, MotionEvent event2, float vel1, float vel2){
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
@@ -573,6 +603,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 ball.x=ball.x+1;
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
                 //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                if(allCells[ball.y][ball.x].getForeground()!=null){
+                    givePowers(allCells[ball.y][ball.x].getForeground().getLevel());
+                }
                 allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
@@ -588,6 +621,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
                 //allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
                 //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                if(allCells[ball.y][ball.x].getForeground()!=null){
+                    givePowers(allCells[ball.y][ball.x].getForeground().getLevel());
+                }
                 allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
@@ -605,6 +641,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     ball.y=ball.y+1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
                    // Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    if(allCells[ball.y][ball.x].getForeground()!=null){
+                        givePowers(allCells[ball.y][ball.x].getForeground().getLevel());
+                    }
                     allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved=true;
                 }
@@ -618,6 +657,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     ball.y = ball.y - 1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
                     //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    if(allCells[ball.y][ball.x].getForeground()!=null){
+                        givePowers(allCells[ball.y][ball.x].getForeground().getLevel());
+                    }
                     allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved = true;
                 }
