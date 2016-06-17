@@ -91,8 +91,23 @@
         android:background="@drawable/highscore_button"
         android:textColor="@color/material_grey_50"
         android:width="150dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="85dp"
+        android:layout_below="@+id/showGridSwitch"
+        android:layout_toRightOf="@+id/ballColor"
+        android:layout_toEndOf="@+id/ballColor" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Toggle Grid"
+        android:id="@+id/showGridSwitch"
+        android:textColor="#FFFFFF"
+        android:textSize="23dp"
+        android:trackTint="#ff0000"
+        android:trackTintMode="src_over"
+        android:thumbTint="#7d7d7d"
         android:layout_below="@+id/radioGroupBallColor"
-        android:layout_centerHorizontal="true"/>
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="31dp" />
 
 </RelativeLayout>
