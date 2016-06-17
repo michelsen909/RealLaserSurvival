@@ -6,12 +6,8 @@ import android.media.MediaPlayer;
 import android.os.IBinder;
 
 
-
 public class PlayAudio extends Service{
     MediaPlayer audio;
-    float volume = 1;
-    float speed = 0.05f;
-
     public void onCreate(){
         super.onCreate();
         audio = MediaPlayer.create(this,R.raw.elevator);
@@ -27,6 +23,7 @@ public class PlayAudio extends Service{
     public void onStop(){
         audio.stop();
         audio.release();
+
     }
 
     public void onPause(){
@@ -38,12 +35,8 @@ public class PlayAudio extends Service{
         audio.release();
     }
 
-    public void FadeOut(float deltaTime)
-    {
-        audio.setVolume(volume, volume);
-        volume -= speed* deltaTime;
 
-    }
+
     //Default made, dont use
     @Override
     public IBinder onBind(Intent objIndent) {

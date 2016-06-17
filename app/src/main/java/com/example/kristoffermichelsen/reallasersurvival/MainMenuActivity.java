@@ -118,6 +118,7 @@ public class MainMenuActivity extends AppCompatActivity {
         stopService(objIntent);
     }
 
+
     @Override
     protected void onResume(){
         super.onResume();
