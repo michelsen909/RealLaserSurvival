@@ -208,27 +208,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 ImageView newPos = new ImageView(getApplicationContext());
 
-                /*
-                if(count%9 == 0) {
-                    newPos.setBackgroundColor(Color.WHITE);
-                } else if (count%9 == 1) {
-                    newPos.setBackgroundColor(Color.LTGRAY);
-                } else if (count%9 == 2) {
-                    newPos.setBackgroundColor(Color.DKGRAY);
-                } else if (count%9 == 3) {
-                    newPos.setBackgroundColor(Color.RED);
-                } else if (count%9 == 4) {
-                    newPos.setBackgroundColor(Color.GREEN);
-                } else if (count%9 == 5) {
-                    newPos.setBackgroundColor(Color.BLUE);
-                } else if (count%9 == 6) {
-                    newPos.setBackgroundColor(Color.YELLOW);
-                } else if (count%9 == 7) {
-                    newPos.setBackgroundColor(Color.MAGENTA);
-                } else if (count%9 == 8) {
-                    newPos.setBackgroundColor(Color.CYAN);
-                }
-                */
+
+
 
                 if(count%2 == 0) {
                     int color1 = Color.DKGRAY;
@@ -386,6 +367,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         }
                         Thread.sleep(breakBetween);
 
+                        if(wait>200){
+                            wait=wait-100;
+                        }
+                        if(breakBetween>100){
+                            breakBetween=breakBetween-20;
+                        }
+                        if(breakBetween<=100 && blinks>7){
+                            blinks--;
+                        }
+
                     }
                     // END GAME
                     setRecentScore(score);
@@ -393,6 +384,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     Intent intent = new Intent(GameActivity.this,MainMenuActivity.class);
                     // FIX NEXT ACTIVITY
                     startActivity(intent);
+
 
 
                 }catch(InterruptedException e){
