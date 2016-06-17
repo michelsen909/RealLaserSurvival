@@ -137,22 +137,21 @@ public class MainMenuActivity extends AppCompatActivity {
     }
     @Override
     protected void onPause() {
-        if (this.isFinishing()){ //basically BACK was pressed from this activity
+
+        if (this.isFinishing()){
             stopAudio(findViewById(R.id.title));
-            Toast.makeText(MainMenuActivity.this, "YOU PRESSED BACK FROM YOUR 'HOME/MAIN' ACTIVITY", Toast.LENGTH_SHORT).show();
+
         }
         Context context = getApplicationContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         if (!taskInfo.isEmpty()) {
             ComponentName topActivity = taskInfo.get(0).topActivity;
-            if (!topActivity.getPackageName().equals(context.getPackageName())) {
+           if (!topActivity.getPackageName().equals(context.getPackageName())) {
                 stopAudio(findViewById(R.id.title));
-                Toast.makeText(MainMenuActivity.this, "YOU LEFT YOUR APP", Toast.LENGTH_SHORT).show();
+
             }
-            else {
-                Toast.makeText(MainMenuActivity.this, "YOU SWITCHED ACTIVITIES WITHIN YOUR APP", Toast.LENGTH_SHORT).show();
-            }
+
         }
         super.onPause();
     }
