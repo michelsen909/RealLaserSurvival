@@ -58,8 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked)
                 {
                     //skift farve på bold til farven på radioButton
-                    Drawable ballDraw =  getApplicationContext().getResources().getDrawable(R.drawable.ball);
-                   ballDraw.setColorFilter(new PorterDuffColorFilter(radioButton.getSolidColor(),PorterDuff.Mode.MULTIPLY));
+                    GameActivity.ballColor = radioButton.;
 
                 }
             }

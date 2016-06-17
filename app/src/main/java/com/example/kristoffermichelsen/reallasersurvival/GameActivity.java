@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Handler;
@@ -47,6 +49,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int wait=1000;
     Drawable ballDraw;
     static int recentGameScore=0;
+    static int ballColor = Color.WHITE;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -310,6 +313,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         //allCells[6][4].setBackgroundColor(Color.WHITE);
         ballDraw = (Drawable) getDrawable(R.drawable.ball);
+        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
         allCells[ball.y][ball.x].setForeground(ballDraw);
         //test
 
