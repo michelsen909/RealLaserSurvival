@@ -95,8 +95,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public static void createHighscore() {
         try {
-            Scanner highscoreFile = new Scanner(new File("assets/scores/Highscore.txt"));
-
+            Scanner highscoreFile = new Scanner(new File("scores/Highscore.txt"));
 
             for (int i = 0; i < 5; i++) {
                 highscores.add(Integer.parseInt(highscoreFile.next()));
