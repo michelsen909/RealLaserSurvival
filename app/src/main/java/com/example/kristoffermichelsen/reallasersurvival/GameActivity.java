@@ -263,18 +263,27 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         int indicator=0;
         for(int i=0;i<7;i++){
             edges[indicator]=allCells[0][i+1];
+            allCells[0][i+1].setBackgroundColor(Color.BLACK);
+            allColors[0][i+1]=Color.BLACK;
+
             indicator++;
             edges[indicator]=allCells[11][i+1];
+            allCells[11][i+1].setBackgroundColor(Color.BLACK);
+            allColors[11][i+1]=Color.BLACK;
+
             indicator++;
         }
         for(int i=0;i<10;i++){
             edges[indicator]=allCells[i+1][0];
+            allCells[i+1][0].setBackgroundColor(Color.BLACK);
+            allColors[i+1][0]=Color.BLACK;
+
             indicator++;
             edges[indicator]=allCells[i+1][8];
+            allCells[i+1][8].setBackgroundColor(Color.BLACK);
+            allColors[i+1][8]=Color.BLACK;
+
             indicator++;
-        }
-        for(int i=0;i<edges.length;i++){
-            edges[i].setBackgroundColor(Color.BLACK);
         }
 
 
