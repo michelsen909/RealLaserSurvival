@@ -170,6 +170,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+
+        alive=false;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
