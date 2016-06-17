@@ -2,6 +2,7 @@ package com.example.kristoffermichelsen.reallasersurvival;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,25 +21,31 @@ public class MainMenuActivity extends AppCompatActivity {
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
         TextView title = (TextView) findViewById(R.id.title);
+        playAudio(title);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
         createHighscore();
 
-        Button startButton = (Button) findViewById(R.id.startButton);
+        final Button startButton = (Button) findViewById(R.id.startButton);
 
         startButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent start = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(start);
+                stopAudio(startButton);
+
             }
         });
+
+
 
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
 
@@ -71,8 +78,9 @@ public class MainMenuActivity extends AppCompatActivity {
                 Intent test = new Intent(MainMenuActivity.this, GameOverActivity.class);
                 startActivity(test);
             }
-        });
-    }
+        });}
+
+
     public static void createHighscore() {
         try {
             Scanner highscoreFile = new Scanner(new File("assets/scores/Highscore.txt"));
@@ -90,5 +98,21 @@ public class MainMenuActivity extends AppCompatActivity {
         }
 
     }
+    public void playAudio(View view) {
+        Intent objIntent = new Intent(this, PlayAudio.class);
+        startService(objIntent);
+    }
+
+    public void stopAudio(View view) {
+        Intent objIntent = new Intent(this, PlayAudio.class);
+        stopService(objIntent);
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        playAudio(findViewById(R.id.title));
+    }
 }
+
 
