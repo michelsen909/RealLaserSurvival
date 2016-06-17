@@ -45,6 +45,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     ImageView edges []  = new ImageView[34];
     TextView multiplierText;
     TextView scoreText;
+    Point [] tunnel = new Point[2];
 
     boolean alive=true;
     int lives=1;
@@ -62,23 +63,54 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         @Override
         public void handleMessage(Message inputMessage){
             String location = inputMessage.getData().getString("message");
+            Random r =new Random();
 
             switch(location.substring(0,1)){
                 case "0": // shieldpower
-                    Random r= new Random();
                     int px = r.nextInt(7)+1;
-                    int py= r.nextInt(11)+1;
+                    int py= r.nextInt(10)+1;
 
                     while(allCells[py][px].getForeground()==ballDraw){
                         px=r.nextInt(7)+1;
-                        py=r.nextInt(11)+1;
+                        py=r.nextInt(10)+1;
                     }
                     Drawable powerBall = (Drawable)getDrawable(R.drawable.power_up);
                     powerBall.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
                     powerBall.setLevel(10);
 
-
                     allCells[py][px].setForeground(powerBall);
+
+                    break;
+                case "1":
+                    int p1x = r.nextInt(7)+1;
+                    int p1y= r.nextInt(10)+1;
+
+                    while(allCells[p1y][p1x].getForeground()==ballDraw){
+                        p1x=r.nextInt(7)+1;
+                        p1y=r.nextInt(10)+1;
+                    }
+
+                    int p2x = r.nextInt(7)+1;
+                    int p2y= r.nextInt(10)+1;
+
+                    while(allCells[p2y][p2x].getForeground()==ballDraw && (p2y!=p1y || p2x!=p1x)){
+                        p2x=r.nextInt(7)+1;
+                        p2y=r.nextInt(10)+1;
+                    }
+
+                    tunnel[0]=new Point(p1x,p1y);
+                    tunnel[1]=new Point(p2x,p2y);
+
+                    Drawable tunnel1 = (Drawable) getDrawable(R.drawable.power_up);
+                    tunnel1.setColorFilter(new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.MULTIPLY));
+                    tunnel1.setLevel(11);
+
+                    Drawable tunnel2 = (Drawable) getDrawable(R.drawable.power_up);
+                    tunnel2.setColorFilter(new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.MULTIPLY));
+                    tunnel2.setLevel(11);
+
+                    allCells[p1y][p1x].setForeground(tunnel1);
+                    allCells[p2y][p2x].setForeground(tunnel2);
 
 
                     break;
@@ -385,7 +417,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
 
-                        boolean powerupSpawn = r.nextInt(100)<10;
+                        boolean powerupSpawn = r.nextInt(100)<85;
 
                         for(int i=0;i<lasersSpawned;i++){
                         int selectEdge = r.nextInt(34);
@@ -458,7 +490,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         Thread.sleep(breakBetween);
 
                         if(powerupSpawn){
-                            int powers=1; // change as we get more powerups
+                            int powers=2; // change as we get more powerups
 
                             sendPowerCommand(r.nextInt(powers));
                         }
@@ -575,6 +607,40 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     lives++;
 
                 }
+                break;
+            case 11: // tunnel
+
+                //Log.i("GameActivity"," tunnel powerup ");
+                Point dest= new Point();
+
+                int start=0;
+
+                for(int i=0;i<2;i++){
+                    if(tunnel[i].x==ball.x && tunnel[i].y==ball.y){
+                        start=i;
+                    }
+
+                }
+
+                if(start==1){
+                    allCells[ball.y][ball.x].setForeground(null);
+
+                    ball.x=tunnel[0].x;
+                    ball.y=tunnel[0].y;
+
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
+
+
+                }else{
+                    allCells[ball.y][ball.x].setForeground(null);
+
+                    ball.x=tunnel[1].x;
+                    ball.y=tunnel[1].y;
+
+                    allCells[ball.y][ball.x].setForeground(ballDraw);
+
+                }
+
                 break;
             default:
                 Log.i("GameActivity"," default powerup");
