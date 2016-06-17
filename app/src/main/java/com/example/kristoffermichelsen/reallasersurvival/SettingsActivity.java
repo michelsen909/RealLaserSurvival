@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.RadioGroup;
 import android.content.*;
 
+import java.util.ArrayList;
+
 public class SettingsActivity extends AppCompatActivity {
     static int savedColor;
 
@@ -44,12 +46,13 @@ public class SettingsActivity extends AppCompatActivity {
         });
 
         RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroupBallColor);
-        //RadioButton white = (RadioButton) findViewById(R.id.white);
-        //RadioButton blue = (RadioButton) findViewById(R.id.blue);
-        //RadioButton green = (RadioButton) findViewById(R.id.green);
-        //RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
+        final RadioButton white = (RadioButton) findViewById(R.id.white);
+        final RadioButton blue = (RadioButton) findViewById(R.id.blue);
+        final RadioButton green = (RadioButton) findViewById(R.id.green);
+        final RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
 
         int rG1_CheckId = radioGroup.getCheckedRadioButtonId();
+        RadioButton [] radioButtons = {white,blue,green,yellow};
 
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -63,9 +66,22 @@ public class SettingsActivity extends AppCompatActivity {
                     savedColor = radioButton.getCurrentTextColor();
                     save(radioButton.getId());
 
+                }else{
+                    GameActivity.ballColor = Color.WHITE;
+                    savedColor=Color.WHITE;
                 }
             }
         });
+
+        if(!blue.isChecked() && !green.isChecked() && !yellow.isChecked()){
+            savedColor=Color.WHITE;
+            white.setChecked(true);
+        }
+        for(int i=0; i<radioButtons.length;i++){
+            if(radioButtons[i].isChecked()){
+                savedColor=radioButtons[i].getCurrentTextColor();
+            }
+        }
 
         final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
         toggleGrid.setChecked(loadGridToggle());
@@ -121,6 +137,8 @@ public class SettingsActivity extends AppCompatActivity {
         if (radioId > 0) {
             RadioButton rbtn = (RadioButton) findViewById(radioId);
             rbtn.setChecked(true);
+            //savedColor = rbtn.getCurrentTextColor();
+            GameActivity.ballColor=rbtn.getCurrentTextColor();
         }
 
     }

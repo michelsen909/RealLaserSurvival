@@ -13,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.Context;
+import android.content.SharedPreferences;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,7 +36,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
-        createHighscore();
+
 
         final Button startButton = (Button) findViewById(R.id.startButton);
 
@@ -97,21 +99,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
 
     public static void createHighscore() {
-        try {
-            Scanner highscoreFile = new Scanner(new File("scores/Highscore.txt"));
-
-            for (int i = 0; i < 5; i++) {
-                highscores.add(Integer.parseInt(highscoreFile.next()));
-                Log.i("Highscore",highscores.toString() );
-            }
-            highscoreFile.close();
-
-        } catch (FileNotFoundException e){
-            Log.i("Highscore","File not found" );
-
-        }
 
     }
+
     public void playAudio(View view) {
         Intent objIntent = new Intent(this, Audio.class);
         startService(objIntent);
@@ -143,7 +133,7 @@ public class MainMenuActivity extends AppCompatActivity {
         }
         Context context = getApplicationContext();
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
         if (!taskInfo.isEmpty()) {
             ComponentName topActivity = taskInfo.get(0).topActivity;
            if (!topActivity.getPackageName().equals(context.getPackageName())) {

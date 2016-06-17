@@ -43,12 +43,13 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
         //TODO - Change this to Recent Score from Game Activity
-        int RecentScore = 20005;
 
-            MainMenuActivity.highscores.add(RecentScore);
-            Collections.sort(MainMenuActivity.highscores);
-            MainMenuActivity.highscores.remove(0);
-            Collections.reverse(MainMenuActivity.highscores);
+        int newHighscore = GameActivity.recentGameScore;
+
+        MainMenuActivity.highscores.add(newHighscore);
+        Collections.sort(MainMenuActivity.highscores);
+        MainMenuActivity.highscores.remove(0);
+        Collections.reverse(MainMenuActivity.highscores);
 
         TextView no1 = (TextView) findViewById(R.id.no1);
         TextView no2 = (TextView) findViewById(R.id.no2);
