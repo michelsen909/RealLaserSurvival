@@ -3,7 +3,10 @@ package com.example.kristoffermichelsen.reallasersurvival;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.shapes.Shape;
 import android.media.audiofx.BassBoost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -14,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.RadioGroup;
+import android.graphics.*;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -42,6 +46,7 @@ public class SettingsActivity extends AppCompatActivity {
         //RadioButton green = (RadioButton) findViewById(R.id.green);
         //RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
 
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener()
         {
             public void onCheckedChanged(RadioGroup group, int checkedId)
@@ -53,6 +58,8 @@ public class SettingsActivity extends AppCompatActivity {
                 if (isChecked)
                 {
                     //skift farve på bold til farven på radioButton
+                    GameActivity.ballColor = radioButton.getCurrentTextColor();
+
                 }
             }
         });

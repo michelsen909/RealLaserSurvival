@@ -3,9 +3,10 @@
     android:innerRadius="0dp"
     android:shape="ring"
     android:thickness="10dp"
-    android:useLevel="false" >
+    android:useLevel="false">
 
-    <solid android:color="#FFFFFF" />
+    <solid android:color="#FFFFFF"
+           android:id="@+id/ballFarve"/>
 
     <size
         android:height="20dp"

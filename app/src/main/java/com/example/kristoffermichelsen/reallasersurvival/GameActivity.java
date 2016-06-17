@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.os.Handler;
@@ -43,7 +45,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     ImageView edges []  = new ImageView[34];
     TextView multiplierText;
     TextView scoreText;
+    boolean alive=true;
     int wait=1000;
+    Drawable ballDraw;
+    static int recentGameScore=0;
+    static int ballColor = Color.WHITE;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -85,6 +91,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     x++;
                     for(int i=1;i<11;i++){
                         allCells[i][x].setBackgroundColor(laserColor);
+                        if(allCells[i][x].getForeground()!=null){
+                            alive=false;
+                        }
                     }
 
                 }
@@ -93,6 +102,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     y++;
                     for(int i=1;i<8;i++){
                         allCells[y][i].setBackgroundColor(laserColor);
+                        if(allCells[y][i].getForeground()!=null){ // CHECK NOT NULL
+                            alive=false;
+                        }
                     }
 
 
@@ -177,15 +189,15 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         ball = new Point(4,6);
 
         TextView multiplier = (TextView) findViewById(R.id.multiplier);
-        TextView score = (TextView) findViewById(R.id.score);
+        final TextView scoreView = (TextView) findViewById(R.id.score);
 
         multiplier.setMinimumHeight(screenHeight/24);
         multiplier.setMaxHeight(screenHeight/24);
         //multiplier.setTextSize(screenHeight/24);
-        score.setMinimumHeight(screenHeight/24);
-        score.setMaxHeight(screenHeight/24);
+        scoreView.setMinimumHeight(screenHeight/24);
+        scoreView.setMaxHeight(screenHeight/24);
         //score.setTextSize(screenHeight/24);
-        score.setMinimumWidth(screenWidth/3+screenWidth/32);
+        scoreView.setMinimumWidth(screenWidth/3+screenWidth/32);
         //score.setMaxWidth(screenWidth/3);
 
         int count=0;
@@ -246,6 +258,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 grid.addView(newPos);
                 allCells[i][j]=newPos;
+                allCells[i][j].setForeground(null);
 
 
 
@@ -299,13 +312,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         allColors[11][0]=Color.BLACK;
 
         //allCells[6][4].setBackgroundColor(Color.WHITE);
-        Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+        ballDraw = (Drawable) getDrawable(R.drawable.ball);
+        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
         allCells[ball.y][ball.x].setForeground(ballDraw);
         //test
 
         new Thread(new Runnable() {
-            boolean dead=false;
-             // multiplier
+            //boolean dead=false;
+
             int wait=1500; // initial wait
             int blinks=10; // how many times the lasers blink
             int breakBetween=400; // break between spawns
@@ -314,7 +328,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
             public void run() {
                 try{
                     Thread.sleep(3000);
-                    while(!dead) {
+                    while(isAlive()) {
+                        sendResetCommand();
+
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
                         int lasersSpawned=r.nextInt(4)+3;
@@ -369,11 +385,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             sendCommand("Shoot,"+i);
                         }
                         Thread.sleep(breakBetween);
-                        sendResetCommand();
 
                     }
-
-
+                    // END GAME
+                    setRecentScore(score);
+                    Log.i("GameActivity","Score: "+ score);
+                    Intent intent = new Intent(GameActivity.this,MainMenuActivity.class);
+                    // FIX NEXT ACTIVITY
+                    startActivity(intent);
 
 
                 }catch(InterruptedException e){
@@ -381,6 +400,15 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 }
             }
         }).start();
+    }
+
+    public void setRecentScore(int in){
+        recentGameScore=in;
+    }
+
+    public boolean isAlive(){
+
+        return alive;
     }
 
     public void incrementMultiplier(){
@@ -441,7 +469,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 allCells[ball.y][ball.x].setForeground(null);
                 ball.x=ball.x+1;
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
                 allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
@@ -456,7 +484,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 ball.x=ball.x-1;
                 //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
                 //allCells[ball.y][ball.x].setBackgroundResource(R.drawable.ball);
-                Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
                 allCells[ball.y][ball.x].setForeground(ballDraw);
                 moved=true;
 
@@ -473,7 +501,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     allCells[ball.y][ball.x].setForeground(null);
                     ball.y=ball.y+1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                   // Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
                     allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved=true;
                 }
@@ -486,7 +514,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     allCells[ball.y][ball.x].setForeground(null);
                     ball.y = ball.y - 1;
                     //allCells[ball.y][ball.x].setBackgroundColor(Color.WHITE);
-                    Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
+                    //Drawable ballDraw = (Drawable) getDrawable(R.drawable.ball);
                     allCells[ball.y][ball.x].setForeground(ballDraw);
                     moved = true;
                 }
