@@ -12,8 +12,7 @@ import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -125,5 +124,6 @@ public class MainMenuActivity extends AppCompatActivity {
         playAudio(findViewById(R.id.title));
     }
 }
+
 
 
