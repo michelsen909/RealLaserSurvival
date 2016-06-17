@@ -570,7 +570,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 if(lives==1){
                     Log.i("GameActivity"," shield powerup inner");
 
-                    ballDraw.setColorFilter(new PorterDuffColorFilter(Color.YELLOW, PorterDuff.Mode.MULTIPLY));
+                    ballDraw.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
 
                     lives++;
 
