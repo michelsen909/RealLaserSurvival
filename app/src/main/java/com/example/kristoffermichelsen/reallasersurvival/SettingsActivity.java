@@ -10,6 +10,7 @@ import android.graphics.drawable.shapes.Shape;
 import android.media.audiofx.BassBoost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -23,6 +24,24 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     static int savedColor;
+
+    static Settings settings = Settings.getInstance();
+
+    //Used for grid toggle switch
+    int[][] onState = new int[][]{
+            new int[]{-android.R.attr.state_enabled}, // enabled
+    };
+    int[] onColor = new int[]{
+            Color.GREEN,
+    };
+    int[][] offState = new int[][]{
+            new int[]{-android.R.attr.state_enabled}, // enabled
+    };
+    int[] offColor = new int[]{
+            Color.RED,
+    };
+    ColorStateList on = new ColorStateList(onState, onColor);
+    ColorStateList off = new ColorStateList(offState, offColor);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,38 +103,26 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
-        toggleGrid.setChecked(loadGridToggle());
+        toggleGrid.setChecked(settings.useGrid);
+
+        if (toggleGrid.isChecked()) {
+            toggleGrid.setTrackTintList(on);
+            saveGridToggle(true);
+        } else {
+            toggleGrid.setTrackTintList(off);
+            saveGridToggle(false);
+        }
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                int[][] green = new int[][]{
-                        new int[]{-android.R.attr.state_enabled}, // enabled
-                };
-
-                int[] colors = new int[]{
-                        Color.GREEN,
-                };
-
-                int[][] red = new int[][]{
-                        new int[]{-android.R.attr.state_enabled}, // enabled
-                };
-
-                int[] color = new int[]{
-                        Color.RED,
-                };
-
-
-                ColorStateList on = new ColorStateList(green, colors);
-                ColorStateList off = new ColorStateList(red, color);
+;
                 if (toggleGrid.isChecked()) {
                     toggleGrid.setTrackTintList(on);
-                    saveGridToggle(true);
+                    settings.useGrid = true;
                 } else {
                     toggleGrid.setTrackTintList(off);
-                    saveGridToggle(false);
+                    settings.useGrid = false;
                 }
-
             }
         });
 
@@ -145,29 +152,13 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     private void saveGridToggle(boolean grid) {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        if (grid) {
-            editor.putBoolean("grid", true);
-            editor.commit();
-        } else {
-            editor.putBoolean("grid", false);
-            editor.commit();
-        }
-
+        settings.useGrid = grid;
     }
 
-    private boolean loadGridToggle() {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
+    public boolean loadGridToggle() {
 
-        boolean grid = sharedPreferences.getBoolean("grid",false);
-        if (grid) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return settings.useGrid;
     }
 
 }

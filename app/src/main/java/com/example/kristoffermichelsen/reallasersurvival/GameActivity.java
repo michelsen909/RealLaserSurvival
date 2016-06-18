@@ -32,8 +32,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.Random;
 
-
 public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
+
+    static Settings settings = Settings.getInstance();
 
     GestureDetector detector;
 
@@ -56,8 +57,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     Drawable ballDraw;
     static int recentGameScore=0;
     static int ballColor = SettingsActivity.savedColor;
-
-
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -305,11 +304,21 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
                 if(count%2 == 0) {
-                    int color1 = Color.DKGRAY;
+                    int color1;
+                    if (settings.useGrid) {
+                        color1 = Color.DKGRAY;
+                    } else {
+                        color1 = Color.BLACK;
+                    }
                     newPos.setBackgroundColor(color1);
                     allColors[i][j]=color1;
                 } else if (count%2 == 1) {
-                    int color2=Color.LTGRAY;
+                    int color2;
+                    if (settings.useGrid) {
+                        color2 = Color.LTGRAY;
+                    } else {
+                        color2 = Color.BLACK;
+                    }
                     newPos.setBackgroundColor(color2);
                     allColors[i][j]=color2;
                 }
