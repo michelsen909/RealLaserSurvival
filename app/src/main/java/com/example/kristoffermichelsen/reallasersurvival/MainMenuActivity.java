@@ -16,9 +16,13 @@ import android.widget.Toast;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -36,6 +40,7 @@ public class MainMenuActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+        createHighscore();
 
 
         final Button startButton = (Button) findViewById(R.id.startButton);
@@ -98,10 +103,46 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
 
-    public static void createHighscore() {
+    public void createHighscore() {
+        try{
+        BufferedReader reader=null;
+        if () {
+            try {
+                reader = new BufferedReader(new InputStreamReader(getAssets().open("scores/Highscore.txt"), "UTF-8"));
+                Log.i("Highscore", "Tried to find file");
+                for (int i = 0; i < 5; i++) {
+                    highscores.add(reader.read());
+                    Log.i("Highscore", highscores.toString());
+                }
+                reader.close();
+                try{
+                    FileWriter highscorePrinter = new FileWriter("Highscore.txt");
+                    for(int i = 0;i <= 4;i++){
+                        String j = MainMenuActivity.highscores.get(i).toString();
+                        highscorePrinter.write(j + " ");
+                    }
+                    highscorePrinter.close();
+                } catch (java.io.IOException e){
+
+                }
+
+            } catch (FileNotFoundException e) {
+                Log.i("Highscore", "File not found");
+
+            } catch (IOException e) {
+
+            }
+        }else{
+            highscores.add(0);
+            highscores.add(0);
+            highscores.add(0);
+            highscores.add(0);
+            highscores.add(0);
+        }
+    } catch (IOException e) {
 
     }
-
+    }
     public void playAudio(View view) {
         Intent objIntent = new Intent(this, Audio.class);
         startService(objIntent);

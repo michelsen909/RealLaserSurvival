@@ -5,5 +5,7 @@ package com.example.kristoffermichelsen.reallasersurvival;
  */
 public class Highscore {
     public int score;
-
+        public Highscore(int x){
+            int score = x;
+        }
 }
