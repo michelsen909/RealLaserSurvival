@@ -7,14 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
-
-import java.io.FileWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
@@ -24,7 +18,7 @@ public class GameOverActivity extends AppCompatActivity {
     private Realm realm;
     private int newHighscore;
     private RealmResults<Score> results;
-    TextView no1, no2, no3;
+    TextView no1, no2, no3, preview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +54,11 @@ public class GameOverActivity extends AppCompatActivity {
 
         newHighscore = GameActivity.recentGameScore;
 
+        preview = (TextView) findViewById(R.id.yourScore);
         no1 = (TextView) findViewById(R.id.no1);
         no2 = (TextView) findViewById(R.id.no2);
         no3 = (TextView) findViewById(R.id.no3);
-
+        preview.setText("Your Score: "+newHighscore);
         saveHighscore();
         showTop3();
 
