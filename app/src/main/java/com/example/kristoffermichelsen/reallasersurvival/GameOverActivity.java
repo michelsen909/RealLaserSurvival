@@ -8,15 +8,29 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
+
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Collections;
 
+import io.realm.Realm;
+import io.realm.RealmResults;
+import io.realm.Sort;
+
 public class GameOverActivity extends AppCompatActivity {
+
+    private Realm realm;
+    private int newHighscore;
+    private RealmResults<Score> results;
+    TextView no1, no2, no3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
+        //Get the database ready for action
+        realm = Realm.getDefaultInstance();
 
         TextView title = (TextView) findViewById(R.id.gameOver);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
@@ -42,35 +56,44 @@ public class GameOverActivity extends AppCompatActivity {
                 startActivity(mainMenu);
             }
         });
-        //TODO - Change this to Recent Score from Game Activity
 
-        int newHighscore = GameActivity.recentGameScore;
+        newHighscore = GameActivity.recentGameScore;
 
-        MainMenuActivity.highscores.add(newHighscore);
-        Collections.sort(MainMenuActivity.highscores);
-        MainMenuActivity.highscores.remove(0);
-        Collections.reverse(MainMenuActivity.highscores);
+        no1 = (TextView) findViewById(R.id.no1);
+        no2 = (TextView) findViewById(R.id.no2);
+        no3 = (TextView) findViewById(R.id.no3);
 
-        TextView no1 = (TextView) findViewById(R.id.no1);
-        TextView no2 = (TextView) findViewById(R.id.no2);
-        TextView no3 = (TextView) findViewById(R.id.no3);
-
-        no1.setText("#1 "+MainMenuActivity.highscores.get(0));
-        no2.setText("#2 "+MainMenuActivity.highscores.get(1));
-        no3.setText("#3 "+MainMenuActivity.highscores.get(2));
+        showTop3();
 
     }
-    public void saveHighscore() {
-        try{
-            FileWriter highscorePrinter = new FileWriter("Highscore.txt");
-            for(int i = 0;i <= 4;i++){
-                String j = MainMenuActivity.highscores.get(i).toString();
-                highscorePrinter.write(j + " ");
-            }
-            highscorePrinter.close();
-        } catch (java.io.IOException e){
 
+    private void saveHighscore() {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Score score = new Score();
+                score.setScore(newHighscore);
+                realm.copyToRealm(score);
+            }
+        });
+    }
+
+    private void showTop3() {
+        results = realm.where(Score.class).findAll();
+        results.sort("score", Sort.DESCENDING);
+        ArrayList<Integer> tempScore = new ArrayList<Integer>();
+
+        for (int i=0;i<3;i++){
+            if(results.get(i)!=null){
+                tempScore.add(results.get(i).getScore());
+            }else{
+                tempScore.add(0);
+            }
         }
+        no1.setText("#1 "+tempScore.get(0));
+        no2.setText("#2 "+tempScore.get(1));
+        no3.setText("#3 "+tempScore.get(2));
+
     }
 
     @Override

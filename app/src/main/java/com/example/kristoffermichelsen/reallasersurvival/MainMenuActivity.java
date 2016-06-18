@@ -27,20 +27,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
+
 public class MainMenuActivity extends AppCompatActivity {
 
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
+    private Realm realm;
+    private RealmConfiguration realmConfig;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
+
+        realmConfig = new RealmConfiguration.Builder(this)
+                .deleteRealmIfMigrationNeeded()
+                .build();
+        Realm.setDefaultConfiguration(realmConfig);
+        realm = Realm.getInstance(realmConfig);
+
         TextView title = (TextView) findViewById(R.id.title);
         playAudio(title);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
-        createHighscore();
 
 
         final Button startButton = (Button) findViewById(R.id.startButton);
@@ -99,50 +110,8 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(testGameOver);
             }
         });
-
     }
 
-
-    public void createHighscore() {
-        try{
-        BufferedReader reader=null;
-        if () {
-            try {
-                reader = new BufferedReader(new InputStreamReader(getAssets().open("scores/Highscore.txt"), "UTF-8"));
-                Log.i("Highscore", "Tried to find file");
-                for (int i = 0; i < 5; i++) {
-                    highscores.add(reader.read());
-                    Log.i("Highscore", highscores.toString());
-                }
-                reader.close();
-                try{
-                    FileWriter highscorePrinter = new FileWriter("Highscore.txt");
-                    for(int i = 0;i <= 4;i++){
-                        String j = MainMenuActivity.highscores.get(i).toString();
-                        highscorePrinter.write(j + " ");
-                    }
-                    highscorePrinter.close();
-                } catch (java.io.IOException e){
-
-                }
-
-            } catch (FileNotFoundException e) {
-                Log.i("Highscore", "File not found");
-
-            } catch (IOException e) {
-
-            }
-        }else{
-            highscores.add(0);
-            highscores.add(0);
-            highscores.add(0);
-            highscores.add(0);
-            highscores.add(0);
-        }
-    } catch (IOException e) {
-
-    }
-    }
     public void playAudio(View view) {
         Intent objIntent = new Intent(this, Audio.class);
         startService(objIntent);
