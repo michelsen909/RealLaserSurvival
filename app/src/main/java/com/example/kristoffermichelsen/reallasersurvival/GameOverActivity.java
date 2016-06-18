@@ -20,20 +20,20 @@ import io.realm.Sort;
 
 public class GameOverActivity extends AppCompatActivity {
 
-    private Realm realm;
-    private int newHighscore;
-    private RealmResults<Score> results;
-    TextView no1, no2, no3;
+    // private Realm realm;
+    // private int newHighscore;
+    //private RealmResults<Score> results;
+    // TextView no1, no2, no3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
         //Get the database ready for action
-        realm = Realm.getDefaultInstance();
+        // realm = Realm.getDefaultInstance();
 
         TextView title = (TextView) findViewById(R.id.gameOver);
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
 
@@ -57,28 +57,28 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-        newHighscore = GameActivity.recentGameScore;
+        // newHighscore = GameActivity.recentGameScore;
 
-        no1 = (TextView) findViewById(R.id.no1);
-        no2 = (TextView) findViewById(R.id.no2);
-        no3 = (TextView) findViewById(R.id.no3);
+        // no1 = (TextView) findViewById(R.id.no1);
+        // no2 = (TextView) findViewById(R.id.no2);
+        // no3 = (TextView) findViewById(R.id.no3);
 
-        showTop3();
+        // showTop3();
 
     }
 
-    private void saveHighscore() {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Score score = new Score();
-                score.setScore(newHighscore);
-                realm.copyToRealm(score);
-            }
-        });
-    }
-
-    private void showTop3() {
+    //  private void saveHighscore() {
+    //realm.executeTransactionAsync(new Realm.Transaction() {
+  //  @Override
+    //public void execute(Realm realm) {
+        //  Score score = new Score();
+        //  score.setScore(newHighscore);
+        //  realm.copyToRealm(score);
+        // }
+        //  });
+        // }
+//
+   /* private void showTop3() {
         results = realm.where(Score.class).findAll();
         results.sort("score", Sort.DESCENDING);
         ArrayList<Integer> tempScore = new ArrayList<Integer>();
@@ -100,8 +100,9 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveHighscore();
+    }*/
     }
-}
+
 
 
 
