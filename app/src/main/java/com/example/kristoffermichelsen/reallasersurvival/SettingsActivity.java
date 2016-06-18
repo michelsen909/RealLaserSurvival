@@ -42,6 +42,7 @@ public class SettingsActivity extends AppCompatActivity {
     };
     ColorStateList on = new ColorStateList(onState, onColor);
     ColorStateList off = new ColorStateList(offState, offColor);
+    //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,10 +108,10 @@ public class SettingsActivity extends AppCompatActivity {
 
         if (toggleGrid.isChecked()) {
             toggleGrid.setTrackTintList(on);
-            saveGridToggle(true);
+            settings.useGrid = true;
         } else {
             toggleGrid.setTrackTintList(off);
-            saveGridToggle(false);
+            settings.useGrid = false;
         }
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -150,15 +151,5 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
-
-    private void saveGridToggle(boolean grid) {
-
-        settings.useGrid = grid;
-    }
-
-    public boolean loadGridToggle() {
-
-        return settings.useGrid;
-    }
 
 }
