@@ -46,7 +46,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     ImageView edges []  = new ImageView[34];
     TextView multiplierText;
     TextView scoreText;
-    Point [] tunnel = new Point[2];
+    ArrayList<Point []> allTunnels = new ArrayList();
 
     boolean alive=true;
     int lives=1;
@@ -96,9 +96,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         p2x=r.nextInt(7)+1;
                         p2y=r.nextInt(10)+1;
                     }
+                    Point [] tunnel = new Point[2];
 
                     tunnel[0]=new Point(p1x,p1y);
                     tunnel[1]=new Point(p2x,p2y);
+
+                    allTunnels.add(tunnel);
 
                     Drawable tunnel1 = (Drawable) getDrawable(R.drawable.power_up);
                     tunnel1.setColorFilter(new PorterDuffColorFilter(Color.MAGENTA, PorterDuff.Mode.MULTIPLY));
@@ -620,19 +623,26 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 Point dest= new Point();
 
                 int start=0;
+                int tunnelNum=0;
 
-                for(int i=0;i<2;i++){
-                    if(tunnel[i].x==ball.x && tunnel[i].y==ball.y){
-                        start=i;
+                for(int i=0;i<allTunnels.size();i++){
+                    for(int j=0;j<2;j++){
+                        if(allTunnels.get(i)[j].x==ball.x && allTunnels.get(i)[j].y==ball.y){
+                            Log.i("GameActivity"," Found  correct tunnel");
+                            start=j;
+                            tunnelNum=i;
+                        }
+
                     }
+
 
                 }
 
                 if(start==1){
                     allCells[ball.y][ball.x].setForeground(null);
 
-                    ball.x=tunnel[0].x;
-                    ball.y=tunnel[0].y;
+                    ball.x=allTunnels.get(tunnelNum)[0].x;
+                    ball.y=allTunnels.get(tunnelNum)[0].y;
 
                     allCells[ball.y][ball.x].setForeground(ballDraw);
 
@@ -640,8 +650,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 }else{
                     allCells[ball.y][ball.x].setForeground(null);
 
-                    ball.x=tunnel[1].x;
-                    ball.y=tunnel[1].y;
+                    ball.x=allTunnels.get(tunnelNum)[1].x;
+                    ball.y=allTunnels.get(tunnelNum)[1].y;
 
                     allCells[ball.y][ball.x].setForeground(ballDraw);
 
