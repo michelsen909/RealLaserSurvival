@@ -8,7 +8,6 @@ public class Settings {
 
 
 
-
     private static Settings instance = null;
 
     private Settings(){};
