@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
 
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -20,17 +21,17 @@ import io.realm.Sort;
 
 public class GameOverActivity extends AppCompatActivity {
 
-    // private Realm realm;
-    // private int newHighscore;
-    //private RealmResults<Score> results;
-    // TextView no1, no2, no3;
+    private Realm realm;
+    private int newHighscore;
+    private RealmResults<Score> results;
+    TextView no1, no2, no3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
         //Get the database ready for action
-        // realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
 
         TextView title = (TextView) findViewById(R.id.gameOver);
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
@@ -57,39 +58,61 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-        // newHighscore = GameActivity.recentGameScore;
+        newHighscore = GameActivity.recentGameScore;
 
-        // no1 = (TextView) findViewById(R.id.no1);
-        // no2 = (TextView) findViewById(R.id.no2);
-        // no3 = (TextView) findViewById(R.id.no3);
+        no1 = (TextView) findViewById(R.id.no1);
+        no2 = (TextView) findViewById(R.id.no2);
+        no3 = (TextView) findViewById(R.id.no3);
 
-        // showTop3();
+        saveHighscore();
+        showTop3();
+
 
     }
 
-    //  private void saveHighscore() {
-    //realm.executeTransactionAsync(new Realm.Transaction() {
-  //  @Override
-    //public void execute(Realm realm) {
-        //  Score score = new Score();
-        //  score.setScore(newHighscore);
-        //  realm.copyToRealm(score);
-        // }
-        //  });
-        // }
-//
-   /* private void showTop3() {
+    private void saveHighscore() {
+        realm.executeTransactionAsync(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                Score score = new Score();
+                score.setScore(newHighscore);
+                realm.copyToRealm(score);
+            }
+        });
+    }
+
+    private void showTop3() {
         results = realm.where(Score.class).findAll();
         results.sort("score", Sort.DESCENDING);
         ArrayList<Integer> tempScore = new ArrayList<Integer>();
 
-        for (int i=0;i<3;i++){
-            if(results.get(i)!=null){
-                tempScore.add(results.get(i).getScore());
-            }else{
+        if(results.isEmpty()){
+            for (int i=0;i<3;i++){
                 tempScore.add(0);
             }
+        }else if (results.size()<3){
+            for (int i = 0; i < results.size(); i++) {
+                tempScore.add(results.get(i).getScore());
+            }
+            for (int j=results.size();j<3;j++){
+                switch (j){
+                    case 0:
+                        tempScore.add(0);
+                        break;
+                    case 1:
+                        tempScore.add(0);
+                        break;
+                    case 2:
+                        tempScore.add(0);
+                        break;
+                }
+            }
+        }else {
+            for (int i = 0; i < 3; i++) {
+                tempScore.add(results.get(i).getScore());
+            }
         }
+
         no1.setText("#1 "+tempScore.get(0));
         no2.setText("#2 "+tempScore.get(1));
         no3.setText("#3 "+tempScore.get(2));
@@ -100,9 +123,8 @@ public class GameOverActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         saveHighscore();
-    }*/
     }
-
+}
 
 
 
