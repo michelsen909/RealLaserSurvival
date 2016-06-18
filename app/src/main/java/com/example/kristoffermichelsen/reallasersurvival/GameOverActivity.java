@@ -34,7 +34,7 @@ public class GameOverActivity extends AppCompatActivity {
         realm = Realm.getDefaultInstance();
 
         TextView title = (TextView) findViewById(R.id.gameOver);
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
 

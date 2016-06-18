@@ -513,10 +513,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                     if(!usedBack) {
                         setRecentScore(score);
-
                         Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
-
-                        // FIX NEXT ACTIVITY
                         startActivity(intent);
                     }
 

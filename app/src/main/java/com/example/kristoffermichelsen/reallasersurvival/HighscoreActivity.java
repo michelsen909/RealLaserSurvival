@@ -19,14 +19,18 @@ import io.realm.Sort;
 
 public class HighscoreActivity extends AppCompatActivity {
 
-    private Realm realm;
-    private RealmResults<Score> results;
-    TextView no1, no2, no3, no4, no5;
+   // private Realm realm;
+    //private RealmResults<Score> results;
+   // TextView no1, no2, no3, no4, no5;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscore);
+        //Get the database ready for action
+        //realm = Realm.getDefaultInstance();
+
+
 
         realm = Realm.getDefaultInstance();
 
@@ -35,13 +39,13 @@ public class HighscoreActivity extends AppCompatActivity {
         title.setTypeface(font);
         title.setTextSize(45);
 
-        no1 = (TextView) findViewById(R.id.no1);
-        no2 = (TextView) findViewById(R.id.no2);
-        no3 = (TextView) findViewById(R.id.no3);
-        no4 = (TextView) findViewById(R.id.no4);
-        no5 = (TextView) findViewById(R.id.no5);
+       // no1 = (TextView) findViewById(R.id.no1);
+       // no2 = (TextView) findViewById(R.id.no2);
+       // no3 = (TextView) findViewById(R.id.no3);
+       // no4 = (TextView) findViewById(R.id.no4);
+       // no5 = (TextView) findViewById(R.id.no5);
 
-        showTop5();
+       // showTop5();
 
         Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
 
@@ -53,11 +57,8 @@ public class HighscoreActivity extends AppCompatActivity {
             }
         });
 
-
-
-
     }
-
+/*
     private void showTop5() {
         results = realm.where(Score.class).findAll();
         results.sort("score", Sort.DESCENDING);
@@ -102,7 +103,7 @@ public class HighscoreActivity extends AppCompatActivity {
         no5.setText("#5 "+tempScore.get(4));
     }
 
-
+*/
 
 
 
