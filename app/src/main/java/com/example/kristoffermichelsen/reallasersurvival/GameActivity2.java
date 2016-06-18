@@ -414,7 +414,7 @@ public class GameActivity2 extends AppCompatActivity implements GestureDetector.
                     }
                     // END GAME
                     setRecentScore(score);
-                    Log.i("GameActivity","Score: "+ score);
+
                     Intent intent = new Intent(GameActivity2.this,GameOverActivity.class);
                     // FIX NEXT ACTIVITY
                     startActivity(intent);
