@@ -7,7 +7,6 @@ public class Settings {
     boolean useGrid = false;
 
 
-
     private static Settings instance = null;
 
     private Settings(){};
