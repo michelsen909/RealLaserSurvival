@@ -28,7 +28,7 @@ public class HighscoreActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_highscore);
 
-
+        realm = Realm.getDefaultInstance();
 
         TextView title = (TextView) findViewById(R.id.highscores);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
@@ -63,18 +63,43 @@ public class HighscoreActivity extends AppCompatActivity {
         results.sort("score", Sort.DESCENDING);
         ArrayList<Integer> tempScore = new ArrayList<Integer>();
 
-        for (int i=0;i<5;i++){
-            if(results.get(i)!=null){
-                tempScore.add(results.get(i).getScore());
-            }else{
+        if(results.isEmpty()){
+            for (int i=0;i<5;i++){
                 tempScore.add(0);
+            }
+        }else if (results.size()<5){
+            for (int i = 0; i < results.size(); i++) {
+                tempScore.add(results.get(i).getScore());
+            }
+            for (int j=results.size();j<5;j++){
+                switch (j){
+                    case 0:
+                        tempScore.add(0);
+                        break;
+                    case 1:
+                        tempScore.add(0);
+                        break;
+                    case 2:
+                        tempScore.add(0);
+                        break;
+                    case 3:
+                        tempScore.add(0);
+                        break;
+                    case 4:
+                        tempScore.add(0);
+                        break;
+                }
+            }
+        }else {
+            for (int i = 0; i < 5; i++) {
+                tempScore.add(results.get(i).getScore());
             }
         }
         no1.setText("#1 "+tempScore.get(0));
         no2.setText("#2 "+tempScore.get(1));
         no3.setText("#3 "+tempScore.get(2));
-        no1.setText("#4 "+tempScore.get(3));
-        no2.setText("#5 "+tempScore.get(4));
+        no4.setText("#4 "+tempScore.get(3));
+        no5.setText("#5 "+tempScore.get(4));
     }
 
 

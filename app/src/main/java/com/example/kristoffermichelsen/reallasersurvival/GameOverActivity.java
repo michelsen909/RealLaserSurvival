@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
 
 import java.io.FileWriter;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -63,7 +64,9 @@ public class GameOverActivity extends AppCompatActivity {
         no2 = (TextView) findViewById(R.id.no2);
         no3 = (TextView) findViewById(R.id.no3);
 
+        saveHighscore();
         showTop3();
+
 
     }
 
@@ -83,13 +86,33 @@ public class GameOverActivity extends AppCompatActivity {
         results.sort("score", Sort.DESCENDING);
         ArrayList<Integer> tempScore = new ArrayList<Integer>();
 
-        for (int i=0;i<3;i++){
-            if(results.get(i)!=null){
-                tempScore.add(results.get(i).getScore());
-            }else{
+        if(results.isEmpty()){
+            for (int i=0;i<3;i++){
                 tempScore.add(0);
             }
+        }else if (results.size()<3){
+            for (int i = 0; i < results.size(); i++) {
+                tempScore.add(results.get(i).getScore());
+            }
+            for (int j=results.size();j<3;j++){
+                switch (j){
+                    case 0:
+                        tempScore.add(0);
+                        break;
+                    case 1:
+                        tempScore.add(0);
+                        break;
+                    case 2:
+                        tempScore.add(0);
+                        break;
+                }
+            }
+        }else {
+            for (int i = 0; i < 3; i++) {
+                tempScore.add(results.get(i).getScore());
+            }
         }
+
         no1.setText("#1 "+tempScore.get(0));
         no2.setText("#2 "+tempScore.get(1));
         no3.setText("#3 "+tempScore.get(2));
