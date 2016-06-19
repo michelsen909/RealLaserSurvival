@@ -760,6 +760,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+        }
+
+
+    @Override
     public void onLongPress(MotionEvent e) {
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);

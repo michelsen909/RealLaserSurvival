@@ -22,6 +22,7 @@ public class HighscoreActivity extends AppCompatActivity {
    private Realm realm;
    private RealmResults<Score> results;
    TextView no1, no2, no3, no4, no5;
+    MediaPlayer mptwo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,8 @@ public class HighscoreActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+
+
 
         no1 = (TextView) findViewById(R.id.no1);
         no2 = (TextView) findViewById(R.id.no2);
@@ -97,4 +100,32 @@ public class HighscoreActivity extends AppCompatActivity {
         no4.setText("#4 "+tempScore.get(1));
         no5.setText("#5 "+tempScore.get(0));
     }
+
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mptwo.stop();
+        mptwo.release();
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.one);
+        if (!mptwo.isPlaying()) {
+            mptwo.start();
+            mptwo.setLooping(true);
+        }
+    }
+
+
 }

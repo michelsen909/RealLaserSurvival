@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,9 +36,12 @@ public class MainMenuActivity extends AppCompatActivity {
     static ArrayList<Integer> highscores = new ArrayList<Integer>();
     private Realm realm;
     private RealmConfiguration realmConfig;
+    MediaPlayer mp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
@@ -48,10 +52,10 @@ public class MainMenuActivity extends AppCompatActivity {
         realm = Realm.getInstance(realmConfig);
 
         TextView title = (TextView) findViewById(R.id.title);
-        playAudio(title);
-        Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
+        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+
 
 
         final Button startButton = (Button) findViewById(R.id.startButton);
@@ -61,11 +65,9 @@ public class MainMenuActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent start = new Intent(MainMenuActivity.this, GameActivity.class);
                 startActivity(start);
-                stopAudio(startButton);
 
             }
         });
-
 
 
         Button settingsButton = (Button) findViewById(R.id.settingsButton);
@@ -112,49 +114,34 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-    public void playAudio(View view) {
-        Intent objIntent = new Intent(this, Audio.class);
-        startService(objIntent);
-    }
-
-    public void stopAudio(View view) {
-        Intent objIntent = new Intent(this, Audio.class);
-        stopService(objIntent);
-    }
-
-
     @Override
-    protected void onResume(){
-        super.onResume();
-        playAudio(findViewById(R.id.title));
-    }
+    public void onBackPressed() {
+        moveTaskToBack(true);
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        stopAudio(findViewById(R.id.title));
-    }
+        }
+
     @Override
     protected void onPause() {
-
-        if (this.isFinishing()){
-            stopAudio(findViewById(R.id.title));
-
-        }
-        Context context = getApplicationContext();
-        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-            List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        if (!taskInfo.isEmpty()) {
-            ComponentName topActivity = taskInfo.get(0).topActivity;
-           if (!topActivity.getPackageName().equals(context.getPackageName())) {
-                stopAudio(findViewById(R.id.title));
-
-            }
-
-        }
         super.onPause();
+            mp.stop();
+            mp.release();
+
+
+        }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mp = MediaPlayer.create(MainMenuActivity.this, R.raw.elevator);
+        if (!mp.isPlaying()) {
+            mp.start();
+            mp.setLooping(true);
+        }
     }
-    }
+
+}
+
 
 
 

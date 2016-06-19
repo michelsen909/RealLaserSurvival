@@ -7,6 +7,7 @@ import android.graphics.PorterDuff;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.shapes.Shape;
+import android.media.MediaPlayer;
 import android.media.audiofx.BassBoost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.content.*;
 import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
+    MediaPlayer mpthree;
     static int savedColor;
 
     static Settings settings = Settings.getInstance();
@@ -151,5 +153,30 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mpthree.stop();
+        mpthree.release();
+
+
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.two);
+        if (!mpthree.isPlaying()) {
+            mpthree.start();
+            mpthree.setLooping(true);
+        }
+    }
 
 }
