@@ -8,17 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class GameOverActivity extends AppCompatActivity {
 
     private Realm realm;
-    private int newHighscore;
-    private RealmResults<Score> results;
     TextView no1, no2, no3, preview;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +33,8 @@ public class GameOverActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+
+
 
         Button playAgain = (Button) findViewById(R.id.playAgainButton);
 
@@ -52,73 +56,46 @@ public class GameOverActivity extends AppCompatActivity {
             }
         });
 
-        newHighscore = GameActivity.recentGameScore;
-
         preview = (TextView) findViewById(R.id.yourScore);
         no1 = (TextView) findViewById(R.id.no1);
         no2 = (TextView) findViewById(R.id.no2);
         no3 = (TextView) findViewById(R.id.no3);
-        preview.setText("Your Score: "+newHighscore);
+        preview.setText("Your Score: "+GameActivity.recentGameScore);
         saveHighscore();
         showTop3();
+
 
 
     }
 
     private void saveHighscore() {
-        realm.executeTransactionAsync(new Realm.Transaction() {
-            @Override
-            public void execute(Realm realm) {
-                Score score = new Score();
-                score.setScore(newHighscore);
-                realm.copyToRealm(score);
-            }
-        });
+        realm.beginTransaction();
+        Score score = realm.createObject(Score.class);
+        score.setScore(GameActivity.recentGameScore);
+        realm.commitTransaction();
     }
 
     private void showTop3() {
-        results = realm.where(Score.class).findAll();
-        results.sort("score", Sort.DESCENDING);
-        ArrayList<Integer> tempScore = new ArrayList<Integer>();
+        RealmQuery<Score> query = realm.where(Score.class);
+        RealmResults<Score> result = query.findAll();
+        result = result.sort("score", Sort.DESCENDING);
 
-        if(results.isEmpty()){
-            for (int i=0;i<3;i++){
-                tempScore.add(0);
-            }
-        }else if (results.size()<3){
-            for (int i = 0; i < results.size(); i++) {
-                tempScore.add(results.get(i).getScore());
-            }
-            for (int j=results.size();j<3;j++){
-                switch (j){
-                    case 0:
-                        tempScore.add(0);
-                        break;
-                    case 1:
-                        tempScore.add(0);
-                        break;
-                    case 2:
-                        tempScore.add(0);
-                        break;
-                }
-            }
-        }else {
-            for (int i = 0; i < 3; i++) {
-                tempScore.add(results.get(i).getScore());
-            }
+        if (result.size() == 1) {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 0");
+            no3.setText("#3 0");
+        } else if (result.size() == 2) {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 0");
+        } else {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 " + result.get(2).getScore());
+
         }
-
-        no1.setText("#1 "+tempScore.get(0));
-        no2.setText("#2 "+tempScore.get(1));
-        no3.setText("#3 "+tempScore.get(2));
-
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        saveHighscore();
-    }
 }
 
 

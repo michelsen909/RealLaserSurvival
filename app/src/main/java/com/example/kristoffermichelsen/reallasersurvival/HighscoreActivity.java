@@ -14,13 +14,13 @@ import com.example.kristoffermichelsen.reallasersurvival.Database.Score;
 import java.util.ArrayList;
 
 import io.realm.Realm;
+import io.realm.RealmQuery;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
 public class HighscoreActivity extends AppCompatActivity {
 
    private Realm realm;
-   private RealmResults<Score> results;
    TextView no1, no2, no3, no4, no5;
     MediaPlayer mptwo;
 
@@ -31,10 +31,12 @@ public class HighscoreActivity extends AppCompatActivity {
 
         realm = Realm.getDefaultInstance();
 
+
         TextView title = (TextView) findViewById(R.id.highscores);
         Typeface font = Typeface.createFromAsset(getAssets(),"fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
+
 
 
 
@@ -43,8 +45,9 @@ public class HighscoreActivity extends AppCompatActivity {
         no3 = (TextView) findViewById(R.id.no3);
         no4 = (TextView) findViewById(R.id.no4);
         no5 = (TextView) findViewById(R.id.no5);
-
         showTop5();
+
+
 
         Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
 
@@ -58,48 +61,52 @@ public class HighscoreActivity extends AppCompatActivity {
     }
 
     private void showTop5() {
-        results = realm.where(Score.class).findAll();
-        results.sort("score", Sort.DESCENDING);
-        ArrayList<Integer> tempScore = new ArrayList<Integer>();
+            RealmQuery<Score> query = realm.where(Score.class);
+            RealmResults<Score> result = query.findAll();
+            result = result.sort("score", Sort.DESCENDING);
 
-        if(results.isEmpty()){
-            for (int i=0;i<5;i++){
-                tempScore.add(0);
-            }
-        }else if (results.size()<5){
-            for (int i = 0; i < results.size(); i++) {
-                tempScore.add(results.get(i).getScore());
-            }
-            for (int j=results.size();j<5;j++){
-                switch (j){
-                    case 0:
-                        tempScore.add(0);
-                        break;
-                    case 1:
-                        tempScore.add(0);
-                        break;
-                    case 2:
-                        tempScore.add(0);
-                        break;
-                    case 3:
-                        tempScore.add(0);
-                        break;
-                    case 4:
-                        tempScore.add(0);
-                        break;
-                }
-            }
-        }else {
-            for (int i = 0; i < 5; i++) {
-                tempScore.add(results.get(i).getScore());
-            }
+        if(result.size()==0) {
+            no1.setText("#1 0");
+            no2.setText("#2 0");
+            no3.setText("#3 0");
+            no4.setText("#4 0");
+            no5.setText("#5 0");
+        } else if (result.size() == 1) {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 0");
+            no3.setText("#3 0");
+            no4.setText("#4 0");
+            no5.setText("#5 0");
+        } else if (result.size() == 2) {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 0");
+            no4.setText("#4 0");
+            no5.setText("#5 0");
+        } else if (result.size() == 3) {
+
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 " + result.get(2).getScore());
+            no4.setText("#4 0");
+            no5.setText("#5 0");
+
+        } else if (result.size()==4) {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 " + result.get(2).getScore());
+            no4.setText("#4 " + result.get(3).getScore());
+            no5.setText("#5 0");
+        } else {
+            no1.setText("#1 " + result.get(0).getScore());
+            no2.setText("#2 " + result.get(1).getScore());
+            no3.setText("#3 " + result.get(2).getScore());
+            no4.setText("#4 " + result.get(3).getScore());
+            no5.setText("#5 " + result.get(4).getScore());
+
         }
-        no1.setText("#1 "+tempScore.get(4));
-        no2.setText("#2 "+tempScore.get(3));
-        no3.setText("#3 "+tempScore.get(2));
-        no4.setText("#4 "+tempScore.get(1));
-        no5.setText("#5 "+tempScore.get(0));
-    }
+
+        }
 
 
     @Override
