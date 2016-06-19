@@ -101,11 +101,6 @@ public class HighscoreActivity extends AppCompatActivity {
         no5.setText("#5 "+tempScore.get(0));
     }
 
-    @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
-
-    }
 
     @Override
     protected void onPause() {
