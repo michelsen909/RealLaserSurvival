@@ -553,6 +553,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     if(!usedBack) {
                         setRecentScore(score);
                         Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
+                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
 
@@ -846,6 +847,13 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public boolean onDown(MotionEvent e) {
         return false;
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(GameActivity.this,MainMenuActivity.class);
+        startActivity(intent);
     }
 }
 

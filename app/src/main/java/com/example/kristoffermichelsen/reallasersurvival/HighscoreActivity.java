@@ -129,5 +129,13 @@ public class HighscoreActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent intent = new Intent(HighscoreActivity.this,MainMenuActivity.class);
+        startActivity(intent);
+    }
+
 
 }
