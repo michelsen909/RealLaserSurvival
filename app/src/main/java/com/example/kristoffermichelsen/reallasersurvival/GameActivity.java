@@ -158,6 +158,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 break;
 
                         }
+
+                        Drawable checker = (Drawable) getDrawable(R.drawable.ball2);
+
                         Point laserPoint = new Point();
                         //Log.i("GameActivity",edges[edgeNum].getX()+"");
                         for(int i=0;i<12;i++){
@@ -177,7 +180,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                 allCells[i][x].setImageLevel(1);
 
 
-                                if(allCells[i][x].getForeground()==ballDraw){
+                                if(allCells[i][x].getForeground()==ballDraw || allCells[i][x].getForeground()==checker){
                                     Log.i("GameActivity","Hit by "+ allCells[i][x].getForeground()+"");
                                     Log.i("GameActivity","Match "+ ballDraw+"");
 
@@ -199,7 +202,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             for(int i=1;i<8;i++){
                                 allCells[y][i].setBackgroundColor(laserColor);
                                 allCells[y][i].setImageLevel(2);
-                                if(allCells[y][i].getForeground()==ballDraw){ // CHECK NOT NULL
+                                if(allCells[y][i].getForeground()==ballDraw || allCells[y][i].getForeground()==checker){ // CHECK NOT NULL
                                     Log.i("GameActivity","Hit by "+allCells[y][i].getForeground()+"");
                                     Log.i("GameActivity","Match "+ ballDraw+"");
                                     if(lives==1){
@@ -535,9 +538,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         incrementScore();
                         incrementMultiplier();
 
-                        if(lasersSpawned==9&&frenzyRoundsLeft==0){
-                            addBonus(5000);
-                        }
+
 
                         for(String i:allLasers){
                             sendCommand(i);
@@ -563,6 +564,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         }
                         if(Math.round(getMultiplier())==getMultiplier() && lasersSpawned<7){
                             lasersSpawned++;
+                        }
+                        if(lasersSpawned==9&&frenzyRoundsLeft==0){
+                            addBonus(5000);
+                            ballDraw=(Drawable) getDrawable(R.drawable.ball);
+                            if(lives>1){
+                                ballDraw.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
+                            }else{
+                                ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+                            }
+
                         }
 
                     }
