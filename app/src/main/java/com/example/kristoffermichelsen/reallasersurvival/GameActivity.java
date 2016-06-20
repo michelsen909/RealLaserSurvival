@@ -70,7 +70,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int px = r.nextInt(7)+1;
                     int py= r.nextInt(10)+1;
 
-                    while(allCells[py][px].getForeground()==ballDraw){
+                    while(allCells[py][px].getForeground()!=null){
                         px=r.nextInt(7)+1;
                         py=r.nextInt(10)+1;
                     }
@@ -85,7 +85,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int p1x = r.nextInt(7)+1;
                     int p1y= r.nextInt(10)+1;
 
-                    while(allCells[p1y][p1x].getForeground()==ballDraw){
+                    while(allCells[p1y][p1x].getForeground()!=null){
                         p1x=r.nextInt(7)+1;
                         p1y=r.nextInt(10)+1;
                     }
@@ -93,7 +93,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int p2x = r.nextInt(7)+1;
                     int p2y= r.nextInt(10)+1;
 
-                    while(allCells[p2y][p2x].getForeground()==ballDraw && (p2y!=p1y || p2x!=p1x)){
+                    while(allCells[p2y][p2x].getForeground()!=null && (p2y!=p1y || p2x!=p1x)){
                         p2x=r.nextInt(7)+1;
                         p2y=r.nextInt(10)+1;
                     }
@@ -122,7 +122,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int px2 = r.nextInt(7)+1;
                     int py2= r.nextInt(10)+1;
 
-                    while(allCells[py2][px2].getForeground()==ballDraw){
+                    while(allCells[py2][px2].getForeground()!=null){
                         px2=r.nextInt(7)+1;
                         py2=r.nextInt(10)+1;
                     }
@@ -170,6 +170,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             x++;
                             for(int i=1;i<11;i++){
                                 allCells[i][x].setBackgroundColor(laserColor);
+                                allCells[i][x].setImageLevel(1);
+
 
                                 if(allCells[i][x].getForeground()==ballDraw){
                                     Log.i("GameActivity","Hit by "+ allCells[i][x].getForeground()+"");
@@ -192,6 +194,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             y++;
                             for(int i=1;i<8;i++){
                                 allCells[y][i].setBackgroundColor(laserColor);
+                                allCells[y][i].setImageLevel(2);
                                 if(allCells[y][i].getForeground()==ballDraw){ // CHECK NOT NULL
                                     Log.i("GameActivity","Hit by "+allCells[y][i].getForeground()+"");
                                     Log.i("GameActivity","Match "+ ballDraw+"");
