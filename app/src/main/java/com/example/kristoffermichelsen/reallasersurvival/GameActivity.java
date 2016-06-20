@@ -28,6 +28,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -56,7 +57,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int wait=1000;
     Drawable ballDraw;
     static int recentGameScore=0;
-    static int ballColor = SettingsActivity.savedColor;
+    static int ballColor = settings.ballColor;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -263,9 +264,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
-        if(ballColor==0){
-            ballColor=Color.WHITE;
-        }
+        /*if(ballColor==0){
+            ballColor=settings.ballColor;
+        }*/
 
         detector = new GestureDetector(this,this);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);

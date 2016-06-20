@@ -5,6 +5,7 @@ import android.graphics.Color;
 public class Settings {
 
     boolean useGrid = false;
+    int ballColor = Color.WHITE;
 
 
     private static Settings instance = null;
