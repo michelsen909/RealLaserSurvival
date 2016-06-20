@@ -93,13 +93,6 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-       // for(int i=0; i<20; i++) {
-         //   FadeOut(20);
-           // try {
-            //Thread.sleep(5);
-       // } catch (InterruptedException e){
-
-         //   }
         mp.stop();
         mp.release();
         }
@@ -120,23 +113,9 @@ public class MainMenuActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-
         moveTaskToBack(true);
-
-        //Intent intent = new Intent(MainMenuActivity.this,MainMenuActivity.class);
-        //startActivity(intent);
     }
-/*
 
-    float volume = 1;
-
-    public void FadeOut(float deltaTime)
-    {
-        mp.setVolume(volume, volume);
-        volume = volume-volume/deltaTime;
-
-    }*/
 
 }
 

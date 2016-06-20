@@ -146,17 +146,9 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.mainmenu);
         if (!mpthree.isPlaying()) {
-            //mpthree.setVolume(0, 0);
             mpthree.start();
             mpthree.setLooping(true);
-            /*for (int i = 0; i < 40; i++) {
-                FadeIn(40);
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
 
-                }
-            }*/
 
             }
         }
@@ -169,14 +161,4 @@ public class SettingsActivity extends AppCompatActivity {
             startActivity(intent);
         }
 
-
-
-
-    /*float volume = 0;
-
-    public void FadeIn(float deltaTime) {
-        mpthree.setVolume(volume, volume);
-        volume = volume + 1 / deltaTime;
-
-    }*/
 }

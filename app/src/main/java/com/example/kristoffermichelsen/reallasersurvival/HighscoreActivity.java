@@ -117,19 +117,12 @@ public class HighscoreActivity extends AppCompatActivity {
         super.onResume();
         mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.mainmenu);
         if (!mptwo.isPlaying()) {
-            mptwo.setVolume(0, 0);
             mptwo.start();
             mptwo.setLooping(true);
-            for (int i = 0; i < 40; i++) {
-                FadeIn(40);
-                try {
-                    Thread.sleep(5);
-                } catch (InterruptedException e) {
 
-                }
-            }
         }
     }
+
 
     @Override
     public void onBackPressed() {
@@ -139,13 +132,4 @@ public class HighscoreActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-   /* float volume = 1;
-
-    public void FadeIn(float deltaTime)
-    {
-        mptwo.setVolume(volume, volume);
-        volume = volume+1/deltaTime;
-
-    }
-*/
 }
