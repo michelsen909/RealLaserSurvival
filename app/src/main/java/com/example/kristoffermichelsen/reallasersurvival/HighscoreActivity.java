@@ -115,12 +115,18 @@ public class HighscoreActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.mainmenu);
-        if (!mptwo.isPlaying()) {
+        mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.crash);
+            mptwo.start();
+        if(!mptwo.isPlaying()) {
+            mptwo.stop();
+            mptwo.release();
+            mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.mainmenuloop);
             mptwo.start();
             mptwo.setLooping(true);
-
         }
+
+
+
     }
 
 
