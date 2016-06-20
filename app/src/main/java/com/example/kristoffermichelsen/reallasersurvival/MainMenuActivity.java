@@ -89,29 +89,6 @@ public class MainMenuActivity extends AppCompatActivity {
                 startActivity(highscore);
             }
         });
-
-
-        // TEST!
-
-        Button testStartButton = (Button) findViewById(R.id.testStartButton);
-
-        testStartButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent testStart = new Intent(MainMenuActivity.this, GameActivity2.class);
-                startActivity(testStart);
-            }
-        });
-
-        Button testGameOverButton = (Button) findViewById(R.id.testGameOverButton);
-
-        testGameOverButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent testGameOver = new Intent(MainMenuActivity.this, GameOverActivity.class);
-                startActivity(testGameOver);
-            }
-        });
     }
 
 
