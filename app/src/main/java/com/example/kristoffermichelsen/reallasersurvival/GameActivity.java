@@ -280,6 +280,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     protected void onPause() {
         super.onPause();
+        //
 
         mp.stop();
         mp.release();

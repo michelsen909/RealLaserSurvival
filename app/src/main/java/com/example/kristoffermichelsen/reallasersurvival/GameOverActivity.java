@@ -22,7 +22,7 @@ public class GameOverActivity extends AppCompatActivity {
     private Realm realm;
     TextView no1, no2, no3, preview;
     MediaPlayer mp;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
