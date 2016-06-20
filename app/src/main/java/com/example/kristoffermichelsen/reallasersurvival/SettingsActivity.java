@@ -76,30 +76,30 @@ public class SettingsActivity extends AppCompatActivity {
             white.setChecked(true);
         } else if (settings.ballColor == Color.rgb(101, 140, 255)) {
             blue.setChecked(true);
-        } else if (settings.ballColor == Color.rgb(0,255,120)) {
+        } else if (settings.ballColor == Color.rgb(0, 255, 120)) {
             green.setChecked(true);
-        } else if (settings.ballColor == Color.rgb(255,221,7)) {
+        } else if (settings.ballColor == Color.rgb(255, 221, 7)) {
             yellow.setChecked(true);
         }
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                if (checkedId==R.id.white) {
+                if (checkedId == R.id.white) {
                     settings.ballColor = Color.WHITE;
                     white.setChecked(true);
-                }else if(checkedId==R.id.blue){
-                    settings.ballColor=Color.rgb(101, 140, 255);
+                } else if (checkedId == R.id.blue) {
+                    settings.ballColor = Color.rgb(101, 140, 255);
                     blue.setChecked(true);
-                }else if(checkedId==R.id.green){
-                    settings.ballColor=Color.rgb(0,255,120);
+                } else if (checkedId == R.id.green) {
+                    settings.ballColor = Color.rgb(0, 255, 120);
                     green.setChecked(true);
-                }else if(checkedId==R.id.yellow){
-                    settings.ballColor=Color.rgb(255,221,7);
+                } else if (checkedId == R.id.yellow) {
+                    settings.ballColor = Color.rgb(255, 221, 7);
                     yellow.setChecked(true);
-                }else {
+                } else {
                     white.setChecked(true);
-                    settings.ballColor=Color.WHITE;
+                    settings.ballColor = Color.WHITE;
                 }
             }
         });
@@ -130,10 +130,10 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
-        MainMenuActivity.length = mpthree.getCurrentPosition();
         mpthree.stop();
         mpthree.release();
 
@@ -146,18 +146,37 @@ public class SettingsActivity extends AppCompatActivity {
         super.onResume();
         mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.mainmenu);
         if (!mpthree.isPlaying()) {
-            mpthree.seekTo(MainMenuActivity.length);
+            mpthree.setVolume(0, 0);
             mpthree.start();
             mpthree.setLooping(true);
+            for (int i = 0; i < 40; i++) {
+                FadeIn(40);
+                try {
+                    Thread.sleep(5);
+                } catch (InterruptedException e) {
+
+                }
+            }
+
+            }
         }
+
+        @Override
+        public void onBackPressed () {
+            super.onBackPressed();
+
+            Intent intent = new Intent(SettingsActivity.this, MainMenuActivity.class);
+            startActivity(intent);
+        }
+
+
+
+
+    float volume = 0;
+
+    public void FadeIn(float deltaTime) {
+        mpthree.setVolume(volume, volume);
+        volume = volume + 1 / deltaTime;
+
     }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-
-        Intent intent = new Intent(SettingsActivity.this,MainMenuActivity.class);
-        startActivity(intent);
-    }
-
 }

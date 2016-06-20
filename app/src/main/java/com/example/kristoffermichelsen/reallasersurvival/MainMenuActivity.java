@@ -34,7 +34,6 @@ import io.realm.RealmConfiguration;
 public class MainMenuActivity extends AppCompatActivity {
 
     private Realm realm;
-    static int length;
     private RealmConfiguration realmConfig;
     MediaPlayer mp;
 
@@ -91,32 +90,32 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
-
-
     @Override
     protected void onPause() {
         super.onPause();
-        length = mp.getCurrentPosition();
-            mp.stop();
-            mp.release();
+        for(int i=0; i<20; i++) {
+            FadeOut(20);
+            try {
+            Thread.sleep(5);
+        } catch (InterruptedException e){
+
+            }
+        }
+        mp.stop();
+        mp.release();
+
 
 
         }
-
 
     @Override
     protected void onResume() {
         super.onResume();
         mp = MediaPlayer.create(MainMenuActivity.this, R.raw.mainmenu);
-        if (!mp.isPlaying() && length > 0) {
-            mp.seekTo(length);
-            mp.start();
-            mp.setLooping(true);
-        } else {
             mp.start();
             mp.setLooping(true);
         }
-    }
+
 
     @Override
     public void onBackPressed() {
@@ -126,6 +125,16 @@ public class MainMenuActivity extends AppCompatActivity {
 
         //Intent intent = new Intent(MainMenuActivity.this,MainMenuActivity.class);
         //startActivity(intent);
+    }
+
+
+    float volume = 1;
+
+    public void FadeOut(float deltaTime)
+    {
+        mp.setVolume(volume, volume);
+        volume = volume-volume/deltaTime;
+
     }
 
 }
