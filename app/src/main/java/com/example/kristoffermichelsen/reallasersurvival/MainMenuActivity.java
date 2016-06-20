@@ -107,7 +107,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mp = MediaPlayer.create(MainMenuActivity.this, R.raw.two);
+        mp = MediaPlayer.create(MainMenuActivity.this, R.raw.mainmenu);
         if (!mp.isPlaying() && length > 0) {
             mp.seekTo(length);
             mp.start();

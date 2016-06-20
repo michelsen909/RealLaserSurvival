@@ -55,6 +55,7 @@ public class GameOverActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent mainMenu = new Intent(GameOverActivity.this, MainMenuActivity.class);
+                MainMenuActivity.length = 0;
                 startActivity(mainMenu);
             }
         });
