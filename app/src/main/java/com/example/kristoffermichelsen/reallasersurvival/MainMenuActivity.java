@@ -106,15 +106,13 @@ public class MainMenuActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         mp = MediaPlayer.create(MainMenuActivity.this, R.raw.crash);
-            mp.start();
-        if(!mp.isPlaying()) {
-            mp.stop();
-            mp.release();
-            mp = MediaPlayer.create(MainMenuActivity.this, R.raw.mainmenuloop);
-            mp.start();
-            mp.setLooping(true);
+        mp.start();
+        mp = MediaPlayer.create(MainMenuActivity.this, R.raw.mainmenuloop);
+        mp.start();
+        mp.setLooping(true);
         }
-        }
+
+
 
 
     @Override
