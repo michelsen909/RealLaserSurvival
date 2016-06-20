@@ -37,17 +37,12 @@ public class HighscoreActivity extends AppCompatActivity {
         title.setTypeface(font);
         title.setTextSize(45);
 
-
-
-
         no1 = (TextView) findViewById(R.id.no1);
         no2 = (TextView) findViewById(R.id.no2);
         no3 = (TextView) findViewById(R.id.no3);
         no4 = (TextView) findViewById(R.id.no4);
         no5 = (TextView) findViewById(R.id.no5);
         showTop5();
-
-
 
         Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
 
@@ -108,7 +103,6 @@ public class HighscoreActivity extends AppCompatActivity {
 
         }
 
-
     @Override
     protected void onPause() {
         super.onPause();
@@ -117,7 +111,6 @@ public class HighscoreActivity extends AppCompatActivity {
 
 
     }
-
 
     @Override
     protected void onResume() {

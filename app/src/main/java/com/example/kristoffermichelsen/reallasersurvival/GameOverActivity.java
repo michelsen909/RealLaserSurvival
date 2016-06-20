@@ -2,6 +2,7 @@ package com.example.kristoffermichelsen.reallasersurvival;
 
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -20,12 +21,14 @@ public class GameOverActivity extends AppCompatActivity {
 
     private Realm realm;
     TextView no1, no2, no3, preview;
-
-
+    MediaPlayer mp;
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_over);
+        mp = MediaPlayer.create(GameOverActivity.this, R.raw.gameover);
+        mp.start();
         //Get the database ready for action
         realm = Realm.getDefaultInstance();
 
@@ -94,6 +97,13 @@ public class GameOverActivity extends AppCompatActivity {
             no3.setText("#3 " + result.get(2).getScore());
 
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mp.stop();
+        mp.release();
     }
 
     @Override
