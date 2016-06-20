@@ -130,9 +130,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         py2=r.nextInt(10)+1;
                     }
                     Drawable frenzyBall = (Drawable)getDrawable(R.drawable.power_up2);
-                    if(lives>1){
-                        frenzyBall.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
-                    }
+
                     //frenzyBall.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
                     frenzyBall.setLevel(12);
 
@@ -736,6 +734,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                 frenzyRoundsLeft=3;
                 ballDraw= (Drawable) getDrawable(R.drawable.ball2);
+                if(lives>1){
+                    ballDraw.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
+                }
                 allCells[ball.y][ball.x].setForeground(ballDraw);
 
                 break;
