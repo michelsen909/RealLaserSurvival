@@ -293,8 +293,8 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     }
 
     MediaPlayer mp;
-    int[] tracks = new int[2];
-    int currentTrack = 0;
+    int[] song = new int[2];
+    int currentSong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -303,9 +303,9 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
         ballColor = settings.ballColor;
 
         detector = new GestureDetector(this,this);
-        tracks[0] = R.raw.dnb;
-        tracks[1] = R.raw.dnbloop;
-        mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
+        song[0] = R.raw.dnb;
+        song[1] = R.raw.dnbloop;
+        mp = MediaPlayer.create(getApplicationContext(), song[currentSong]);
         mp.setOnCompletionListener(this);
         mp.start();
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
@@ -850,9 +850,9 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     }
     public void onCompletion(MediaPlayer mp) {
         mp.release();
-        if (currentTrack < tracks.length) {
-            currentTrack++;
-            mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
+        if (currentSong < song.length) {
+            currentSong++;
+            mp = MediaPlayer.create(getApplicationContext(), song[currentSong]);
             mp.setOnCompletionListener(this);
             mp.start();
             mp.setLooping(true);
