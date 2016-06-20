@@ -33,7 +33,6 @@ import io.realm.RealmConfiguration;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    static ArrayList<Integer> highscores = new ArrayList<Integer>();
     private Realm realm;
     static int length;
     private RealmConfiguration realmConfig;
