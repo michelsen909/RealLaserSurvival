@@ -139,7 +139,7 @@ public class HighscoreActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    float volume = 1;
+   /* float volume = 1;
 
     public void FadeIn(float deltaTime)
     {
@@ -147,5 +147,5 @@ public class HighscoreActivity extends AppCompatActivity {
         volume = volume+1/deltaTime;
 
     }
-
+*/
 }

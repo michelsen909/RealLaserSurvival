@@ -93,20 +93,21 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        for(int i=0; i<20; i++) {
-            FadeOut(20);
-            try {
-            Thread.sleep(5);
-        } catch (InterruptedException e){
+       // for(int i=0; i<20; i++) {
+         //   FadeOut(20);
+           // try {
+            //Thread.sleep(5);
+       // } catch (InterruptedException e){
 
-            }
-        }
+         //   }
         mp.stop();
         mp.release();
-
-
-
         }
+
+
+
+
+
 
     @Override
     protected void onResume() {
@@ -126,7 +127,7 @@ public class MainMenuActivity extends AppCompatActivity {
         //Intent intent = new Intent(MainMenuActivity.this,MainMenuActivity.class);
         //startActivity(intent);
     }
-
+/*
 
     float volume = 1;
 
@@ -135,7 +136,7 @@ public class MainMenuActivity extends AppCompatActivity {
         mp.setVolume(volume, volume);
         volume = volume-volume/deltaTime;
 
-    }
+    }*/
 
 }
 
