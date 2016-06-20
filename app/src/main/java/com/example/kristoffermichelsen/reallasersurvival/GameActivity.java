@@ -283,11 +283,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_game2);
+        setContentView(R.layout.activity_game);
         ballColor = settings.ballColor;
 
         detector = new GestureDetector(this,this);
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
 
@@ -825,7 +825,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     @Override
     public void onLongPress(MotionEvent e) {
         //ImageView userBall= (ImageView) findViewById(R.id.userBall);
-        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
+        GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         //grid.getChildAt(16).setBackgroundColor(Color.GREEN);
 
 
