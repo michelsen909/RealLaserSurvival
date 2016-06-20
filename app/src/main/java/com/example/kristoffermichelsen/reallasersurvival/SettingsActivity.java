@@ -142,8 +142,9 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.two);
+        mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.elevator);
         if (!mpthree.isPlaying()) {
+            mpthree.seekTo(MainMenuActivity.length);
             mpthree.start();
             mpthree.setLooping(true);
         }
