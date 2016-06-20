@@ -11,9 +11,11 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -279,9 +281,14 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     protected void onPause() {
         super.onPause();
 
+        mp.stop();
+        mp.release();
+
         usedBack=true;
         alive=false;
     }
+
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -290,6 +297,15 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         ballColor = settings.ballColor;
 
         detector = new GestureDetector(this,this);
+        mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
+        mp.start();
+        if(!mp.isPlaying()) {
+            mp.stop();
+            mp.release();
+            mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
+            mp.start();
+            mp.setLooping(true);
+        }
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
