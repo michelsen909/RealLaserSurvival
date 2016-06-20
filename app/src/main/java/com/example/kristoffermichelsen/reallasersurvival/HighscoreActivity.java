@@ -106,6 +106,7 @@ public class HighscoreActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        MainMenuActivity.length = mptwo.getCurrentPosition();
         mptwo.stop();
         mptwo.release();
 
@@ -115,8 +116,9 @@ public class HighscoreActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.one);
+        mptwo = MediaPlayer.create(HighscoreActivity.this, R.raw.two);
         if (!mptwo.isPlaying()) {
+            mptwo.seekTo(MainMenuActivity.length);
             mptwo.start();
             mptwo.setLooping(true);
         }

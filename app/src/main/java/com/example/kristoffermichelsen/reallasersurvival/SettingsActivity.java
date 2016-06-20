@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class SettingsActivity extends AppCompatActivity {
     MediaPlayer mpthree;
 
+
     static Settings settings = Settings.getInstance();
 
     //Used for grid toggle switch
@@ -132,6 +133,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        MainMenuActivity.length = mpthree.getCurrentPosition();
         mpthree.stop();
         mpthree.release();
 
@@ -142,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.elevator);
+        mpthree = MediaPlayer.create(SettingsActivity.this, R.raw.two);
         if (!mpthree.isPlaying()) {
             mpthree.seekTo(MainMenuActivity.length);
             mpthree.start();
