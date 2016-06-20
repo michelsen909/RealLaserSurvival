@@ -273,7 +273,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         for(int i=0;i<12;i++){
             for(int j=0;j<9;j++){
                     allCells[i][j].setBackgroundColor(allColors[i][j]);
-
+                if(i==ball.y && j==ball.x){
+                    allCells[i][j].setForeground(ballDraw);
+                }
             }
         }
     }
@@ -573,7 +575,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                             }else{
                                 ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
                             }
-
+                            //allCells[ball.y][ball.x].setForeground(ballDraw);
+                            sendResetCommand();
                         }
 
                     }
