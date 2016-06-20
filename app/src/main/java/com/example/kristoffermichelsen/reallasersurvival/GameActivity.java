@@ -35,7 +35,7 @@ import android.content.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
+public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener, GestureDetector.OnGestureListener {
 
     static Settings settings = Settings.getInstance();
 
@@ -293,6 +293,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     }
 
     MediaPlayer mp;
+    int[] tracks = new int[2];
+    int currentTrack = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -301,15 +303,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         ballColor = settings.ballColor;
 
         detector = new GestureDetector(this,this);
-        mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
+        tracks[0] = R.raw.dnb;
+        tracks[1] = R.raw.dnbloop;
+        mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
+        mp.setOnCompletionListener(this);
         mp.start();
-        if(!mp.isPlaying()) {
-            mp.stop();
-            mp.release();
-            mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
-            mp.start();
-            mp.setLooping(true);
-        }
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
@@ -849,6 +847,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
 
         return true;
+    }
+    public void onCompletion(MediaPlayer mp) {
+        mp.release();
+        if (currentTrack < tracks.length) {
+            currentTrack++;
+            mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
+            mp.setOnCompletionListener(this);
+            mp.start();
+            mp.setLooping(true);
+        }
     }
 
     @Override
