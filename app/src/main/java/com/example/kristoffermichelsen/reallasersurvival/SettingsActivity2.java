@@ -100,17 +100,31 @@ public class SettingsActivity2 extends AppCompatActivity {
         }
         });*/
 
+        if (settings.ballColor == Color.WHITE) {
+            white.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(101, 140, 255)) {
+            blue.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(0,255,120)) {
+            green.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(255,221,7)) {
+            yellow.setChecked(true);
+        }
+
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId==R.id.white) {
                     settings.ballColor = Color.WHITE;
+                    white.setChecked(true);
                 }else if(checkedId==R.id.blue){
                     settings.ballColor=Color.rgb(101, 140, 255);
+                    blue.setChecked(true);
                 }else if(checkedId==R.id.green){
                     settings.ballColor=Color.rgb(0,255,120);
+                    green.setChecked(true);
                 }else if(checkedId==R.id.yellow){
                     settings.ballColor=Color.rgb(255,221,7);
+                    yellow.setChecked(true);
                 }else {
                     white.setChecked(true);
                     settings.ballColor=Color.WHITE;

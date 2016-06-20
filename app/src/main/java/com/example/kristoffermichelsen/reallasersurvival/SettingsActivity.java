@@ -25,7 +25,6 @@ import java.util.ArrayList;
 
 public class SettingsActivity extends AppCompatActivity {
     MediaPlayer mpthree;
-    static int savedColor;
 
     static Settings settings = Settings.getInstance();
 
@@ -54,7 +53,6 @@ public class SettingsActivity extends AppCompatActivity {
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/ARDESTINE.ttf");
         title.setTypeface(font);
         title.setTextSize(45);
-        //load();
 
 
         Button mainMenu = (Button) findViewById(R.id.mainMenuButton);
@@ -72,86 +70,38 @@ public class SettingsActivity extends AppCompatActivity {
         final RadioButton blue = (RadioButton) findViewById(R.id.blue);
         final RadioButton green = (RadioButton) findViewById(R.id.green);
         final RadioButton yellow = (RadioButton) findViewById(R.id.yellow);
-        /*radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-        public void onRadioButtonClicked(View view){
-            boolean radioChecked = ((RadioButton)view).isChecked();
 
-            switch(view.getId()){
-                case R.id.white:
-                    if (radioChecked){
-                        settings.ballColor = Color.WHITE;
-
-                    }
-                    break;
-                case R.id.blue:
-                    if (radioChecked){
-                        settings.ballColor=Color.rgb(101, 140, 255);
-                    }
-                    break;
-                case R.id.green:
-                    if(radioChecked){
-                        settings.ballColor=Color.rgb(0,255,120);
-                    }
-                    break;
-                case R.id.yellow:
-                    if(radioChecked){
-                        settings.ballColor=Color.rgb(255,221,7);
-                    }
-                    break;
-            }
+        if (settings.ballColor == Color.WHITE) {
+            white.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(101, 140, 255)) {
+            blue.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(0,255,120)) {
+            green.setChecked(true);
+        } else if (settings.ballColor == Color.rgb(255,221,7)) {
+            yellow.setChecked(true);
         }
-        });*/
 
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if (checkedId==R.id.white) {
                     settings.ballColor = Color.WHITE;
+                    white.setChecked(true);
                 }else if(checkedId==R.id.blue){
                     settings.ballColor=Color.rgb(101, 140, 255);
+                    blue.setChecked(true);
                 }else if(checkedId==R.id.green){
                     settings.ballColor=Color.rgb(0,255,120);
+                    green.setChecked(true);
                 }else if(checkedId==R.id.yellow){
                     settings.ballColor=Color.rgb(255,221,7);
+                    yellow.setChecked(true);
                 }else {
                     white.setChecked(true);
                     settings.ballColor=Color.WHITE;
                 }
             }
         });
-
-        //int whiteColor = white.getCurrentTextColor();
-
-        //int rG1_CheckId = radioGroup.getCheckedRadioButtonId();
-        //RadioButton [] radioButtons = {white,blue,green,yellow};
-
-
-        /*radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = (RadioButton) group.findViewById(checkedId);
-
-                boolean isChecked = radioButton.isChecked();
-
-                if (isChecked) {
-                    GameActivity.ballColor = radioButton.getCurrentTextColor();
-                    savedColor = radioButton.getCurrentTextColor();
-                    save(radioButton.getId());
-
-                }else{
-                    GameActivity.ballColor = Color.WHITE;
-                    savedColor=Color.WHITE;
-                }
-            }
-        });/*
-
-        /*if(!blue.isChecked() && !green.isChecked() && !yellow.isChecked()){
-            savedColor=Color.WHITE;
-            white.setChecked(true);
-        }
-        for(int i=0; i<radioButtons.length;i++){
-            if(radioButtons[i].isChecked()){
-                savedColor=radioButtons[i].getCurrentTextColor();
-            }
-        }*/
 
         final Switch toggleGrid = (Switch) findViewById(R.id.showGridSwitch);
         toggleGrid.setChecked(settings.useGrid);
@@ -166,7 +116,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-;
+                ;
                 if (toggleGrid.isChecked()) {
                     toggleGrid.setTrackTintList(on);
                     settings.useGrid = true;
@@ -179,31 +129,6 @@ public class SettingsActivity extends AppCompatActivity {
 
 
     }
-
-
-    private void save(int radioid) {
-
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("check", radioid);
-        editor.commit();
-    }
-
-    private void load() {
-        SharedPreferences sharedPreferences = getPreferences(Context.MODE_PRIVATE);
-
-        int radioId = sharedPreferences.getInt("check", 0);
-        if (radioId > 0) {
-            RadioButton rbtn = (RadioButton) findViewById(radioId);
-            rbtn.setChecked(true);
-            //savedColor = rbtn.getCurrentTextColor();
-            GameActivity.ballColor=rbtn.getCurrentTextColor();
-        }
-
-    }
-
-
-
     @Override
     protected void onPause() {
         super.onPause();

@@ -284,9 +284,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game2);
-        /*if(ballColor==0){
-            ballColor=settings.ballColor;
-        }*/
+        ballColor = settings.ballColor;
 
         detector = new GestureDetector(this,this);
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen2);
@@ -608,9 +606,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         if(lives>1){
             ballDraw.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
         }else {
-            if (ballColor == 0) {
-                ballColor = Color.WHITE;
-            }
             ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
         }
     }
