@@ -33,8 +33,8 @@ import io.realm.RealmConfiguration;
 
 public class MainMenuActivity extends AppCompatActivity {
 
-    static ArrayList<Integer> highscores = new ArrayList<Integer>();
     private Realm realm;
+    static int length;
     private RealmConfiguration realmConfig;
     MediaPlayer mp;
 
@@ -96,6 +96,7 @@ public class MainMenuActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        length = mp.getCurrentPosition();
             mp.stop();
             mp.release();
 
