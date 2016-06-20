@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:innerRadius="6dp"
+    android:shape="ring"
+    android:thickness="4dp"
+    android:useLevel="false">
+
+    <solid android:color="#FF8D38"
+        android:id="@+id/ballFarve2"/>
+
+    <size
+        android:height="20dp"
+        android:width="20dp" />
+
+</shape>

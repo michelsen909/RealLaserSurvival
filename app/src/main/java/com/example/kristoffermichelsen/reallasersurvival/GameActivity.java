@@ -46,6 +46,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int allColors [] [] = new int [12][9];
     ImageView edges []  = new ImageView[34];
     TextView multiplierText;
+    int frenzyRoundsLeft=0;
     TextView scoreText;
     ArrayList<Point []> allTunnels = new ArrayList();
 
@@ -115,6 +116,22 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     allCells[p1y][p1x].setForeground(tunnel1);
                     allCells[p2y][p2x].setForeground(tunnel2);
 
+
+                    break;
+
+                case "2": // frenzy
+                    int px2 = r.nextInt(7)+1;
+                    int py2= r.nextInt(10)+1;
+
+                    while(allCells[py2][px2].getForeground()==ballDraw){
+                        px2=r.nextInt(7)+1;
+                        py2=r.nextInt(10)+1;
+                    }
+                    Drawable frenzyBall = (Drawable)getDrawable(R.drawable.power_up2);
+                    //frenzyBall.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
+                    frenzyBall.setLevel(12);
+
+                    allCells[py2][px2].setForeground(frenzyBall);
 
                     break;
 
@@ -425,7 +442,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
                         Random r= new Random();
                         ArrayList<Integer> fieldsUsed=new ArrayList();
+
                         int lasersSpawned=r.nextInt(numLasers)+3;
+                        if(frenzyActive()){lasersSpawned=9;}
                         ArrayList<String> allLasers= new ArrayList<String>();
 
 
@@ -496,14 +515,20 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         //wait=wait-100;
                         incrementScore();
                         incrementMultiplier();
+
+                        if(lasersSpawned==9&&frenzyRoundsLeft==0){
+                            addBonus(5000);
+                        }
+
                         for(String i:allLasers){
                             sendCommand(i);
                             sendCommand("Shoot,"+i);
                         }
+
                         Thread.sleep(breakBetween);
 
                         if(powerupSpawn){
-                            int powers=2; // change as we get more powerups
+                            int powers=3; // change as we get more powerups
 
                             sendPowerCommand(r.nextInt(powers));
                         }
@@ -556,10 +581,35 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         recentGameScore=in;
     }
 
+
+
+    public boolean frenzyActive(){
+
+        if(frenzyRoundsLeft>0){
+            frenzyRoundsLeft--;
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean isAlive(){
 
 
         return alive;
+    }
+
+    public void addBonus(int bonus){
+        score=(int)(score+bonus);
+        ballDraw=(Drawable) getDrawable(R.drawable.ball);
+        if(lives>1){
+            ballDraw.setColorFilter(new PorterDuffColorFilter(Color.CYAN, PorterDuff.Mode.MULTIPLY));
+        }else {
+            if (ballColor == 0) {
+                ballColor = Color.WHITE;
+            }
+            ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+        }
     }
 
     public void incrementMultiplier(){
@@ -569,6 +619,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         multiplier=Math.round(multiplier);
         multiplier=multiplier/10;
     }
+
+
 
     public void incrementScore (){
 
@@ -659,6 +711,16 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                 }
 
                 break;
+
+            case 12:
+                Log.i("GameActivity"," frenzy powerup");
+
+                frenzyRoundsLeft=3;
+                ballDraw= (Drawable) getDrawable(R.drawable.ball2);
+                allCells[ball.y][ball.x].setForeground(ballDraw);
+
+                break;
+
             default:
                 Log.i("GameActivity"," default powerup");
 
