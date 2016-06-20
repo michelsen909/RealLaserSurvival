@@ -117,6 +117,8 @@ public class MainMenuActivity extends AppCompatActivity {
     public void onBackPressed() {
         //super.onBackPressed();
 
+        moveTaskToBack(true);
+
         //Intent intent = new Intent(MainMenuActivity.this,MainMenuActivity.class);
         //startActivity(intent);
     }
