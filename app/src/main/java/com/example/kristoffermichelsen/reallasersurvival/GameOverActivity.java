@@ -84,7 +84,7 @@ public class GameOverActivity extends AppCompatActivity {
         result = result.sort("score", Sort.DESCENDING);
         if(result.size()==6) {
         realm.beginTransaction();
-        result.deleteLastFromRealm();
+        result.deleteFromRealm(5);
         realm.commitTransaction();
         }
 
