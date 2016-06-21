@@ -293,21 +293,14 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     }
 
     MediaPlayer mp;
-    int[] song = new int[2];
-    int currentSong = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
         ballColor = settings.ballColor;
-
         detector = new GestureDetector(this,this);
-        song[0] = R.raw.dnb;
-        song[1] = R.raw.dnbloop;
-        mp = MediaPlayer.create(getApplicationContext(), song[currentSong]);
-        mp.setOnCompletionListener(this);
-        mp.start();
+        playAudio();
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
@@ -680,6 +673,22 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     }
 
 
+    private void playAudio() {
+
+        mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
+
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
+                mp.start();
+                mp.setLooping(true);
+            }
+        });
+        mp.start();
+    }
+
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         return detector.onTouchEvent(event);
@@ -848,16 +857,7 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
 
         return true;
     }
-    public void onCompletion(MediaPlayer mp) {
-        mp.release();
-        if (currentSong < song.length) {
-            currentSong++;
-            mp = MediaPlayer.create(getApplicationContext(), song[currentSong]);
-            mp.setOnCompletionListener(this);
-            mp.start();
-            mp.setLooping(true);
-        }
-    }
+
 
     @Override
     public void onShowPress(MotionEvent e) {
