@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.gesture.Gesture;
+import android.media.MediaPlayer.OnCompletionListener;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
@@ -35,10 +36,10 @@ import android.content.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener, GestureDetector.OnGestureListener {
+public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     static Settings settings = Settings.getInstance();
-
+    MediaPlayer mp;
     GestureDetector detector;
 
     double multiplier=1.0;
@@ -51,9 +52,8 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     int frenzyRoundsLeft=0;
     TextView scoreText;
     ArrayList<Point []> allTunnels = new ArrayList();
-
     boolean alive=true;
-    int lives=1;
+    int lives=10000;
 
     boolean usedBack=false;
 
@@ -263,11 +263,28 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     }};
 
 
-    private void resetEdges(){
-        for (ImageView i:edges) {
+    private void resetEdges() {
+        for (ImageView i : edges) {
             i.setBackgroundColor(Color.BLACK);
         }
     }
+
+
+        private void playAudio() {
+
+            mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
+
+            mp.setOnCompletionListener(new OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
+                    mp.start();
+                    mp.setLooping(true);
+                }
+            });
+            mp.start();
+    }
+
 
     private void resetEntireBoard(){
         for(int i=0;i<12;i++){
@@ -284,7 +301,6 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
     protected void onPause() {
         super.onPause();
         //
-
         mp.stop();
         mp.release();
 
@@ -292,22 +308,13 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
         alive=false;
     }
 
-    MediaPlayer mp;
-    int[] tracks = new int[2];
-    int currentTrack = 0;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+        playAudio();
         ballColor = settings.ballColor;
-
         detector = new GestureDetector(this,this);
-        tracks[0] = R.raw.dnb;
-        tracks[1] = R.raw.dnbloop;
-        mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
-        mp.setOnCompletionListener(this);
-        mp.start();
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
@@ -583,7 +590,6 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
                     if(!usedBack) {
                         setRecentScore(score);
                         Intent intent = new Intent(GameActivity.this, GameOverActivity.class);
-                        //intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(intent);
                     }
 
@@ -848,16 +854,8 @@ public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCom
 
         return true;
     }
-    public void onCompletion(MediaPlayer mp) {
-        mp.release();
-        if (currentTrack < tracks.length) {
-            currentTrack++;
-            mp = MediaPlayer.create(getApplicationContext(), tracks[currentTrack]);
-            mp.setOnCompletionListener(this);
-            mp.start();
-            mp.setLooping(true);
-        }
-    }
+
+
 
     @Override
     public void onShowPress(MotionEvent e) {
