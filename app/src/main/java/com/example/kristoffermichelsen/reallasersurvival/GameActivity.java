@@ -40,7 +40,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     static Settings settings = Settings.getInstance();
 
     GestureDetector detector;
-
+//
     double multiplier=1.0;
     int score=0;
     Point ball;
