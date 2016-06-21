@@ -35,7 +35,7 @@ import android.content.*;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity implements MediaPlayer.OnCompletionListener, GestureDetector.OnGestureListener {
+public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     static Settings settings = Settings.getInstance();
 
