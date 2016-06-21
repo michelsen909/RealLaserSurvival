@@ -96,7 +96,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int p2x = r.nextInt(7)+1;
                     int p2y= r.nextInt(10)+1;
 
-                    while(allCells[p2y][p2x].getForeground()!=null && (p2y!=p1y || p2x!=p1x)){
+                    while(allCells[p2y][p2x].getForeground()!=null || (p2y!=p1y && p2x!=p1x)){
                         p2x=r.nextInt(7)+1;
                         p2y=r.nextInt(10)+1;
                     }
