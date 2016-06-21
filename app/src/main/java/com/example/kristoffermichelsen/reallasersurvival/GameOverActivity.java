@@ -82,6 +82,12 @@ public class GameOverActivity extends AppCompatActivity {
         RealmQuery<Score> query = realm.where(Score.class);
         RealmResults<Score> result = query.findAll();
         result = result.sort("score", Sort.DESCENDING);
+        if(result.size()==6) {
+        realm.beginTransaction();
+        result.deleteFromRealm(5);
+        realm.commitTransaction();
+        }
+
 
         if (result.size() == 1) {
             no1.setText("#1 " + result.get(0).getScore());
