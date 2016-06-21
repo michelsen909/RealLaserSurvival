@@ -1,46 +1,30 @@
 package com.example.kristoffermichelsen.reallasersurvival;
-
-import android.app.Activity;
-import android.app.Application;
-import android.content.Context;
 import android.content.Intent;
-import android.gesture.Gesture;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.provider.MediaStore;
-import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.Display;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.content.*;
-
 import java.util.ArrayList;
 import java.util.Random;
 
 public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     static Settings settings = Settings.getInstance();
-//
     GestureDetector detector;
-
     double multiplier=1.0;
     int score=0;
     Point ball;
@@ -51,16 +35,10 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     int frenzyRoundsLeft=0;
     TextView scoreText;
     ArrayList<Point []> allTunnels = new ArrayList();
-
     MediaPlayer mp;
-
-
-
     boolean alive=true;
-    int lives=1000;
-
+    int lives=1;
     boolean usedBack=false;
-
     int wait=1000;
     Drawable ballDraw;
     static int recentGameScore=0;
@@ -683,14 +661,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
-
-
             @Override
             public void onCompletion(MediaPlayer mp) {
                 playAudio2();
             }
         });
-
 
         mp.start();
     }
@@ -698,7 +673,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     private void playAudio2() {
 
         mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
-
         mp.start();
         mp.setLooping(true);
     }
