@@ -107,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity {
 
         toggleGrid.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                ;
+
                 if (toggleGrid.isChecked()) {
                     toggleGrid.setTrackTintList(on);
                     settings.useGrid = true;
