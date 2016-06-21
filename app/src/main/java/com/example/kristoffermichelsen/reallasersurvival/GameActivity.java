@@ -38,7 +38,7 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     static Settings settings = Settings.getInstance();
-
+//
     GestureDetector detector;
 
     double multiplier=1.0;
