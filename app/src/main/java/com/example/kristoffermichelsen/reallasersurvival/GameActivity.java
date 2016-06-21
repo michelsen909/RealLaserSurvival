@@ -52,8 +52,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     TextView scoreText;
     ArrayList<Point []> allTunnels = new ArrayList();
 
+    MediaPlayer mp;
+
+
+
     boolean alive=true;
-    int lives=1;
+    int lives=1000;
 
     boolean usedBack=false;
 
@@ -92,6 +96,8 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                         p1x=r.nextInt(7)+1;
                         p1y=r.nextInt(10)+1;
                     }
+
+
 
                     int p2x = r.nextInt(7)+1;
                     int p2y= r.nextInt(10)+1;
@@ -292,7 +298,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         alive=false;
     }
 
-    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -678,13 +683,22 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         mp = MediaPlayer.create(GameActivity.this, R.raw.dnb);
 
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+
+
             @Override
             public void onCompletion(MediaPlayer mp) {
+
+                mp.stop();
+                mp.release();
+
                 mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
-                mp.start();
                 mp.setLooping(true);
+
+                mp.start();
             }
         });
+
+
         mp.start();
     }
 
