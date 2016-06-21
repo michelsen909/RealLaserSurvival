@@ -283,7 +283,6 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         setContentView(R.layout.activity_game);
         ballColor = settings.ballColor;
         detector = new GestureDetector(this,this);
-        playAudio();
         GridLayout grid = (GridLayout) findViewById(R.id.gameScreen);
         multiplierText= (TextView) findViewById(R.id.multiplier);
         scoreText= (TextView) findViewById(R.id.score);
@@ -675,6 +674,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
         mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
         mp.start();
         mp.setLooping(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        playAudio();
     }
 
 
