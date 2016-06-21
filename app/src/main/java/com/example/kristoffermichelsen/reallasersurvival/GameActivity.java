@@ -43,6 +43,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
     Drawable ballDraw;
     static int recentGameScore=0;
     static int ballColor = settings.ballColor;
+    boolean activeFrenzy=false;
 
     private final Handler lasers = new Handler(Looper.getMainLooper()){
         @Override
@@ -66,7 +67,7 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     allCells[py][px].setForeground(powerBall);
 
                     break;
-                case "1":
+                case "1": //tunnel
                     int p1x = r.nextInt(7)+1;
                     int p1y= r.nextInt(10)+1;
 
@@ -80,9 +81,9 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                     int p2x = r.nextInt(7)+1;
                     int p2y= r.nextInt(10)+1;
 
-                    while(allCells[p2y][p2x].getForeground()!=null || (p2y!=p1y && p2x!=p1x)){
-                        p2x=r.nextInt(7)+1;
-                        p2y=r.nextInt(10)+1;
+                    while(allCells[p2y][p2x].getForeground()!=null || (p2y==p1y && p2x==p1x)){
+                        p2x = r.nextInt(7)+1;
+                        p2y = r.nextInt(10)+1;
                     }
                     Point [] tunnel = new Point[2];
 
@@ -172,8 +173,12 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                         alive=false;
                                     }
                                     else{
-                                        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
-                                        lives--;
+                                        if(frenzyRoundsLeft>0 || activeFrenzy){
+                                            ballDraw.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
+                                        }else {
+                                            ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+                                        }
+                                            lives--;
                                     }
 
                                 }
@@ -193,7 +198,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
                                         alive=false;
                                     }
                                     else{
-                                        ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+                                        if(frenzyRoundsLeft>0 || activeFrenzy){
+                                            ballDraw.setColorFilter(new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.MULTIPLY));
+                                        }else {
+                                            ballDraw.setColorFilter(new PorterDuffColorFilter(ballColor, PorterDuff.Mode.MULTIPLY));
+                                        }
                                         lives--;
                                     }
                                 }
@@ -594,9 +603,11 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
         if(frenzyRoundsLeft>0){
             frenzyRoundsLeft--;
+            activeFrenzy=true;
             return true;
         }
 
+        activeFrenzy=false;
         return false;
     }
 
