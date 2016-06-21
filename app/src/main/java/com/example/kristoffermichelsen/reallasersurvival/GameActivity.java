@@ -687,19 +687,20 @@ public class GameActivity extends AppCompatActivity implements GestureDetector.O
 
             @Override
             public void onCompletion(MediaPlayer mp) {
-
-                mp.stop();
-                mp.release();
-
-                mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
-                mp.setLooping(true);
-
-                mp.start();
+                playAudio2();
             }
         });
 
 
         mp.start();
+    }
+
+    private void playAudio2() {
+
+        mp = MediaPlayer.create(GameActivity.this, R.raw.dnbloop);
+
+        mp.start();
+        mp.setLooping(true);
     }
 
 
